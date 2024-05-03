@@ -1,0 +1,73 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginTop="10dp"
+
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/user_img_and_name"
+        layout="@layout/user_img_and_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </include>
+
+
+
+    <TextView
+        android:layout_below="@+id/user_img_and_name"
+
+
+        android:id="@+id/groupTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Участник группы BandName"
+        android:textSize="16sp"
+
+
+        />
+
+    <!-- Кнопка "написать" -->
+    <Button
+        android:id="@+id/writeMessageButton"
+        style="@style/ButtonSettingsStyle"
+
+        android:layout_below="@id/groupTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Написать" />
+
+    <!-- Текст "О себе" -->
+    <TextView
+        android:id="@+id/aboutMeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/writeMessageButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="О себе:"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/aboutMeTextView"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/about_user_shape"
+        android:padding="20dp">
+
+        <TextView
+            android:textSize="16sp"
+            android:id="@+id/aboutMeContentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/mainPageFragment">
+
+    <fragment
+        android:id="@+id/mainPageFragment"
+        android:name="com.example.findyourband.MainPageFragment"
+        android:label="MainPageFragment" >
+        <action
+            android:id="@+id/action_mainPageFragment_to_registerPageFragment"
+            app:destination="@id/registerPageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_loginPageFragment"
+            app:destination="@id/loginPageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginPageFragment"
+        android:name="com.example.findyourband.ui.login.LoginFragment"
+        android:label="LoginPageFragment" />
+
+    <fragment
+        android:id="@+id/registerPageFragment"
+        android:name="com.example.findyourband.RegisterFirstStep"
+        android:label="RegisterPageFragment" >
+        <action
+            android:id="@+id/action_registerPageFragment_to_registerSecondStep"
+            app:destination="@id/registerSecondStep" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerSecondStep"
+        android:name="com.example.findyourband.RegisterSecondStep"
+        android:label="RegisterSecondStep" />
+</navigation>

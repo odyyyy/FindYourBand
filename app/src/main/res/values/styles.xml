@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/custom_edittext</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="ButtonStyle" >
+        <item name="android:backgroundTint">@color/orange</item>
+        <item name="android:padding">@dimen/btn_padding</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="ButtonSettingsStyle" >
+
+        <item name="android:backgroundTint">@color/orange</item>
+        <item name="android:padding">@dimen/btn_padding</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginTop">9dp</item>
+        <item name="android:layout_width">260dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BadgeStyle">
+        <item name="android:background">@drawable/badge_shape</item>
+        <item name="borderRound">12dp</item>
+        <item name="android:layout_width">105dp</item>
+        <item name="android:layout_height">105dp</item>
+    </style>
+
+</resources>
