@@ -26,13 +26,10 @@ public class SettingsFragment extends Fragment {
         binding.backArrowImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: переписать
-//                FragmentManager fragmentManager = getFragmentManager();
-//
-//                fragmentManager.popBackStack();
+
                 MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment).addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
             }
         });
 

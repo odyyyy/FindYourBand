@@ -1,78 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/background"
+
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_marginTop="10dp"
-    android:layout_height="match_parent">
+    android:background="@color/background">
 
     <include
         android:id="@+id/user_img_and_name"
-        layout="@layout/user_img_and_nickname"
+        layout="@layout/component_user_img_and_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
     </include>
 
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_img_and_name"
+        android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/myPageButton"
             style="@style/ButtonSettingsStyle"
-            android:drawablePadding="16dp"
             android:drawableStart="@drawable/logo"
-            android:text="Моя страница"
             android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="Моя страница"
 
             />
 
         <Button
             android:id="@+id/myAdsButton"
             style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
-            android:text="Мои объявления"
-            android:drawableEnd="@drawable/ic_arrow_right" />
+            android:text="Мои объявления" />
 
         <Button
             android:id="@+id/myMessagesButton"
             style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
-            android:text="Мои сообщения"
-            android:drawableEnd="@drawable/ic_arrow_right" />
+            android:text="Мои сообщения" />
 
         <Button
             android:id="@+id/myRequestsButton"
             style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
-            android:text="Мои заявки"
-            android:drawableEnd="@drawable/ic_arrow_right" />
+            android:text="Мои заявки" />
 
         <Button
             android:id="@+id/favoritesButton"
             style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
-            android:text="Избранное"
-            android:drawableEnd="@drawable/ic_arrow_right" />
+            android:text="Избранное" />
 
         <Button
             android:id="@+id/groupManagementButton"
             style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
-            android:text="Управление группой"
-            android:drawableEnd="@drawable/ic_arrow_right" />
+            android:text="Управление группой" />
 
         <Button
             android:id="@+id/settingsButtonAccount"
             style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
             android:text="Настройки"
-            android:drawableEnd="@drawable/ic_arrow_right"
 
             />
     </LinearLayout>

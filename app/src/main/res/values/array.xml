@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cities">
+        <item>Москва</item>
+        <item>Санкт-Петербург</item>
+        <item>Новосибирск</item>
+        <item>Екатеринбург</item>
+        <item>Нижний Новгород</item>
+        <item>Казань</item>
+        <item>Челябинск</item>
+        <item>Омск</item>
+        <item>Самара</item>
+        <item>Ростов-на-Дону</item>
+        <item>Уфа</item>
+        <item>Красноярск</item>
+        <item>Пермь</item>
+        <item>Воронеж</item>
+        <item>Волгоград</item>
+        <item>Краснодар</item>
+        <item>Саратов</item>
+        <item>Тюмень</item>
+        <item>Тольятти</item>
+        <item>Ижевск</item>
+        <item>Барнаул</item>
+        <item>Ульяновск</item>
+        <item>Иркутск</item>
+        <item>Хабаровск</item>
+        <item>Владивосток</item>
+        <item>Ярославль</item>
+        <item>Томск</item>
+        <item>Оренбург</item>
+        <item>Кемерово</item>
+        <item>Новокузнецк</item>
+        <item>Рязань</item>
+        <item>Астрахань</item>
+        <item>Набережные Челны</item>
+        <item>Пенза</item>
+        <item>Липецк</item>
+        <item>Тула</item>
+        <item>Киров</item>
+        <item>Чебоксары</item>
+        <item>Калининград</item>
+        <item>Курск</item>
+        <item>Улан-Удэ</item>
+        <item>Ставрополь</item>
+        <item>Сочи</item>
+        <item>Тверь</item>
+        <item>Магнитогорск</item>
+        <item>Иваново</item>
+        <item>Брянск</item>
+        <item>Белгород</item>
+        <item>Сургут</item>
+    </string-array>
+
+    <string-array name="instruments">
+        <item>Гитара</item>
+        <item>Клавишные</item>
+        <item>Бас-гитара</item>
+        <item>Ударные</item>
+        <item>Саксофон</item>
+        <item>Труба</item>
+        <item>Виолончель</item>
+        <item>Скрипка</item>
+        <item>Контрабас</item>
+        <item>Другое</item>
+        <item>Мультиинструменталист</item>
+    </string-array>
+
+
+    <string-array name="genres">
+        <item>Рок</item>
+        <item>Хип-хоп</item>
+        <item>Электронная музыка</item>
+        <item>Джаз</item>
+        <item>Классическая музыка</item>
+        <item>Блюз</item>
+        <item>Метал</item>
+        <item>Панк</item>
+        <item>Кантри</item>
+        <item>Инди</item>
+    </string-array>
+
+    <string-array name="experience">
+        <item>Без опыта</item>
+        <item>Начинающий (менее года)</item>
+        <item>Любитель (около 2-х лет)</item>
+        <item>Опытный (больше 4-х лет) </item>
+        <item>Профессионал (более 8 лет) </item>
+    </string-array>
+</resources>

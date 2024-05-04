@@ -1,11 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/vacancyRelativeLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
     android:layout_height="match_parent">
 
     <include
         android:id="@+id/profileLayout"
-        layout="@layout/user_status_bar"
+        layout="@layout/component_user_status_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </include>
@@ -15,11 +17,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/profileLayout"
-        android:layout_centerInParent="true"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="17dp"
         android:layout_marginBottom="40dp"
         android:text="Объявления"
         android:textSize="32sp" />
+
+
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/filter_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Фильтр"
+        app:chipBackgroundColor="@color/chip_filter"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="17dp"
+        app:chipStrokeWidth="0dp"
+        android:layout_below="@id/profileLayout"
+        android:layout_toEndOf="@id/newsTextView"
+        app:chipIcon="@drawable/ic_filter" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newsRecyclerView"

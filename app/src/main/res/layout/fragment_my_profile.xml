@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/user_img_and_name"
-        layout="@layout/user_img_and_nickname"
+        layout="@layout/component_user_img_and_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </include>

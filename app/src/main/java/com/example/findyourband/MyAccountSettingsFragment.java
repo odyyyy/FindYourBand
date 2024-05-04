@@ -47,9 +47,11 @@ public class MyAccountSettingsFragment extends Fragment {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        Fragment fragmentToRemove = fragmentManager.findFragmentByTag("SettingsFragmentTag");
-        if (fragmentToRemove != null) {
-            transaction.remove(fragmentToRemove);
+        Fragment fragmentToRemoveFirst = fragmentManager.findFragmentByTag("SettingsFragmentTag");
+        Fragment fragmentToRemoveSecond = fragmentManager.findFragmentByTag("MyAccountSettingsFragment");
+        if (fragmentToRemoveFirst != null) {
+            transaction.remove(fragmentToRemoveFirst);
+            transaction.remove(fragmentToRemoveSecond);
             transaction.commit();
         }
     }
