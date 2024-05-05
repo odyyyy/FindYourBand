@@ -9,4 +9,5 @@
     <color name="chip_inactive">#FABB84</color>
     <color name="chip_active">#EF9106</color>
     <color name="chip_filter">#FFBC5A</color>
+    <color name="card_color">#BDBDBD</color>
 </resources>

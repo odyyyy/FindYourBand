@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -29,10 +30,26 @@ public class VacancyPageFragment extends Fragment {
             public void onClick(View v) {
                 FilterFragment fragment = new FilterFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment).addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "filterFragment").addToBackStack(null).commit();
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        /* Удаляем фрагмент настроек из бекстека, чтобы пофиксить "моргание" */
+        super.onStop();
+
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        Fragment fragmentToRemoveFirst = fragmentManager.findFragmentByTag("filterFragment");
+        if (fragmentToRemoveFirst != null) {
+            transaction.remove(fragmentToRemoveFirst);
+            transaction.commit();
+        }
     }
 }

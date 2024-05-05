@@ -25,6 +25,16 @@ public class MyAccountSettingsFragment extends Fragment {
         binding = FragmentMyAccountSettingsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        binding.myPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MyProfileFragment fragment = new MyProfileFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyProfileFragmentTag").addToBackStack(null).commit();
+            }
+        });
+
         binding.settingsButtonAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,10 +58,10 @@ public class MyAccountSettingsFragment extends Fragment {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         Fragment fragmentToRemoveFirst = fragmentManager.findFragmentByTag("SettingsFragmentTag");
-        Fragment fragmentToRemoveSecond = fragmentManager.findFragmentByTag("MyAccountSettingsFragment");
+        //Fragment fragmentToMyProfile = fragmentManager.findFragmentByTag("MyProfileFragmentTag");
         if (fragmentToRemoveFirst != null) {
             transaction.remove(fragmentToRemoveFirst);
-            transaction.remove(fragmentToRemoveSecond);
+            //transaction.remove(fragmentToMyProfile);
             transaction.commit();
         }
     }

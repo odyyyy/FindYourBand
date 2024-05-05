@@ -52,7 +52,6 @@ public class FilterFragment extends Fragment {
         adaptersMap.put("experience", adapter_experience);
 
 
-
         return adaptersMap;
 
     }

@@ -3,6 +3,7 @@ package com.example.findyourband;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
@@ -33,6 +34,8 @@ public class WelcomeScreenFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+
+
                 RegisterFirstStep fragment = new RegisterFirstStep();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.auth_fragment_container, fragment).addToBackStack(null).commit();
