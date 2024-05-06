@@ -8,7 +8,7 @@
     <color name="badges_background">#D9D9D9</color>
     <color name="chip_inactive">#D9D9D9</color>
     <color name="chip_active">#757575</color>
-    <color name="chip_filter">#FFBC5A</color>
+    <color name="chip_filter">#D9D9D9</color>
     <color name="card_color">#BDBDBD</color>
     <color name="genre_bcg_color">#373737</color>
 

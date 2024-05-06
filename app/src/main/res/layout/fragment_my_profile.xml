@@ -1,80 +1,84 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background">
 
-    android:layout_marginTop="10dp">
-
-
-    <include
-        android:id="@+id/user_img_and_name"
-        layout="@layout/component_user_img_and_nickname"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></include>
-
-
-    <TextView
-        android:id="@+id/groupTextView"
-
-
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user_img_and_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Участник группы BandName"
-        android:textSize="16sp"
+        android:background="@color/background">
 
 
-        />
-
-    <Button
-        android:id="@+id/writeMessageButton"
-        style="@style/ButtonSettingsStyle"
-
-        android:layout_below="@id/groupTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Написать" />
-
-    <TextView
-        android:id="@+id/aboutMeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/writeMessageButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="О себе:"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/aboutMeTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/about_user_shape"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <TextView
-            android:id="@+id/aboutMeContentTextView"
+        <include
+            android:id="@+id/user_img_and_name"
+            layout="@layout/component_user_img_and_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lorem"
+            android:layout_marginTop="10dp" />
+
+
+        <TextView
+            android:id="@+id/groupTextView"
+
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_img_and_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="Участник группы BandName"
             android:textSize="16sp" />
 
-        <ImageButton
+<!--        <Button-->
+<!--            android:id="@+id/writeMessageButton"-->
+<!--            style="@style/ButtonSettingsStyle"-->
 
-            android:id="@+id/changeAboutMeInfoBtn"
+<!--            android:layout_below="@id/groupTextView"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:text="Написать" />-->
 
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="end|center_horizontal"
+        <TextView
+            android:id="@+id/aboutMeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/groupTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="О себе:"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aboutMeTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/about_user_shape"
-            android:padding="10dp"
-            android:src="@drawable/ic_change" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="20dp">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/aboutMeContentTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lorem"
+                android:textSize="16sp" />
+
+            <ImageButton
+
+                android:id="@+id/changeAboutMeInfoBtn"
+
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="end|center_horizontal"
+                android:background="@drawable/about_user_shape"
+                android:padding="10dp"
+                android:src="@drawable/ic_change" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

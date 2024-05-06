@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="170dp"
         android:fontFamily="@font/philosopher"
         android:text="Регистрация"
         android:textColor="@color/black"
@@ -38,7 +38,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/philosopher"
         android:text="Шаг 1"
         android:textSize="28sp"
@@ -53,7 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="352dp"
+        android:layout_marginTop="300dp"
 
         android:layout_marginEnd="40dp"
 
@@ -62,26 +61,9 @@
         android:padding="@dimen/input_padding"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/register_password1"
-        style="@style/CustomEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="40dp"
-        android:hint="Пароль"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/input_padding"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_login" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/register_password2"
@@ -120,16 +102,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_email" />
 
+    <EditText
+        android:id="@+id/register_password1"
+        style="@style/CustomEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:hint="Пароль"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/input_padding"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_login" />
+
     <Button
         android:id="@+id/button"
         style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="156dp"
-        android:text="Зарегистрироваться"
+        android:layout_marginTop="24dp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Зарегистрироваться"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_password2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

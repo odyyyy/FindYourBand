@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/user_img_and_name"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -49,12 +50,12 @@
             android:drawablePadding="16dp"
             android:text="Мои объявления" />
 
-        <Button
-            android:id="@+id/myMessagesButton"
-            style="@style/ButtonSettingsStyle"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            android:drawablePadding="16dp"
-            android:text="Мои сообщения" />
+<!--        <Button-->
+<!--            android:id="@+id/myMessagesButton"-->
+<!--            style="@style/ButtonSettingsStyle"-->
+<!--            android:drawableEnd="@drawable/ic_arrow_right"-->
+<!--            android:drawablePadding="16dp"-->
+<!--            android:text="Мои сообщения" />-->
 
         <Button
             android:id="@+id/myRequestsButton"
@@ -70,12 +71,12 @@
             android:drawablePadding="16dp"
             android:text="Избранное" />
 
-        <Button
-            android:id="@+id/groupManagementButton"
-            style="@style/ButtonSettingsStyle"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            android:drawablePadding="16dp"
-            android:text="Управление группой" />
+<!--        <Button-->
+<!--            android:id="@+id/groupManagementButton"-->
+<!--            style="@style/ButtonSettingsStyle"-->
+<!--            android:drawableEnd="@drawable/ic_arrow_right"-->
+<!--            android:drawablePadding="16dp"-->
+<!--            android:text="Управление группой" />-->
 
         <Button
             android:id="@+id/settingsButtonAccount"

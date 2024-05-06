@@ -65,7 +65,7 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/chipMusicBands"
             style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="130dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:clickable="true"
@@ -78,14 +78,14 @@
             android:id="@+id/chipMusicians"
 
             style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="130dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:chipBackgroundColor="@color/chip_selector"
             android:checkable="true"
             android:clickable="true"
             android:focusable="true"
             android:text="Музыкантов"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            app:chipBackgroundColor="@color/chip_selector" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -154,6 +154,13 @@
             android:layout_marginEnd="40dp"
             android:hint="Жанр"
             app:startIconDrawable="@drawable/ic_genre">
+            <AutoCompleteTextView
+                android:id="@+id/genreDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -192,12 +199,6 @@
         android:layout_marginTop="20dp"
         android:text="Найти объявления" />
 
-    <AutoCompleteTextView
-        android:id="@+id/genreDropDown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:inputType="none"
-        android:text="" />
+
 
 </RelativeLayout>

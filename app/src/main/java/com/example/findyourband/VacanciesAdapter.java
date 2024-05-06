@@ -63,23 +63,22 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
-            private Fragment fragment;
 
             @Override
             public void onClick(View v) {
+                TextView vacancyTextView = v.findViewById(R.id.nameVacancyTextView);
+                String vacancy_title = vacancyTextView.getText().toString();
 
-                String vacancy_title = v.findViewById(R.id.nameVacancyTextView).toString();
+                Fragment fragment;
                 if (vacancy_title.contains("Группа")) {
                     fragment = new GroupPageFragment();
-                }
-                else{
+                } else {
                     fragment = new MusicianPageFragment();
                 }
 
-
                 FragmentManager fragmentManager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "musicianPageFragment").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment).addToBackStack(null).commit();
             }
         });
     }

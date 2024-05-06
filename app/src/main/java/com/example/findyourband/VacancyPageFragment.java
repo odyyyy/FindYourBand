@@ -70,7 +70,7 @@ public class VacancyPageFragment extends Fragment {
 
         vacanciesData.add(createVacancy("User", "Москва", Arrays.asList("Гитара", "Барабаны"), Arrays.asList("Рок", "Поп")));
         vacanciesData.add(createVacancy("User_With_Long_Name_2", "Санкт-Петербург", Arrays.asList("Клавиши", "Бас-гитара"), Arrays.asList("Джаз", "Фанк")));
-        vacanciesData.add(createVacancy("SimpleUser3", "Новосибирск", Arrays.asList("Скрипка", "Флейта"), Arrays.asList("Классика", "Вокал")));
+        vacanciesData.add(createVacancy("Группа BandName", "Новосибирск", Arrays.asList("Скрипка", "Флейта"), Arrays.asList("Классика", "Вокал")));
         vacanciesData.add(createVacancy("MusicUser4", "Екатеринбург", Arrays.asList("Саксофон", "Труба"), Arrays.asList("Блюз", "Электроника")));
         vacanciesData.add(createVacancy("User5", "Казань", Arrays.asList("Ударные", "Синтезатор"), Arrays.asList("Хип-хоп", "Рэгги")));
 
@@ -87,25 +87,4 @@ public class VacancyPageFragment extends Fragment {
     }
 
 
-    @Override
-    public void onStop() {
-        /* Удаляем фрагмент настроек из бекстека, чтобы пофиксить "моргание" */
-        super.onStop();
-
-//        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//
-//        Fragment fragmentToRemoveFirst = fragmentManager.findFragmentByTag("filterFragment");
-//        Fragment fragmentToRemoveSecond = fragmentManager.findFragmentByTag("MusicianPageFragment");
-//        if (fragmentToRemoveFirst != null) {
-//            transaction.remove(fragmentToRemoveFirst);
-//            transaction.commit();
-//        }
-//        if (fragmentToRemoveSecond != null) {
-//            transaction.remove(fragmentToRemoveSecond);
-//            transaction.commit();
-//        }
-
-    }
 }

@@ -1,59 +1,65 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/vacancyRelativeLayout"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/profileLayout"
-        layout="@layout/component_user_status_bar"
+    <RelativeLayout
+        android:id="@+id/vacancyRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
-    <TextView
-        android:id="@+id/vacancyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profileLayout"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="30dp"
-        android:text="Объявления"
-        android:textSize="32sp" />
+        <include
+            android:id="@+id/profileLayout"
+            layout="@layout/component_user_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/filter_chip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profileLayout"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="17dp"
-        android:layout_toEndOf="@id/vacancyTextView"
-        android:text="Фильтр"
-        app:chipBackgroundColor="@color/chip_filter"
-        app:chipIcon="@drawable/ic_filter"
-        app:chipStrokeWidth="0dp" />
-
-    <TextView
-        android:id="@+id/amongOfVacanciesTextView"
-        android:layout_below="@id/vacancyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"
-        android:textColor="#7B7B7B"
-        android:text="Найдено X объявлений"
-        android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/vacancyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileLayout"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="30dp"
+            android:text="Объявления"
+            android:textSize="32sp" />
 
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/filter_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileLayout"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="17dp"
+            android:layout_toEndOf="@id/vacancyTextView"
+            android:text="Фильтр"
+            app:chipBackgroundColor="@color/chip_filter"
+            app:chipIcon="@drawable/ic_filter"
+            app:chipStrokeWidth="0dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vacancyRecyclerView"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/amongOfVacanciesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vacancyTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:text="Найдено X объявлений"
+            android:textColor="#7B7B7B"
+            android:textSize="18sp" />
 
-        android:layout_height="wrap_content"
-        android:layout_below="@id/amongOfVacanciesTextView"/>
 
-</RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/vacancyRecyclerView"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amongOfVacanciesTextView" />
+
+    </RelativeLayout>
+
+</ScrollView>

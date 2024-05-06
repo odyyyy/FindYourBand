@@ -23,7 +23,10 @@ public class MyProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+
+        View view = binding.getRoot();
+
+        return view;
     }
 
 

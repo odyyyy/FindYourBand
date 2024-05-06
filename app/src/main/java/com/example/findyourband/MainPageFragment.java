@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.example.findyourband.databinding.FragmentMainPageBinding;
 
@@ -56,4 +57,6 @@ public class MainPageFragment extends Fragment {
 
         return newsData;
     }
+
+
 }
