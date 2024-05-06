@@ -1,19 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:id="@+id/vacancyRelativeLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background"
-    android:layout_height="match_parent">
+    android:id="@+id/vacancyRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <include
         android:id="@+id/profileLayout"
         layout="@layout/component_user_status_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </include>
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/newsTextView"
+        android:id="@+id/vacancyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/profileLayout"
@@ -24,24 +23,36 @@
         android:textSize="32sp" />
 
 
-
     <com.google.android.material.chip.Chip
         android:id="@+id/filter_chip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Фильтр"
-        app:chipBackgroundColor="@color/chip_filter"
+        android:layout_below="@id/profileLayout"
         android:layout_marginStart="70dp"
         android:layout_marginTop="17dp"
-        app:chipStrokeWidth="0dp"
-        android:layout_below="@id/profileLayout"
-        android:layout_toEndOf="@id/newsTextView"
-        app:chipIcon="@drawable/ic_filter" />
+        android:layout_toEndOf="@id/vacancyTextView"
+        android:text="Фильтр"
+        app:chipBackgroundColor="@color/chip_filter"
+        app:chipIcon="@drawable/ic_filter"
+        app:chipStrokeWidth="0dp" />
+
+    <TextView
+        android:id="@+id/amongOfVacanciesTextView"
+        android:layout_below="@id/vacancyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#7B7B7B"
+        android:text="Найдено X объявлений"
+        android:layout_centerHorizontal="true"/>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newsRecyclerView"
+        android:id="@+id/vacancyRecyclerView"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:layout_below="@id/newsTextView"/>
+        android:layout_below="@id/amongOfVacanciesTextView"/>
 
 </RelativeLayout>
