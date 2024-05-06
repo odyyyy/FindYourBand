@@ -1,6 +1,7 @@
 package com.example.findyourband;
 
 import android.os.Bundle;
+import android.widget.ScrollView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

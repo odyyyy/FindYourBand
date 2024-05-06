@@ -42,9 +42,13 @@ public class MainPageFragment extends Fragment {
         adapter = new NewsAdapter(getContext(), newsList);
         newsRecyclerView.setAdapter(adapter);
 
-
-
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.mainPageScrollView.scrollTo(0, 0);
     }
 
     private ArrayList<String> get_news_data() {
