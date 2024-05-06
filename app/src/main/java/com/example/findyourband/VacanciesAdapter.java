@@ -7,14 +7,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.ViewHolder> {
 
@@ -53,6 +60,28 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         holder.name.setText(name);
         holder.city.setText(city);
         holder.image.setImageResource(R.drawable.paul);
+
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            private Fragment fragment;
+
+            @Override
+            public void onClick(View v) {
+
+                String vacancy_title = v.findViewById(R.id.nameVacancyTextView).toString();
+                if (vacancy_title.contains("Группа")) {
+                    fragment = new GroupPageFragment();
+                }
+                else{
+                    fragment = new MusicianPageFragment();
+                }
+
+
+                FragmentManager fragmentManager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "musicianPageFragment").addToBackStack(null).commit();
+            }
+        });
     }
 
     @Override
@@ -69,13 +98,17 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
         ImageView image;
 
+        CardView cardView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.nameVacancyTextView);
             image = itemView.findViewById(R.id.vacancyCardImage);
             city = itemView.findViewById(R.id.cityVacancyTextView);
-
             // TODO: дописать для genre и instrument
+
+
+            cardView = itemView.findViewById(R.id.vacancyCardView);
         }
     }
 

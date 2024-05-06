@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_my_requests"
+    android:layout_width="match_parent"
+    android:layout_height="800dp"
+    android:background="@color/background"
+    android:gravity="left|top"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/avatar_container"
+        android:layout_width="303.08dp"
+        android:layout_height="65dp"
+        android:layout_marginRight="0.46dp"
+        android:layout_marginTop="9dp"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/avatar_image"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="top|left"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/nickname_text"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginLeft="0.46dp"
+            android:layout_marginTop="21.5dp"
+            android:layout_marginBottom="-3dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Никнейм"
+            android:textColor="#FF000000"
+            android:textSize="16.81dp" />
+
+        <ImageView
+            android:id="@+id/vector_image"
+            android:layout_width="12.08dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="291dp"
+            android:layout_marginTop="22dp"
+            android:layout_gravity="top|left"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/text_status_requests"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginLeft="0.5dp"
+        android:layout_marginTop="35.65dp"
+        android:layout_marginBottom="-5.35dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="Статус заявок"
+        android:textColor="#FF000000"
+        android:textSize="28dp" />
+
+    <FrameLayout
+        android:id="@+id/container_chat_field"
+        android:layout_width="332dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="64dp"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/image_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/logo"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/image_request_status"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="292dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="22dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/image_user_avatar"
+            android:layout_width="51.35dp"
+            android:layout_height="51.35dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="8.65dp"
+            android:layout_gravity="left"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/text_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="71dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="left"
+            android:gravity="center_horizontal|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Название группы"
+            android:textColor="#FF000000"
+            android:textSize="15.2dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_chat_field1"
+        android:layout_width="332dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="29dp"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/image_rectangle1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/logo"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/image_request_status1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="292dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="22dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/image_user_avatar1"
+            android:layout_width="51.35dp"
+            android:layout_height="51.35dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="8.65dp"
+            android:layout_gravity="left"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/text_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="71dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="left"
+            android:gravity="center_horizontal|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Никнейм"
+            android:textColor="#FF000000"
+            android:textSize="15.2dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_menu"
+        android:layout_width="360dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="406dp"
+        android:layout_gravity="left">
+
+        <ImageView
+            android:id="@+id/image_menu_background"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="-7dp"
+            android:background="@drawable/logo"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/image_icons"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_gravity="center"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/image_frame"
+            android:layout_width="298.09dp"
+            android:layout_height="33.27dp"
+            android:layout_marginRight="0.5dp"
+            android:layout_gravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+    </FrameLayout>
+</LinearLayout>

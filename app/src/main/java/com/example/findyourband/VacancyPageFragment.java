@@ -49,13 +49,16 @@ public class VacancyPageFragment extends Fragment {
 
 
 
+
+
         binding.filterChip.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+
                 FilterFragment fragment = new FilterFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "filterFragment").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "filterFragment").addToBackStack("filterFragment").commit();
             }
         });
 
@@ -89,14 +92,20 @@ public class VacancyPageFragment extends Fragment {
         /* Удаляем фрагмент настроек из бекстека, чтобы пофиксить "моргание" */
         super.onStop();
 
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//
+//        Fragment fragmentToRemoveFirst = fragmentManager.findFragmentByTag("filterFragment");
+//        Fragment fragmentToRemoveSecond = fragmentManager.findFragmentByTag("MusicianPageFragment");
+//        if (fragmentToRemoveFirst != null) {
+//            transaction.remove(fragmentToRemoveFirst);
+//            transaction.commit();
+//        }
+//        if (fragmentToRemoveSecond != null) {
+//            transaction.remove(fragmentToRemoveSecond);
+//            transaction.commit();
+//        }
 
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        Fragment fragmentToRemoveFirst = fragmentManager.findFragmentByTag("filterFragment");
-        if (fragmentToRemoveFirst != null) {
-            transaction.remove(fragmentToRemoveFirst);
-            transaction.commit();
-        }
     }
 }

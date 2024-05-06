@@ -56,7 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/filterByTextView"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        app:selectionRequired="true"
+        app:singleLine="true"
+        app:singleSelection="true">
 
 
         <com.google.android.material.chip.Chip
@@ -64,16 +67,23 @@
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/chip_inactive"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
             android:text="Групп"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            app:chipBackgroundColor="@color/chip_selector" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipMusicians"
+
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/chip_inactive"
+            app:chipBackgroundColor="@color/chip_selector"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
             android:text="Музыкантов"
             android:textAlignment="center" />
 
@@ -145,14 +155,6 @@
             android:hint="Жанр"
             app:startIconDrawable="@drawable/ic_genre">
 
-            <AutoCompleteTextView
-                android:id="@+id/genreDropDown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:text="" />
-
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -181,12 +183,21 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/filterApplyBtn"
         style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/filterInputsLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Найти объявление" />
+        android:text="Найти объявления" />
+
+    <AutoCompleteTextView
+        android:id="@+id/genreDropDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="none"
+        android:text="" />
 
 </RelativeLayout>

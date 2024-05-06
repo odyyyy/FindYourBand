@@ -1,10 +1,13 @@
 package com.example.findyourband;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.example.findyourband.databinding.FragmentFilterBinding;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class FilterFragment extends Fragment {
     FragmentFilterBinding binding;
@@ -23,6 +29,7 @@ public class FilterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentFilterBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
 
         HashMap<String, ArrayAdapter<String>> adaptersMap = getAdaptersForFilterInputs();
 
@@ -34,11 +41,62 @@ public class FilterFragment extends Fragment {
         binding.experienceDropDown.setAdapter(adaptersMap.get("experience"));
 
 
+        // Закрытие фильтра
+        binding.closeFilterButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                VacancyPageFragment fragment = new VacancyPageFragment();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+
+
+            }
+        });
+
+        // Сброс фильтра
+
+        binding.resetFilterButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                binding.filterChipGroup.clearCheck();
+                binding.cityAutoComplete.setText("");
+                binding.instrumentDropDown.setText("");
+                binding.genreDropDown.setText("");
+                binding.experienceDropDown.setText("");
+            }
+        });
+
+        // Применние фильтра
+
+        binding.filterApplyBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                // TODO: применение фильтра
+            }
+        });
+
+
+//        binding.filterChipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
+//            @Override
+//            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
+//                Chip chip = group.findViewById(checkedIds.get(0));
+//                chip.setChipBackgroundColorResource(R.color.chip_active);
+//            }
+//        });
+
+
         return view;
 
     }
 
-    private HashMap<String, ArrayAdapter<String>> getAdaptersForFilterInputs(){
+    private HashMap<String, ArrayAdapter<String>> getAdaptersForFilterInputs() {
         HashMap<String, ArrayAdapter<String>> adaptersMap = new HashMap<>();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.cities));

@@ -25,7 +25,7 @@
 
 
     <style name="ButtonStyle" >
-        <item name="android:backgroundTint">@color/orange</item>
+        <item name="android:backgroundTint">#2D2D2D</item>
         <item name="android:padding">@dimen/btn_padding</item>
         <item name="android:textSize">18sp</item>
     </style>
@@ -58,6 +58,25 @@
         <item name="android:layout_marginEnd">10dp</item>
         <item name="android:padding">5dp</item>
 
+    </style>
+
+    <style name="musicExampleLayoutStyle">
+        <item name="android:layout_width">330dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@drawable/music_example_shape</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="groupMembersLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/music_example_shape</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_margin">14dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
 

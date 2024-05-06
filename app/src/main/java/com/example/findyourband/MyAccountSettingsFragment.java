@@ -48,22 +48,6 @@ public class MyAccountSettingsFragment extends Fragment {
 
         return view;
     }
-    @Override
-    public void onStop() {
-        /* Удаляем фрагмент настроек из бекстека, чтобы пофиксить "моргание" */
-        super.onStop();
 
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        Fragment fragmentToRemoveFirst = fragmentManager.findFragmentByTag("SettingsFragmentTag");
-        //Fragment fragmentToMyProfile = fragmentManager.findFragmentByTag("MyProfileFragmentTag");
-        if (fragmentToRemoveFirst != null) {
-            transaction.remove(fragmentToRemoveFirst);
-            //transaction.remove(fragmentToMyProfile);
-            transaction.commit();
-        }
-    }
 
 }
