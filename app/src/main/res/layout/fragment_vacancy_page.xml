@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
     android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/filter_chip"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_below="@id/profileLayout"
             android:layout_marginStart="70dp"
             android:layout_marginTop="17dp"
@@ -55,10 +55,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacancyRecyclerView"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:layout_below="@id/amongOfVacanciesTextView" />
 
     </RelativeLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

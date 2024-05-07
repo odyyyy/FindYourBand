@@ -16,8 +16,8 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/mobile_navigation2"
+        android:layout_marginBottom="85dp"
 
-        android:layout_marginBottom="90dp"
 
          />
 

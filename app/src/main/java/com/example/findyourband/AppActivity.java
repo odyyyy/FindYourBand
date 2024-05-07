@@ -54,8 +54,6 @@ public class AppActivity extends AppCompatActivity {
                 navController.navigate(R.id.navigation_my_account_settings);
 
             }
-
-
             return true;
 
         });

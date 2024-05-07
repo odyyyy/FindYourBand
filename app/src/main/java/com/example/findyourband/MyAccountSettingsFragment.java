@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.example.findyourband.databinding.FragmentMyAccountSettingsBinding;
 
 
-
 public class MyAccountSettingsFragment extends Fragment {
 
     FragmentMyAccountSettingsBinding binding;
@@ -34,6 +33,43 @@ public class MyAccountSettingsFragment extends Fragment {
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyProfileFragmentTag").addToBackStack(null).commit();
             }
         });
+
+        binding.myVacanciesButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                MyVacanciesFragment fragment = new MyVacanciesFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyAdsFragmentTag").addToBackStack(null).commit();
+
+            }
+        });
+
+        binding.myRequestsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                MyRequestsFragment fragment = new MyRequestsFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyRequestsFragmentTag").addToBackStack(null).commit();
+            }
+        });
+
+        binding.favoritesButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                FavoritesFragment fragment = new FavoritesFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "FavoritesFragmentTag").addToBackStack(null).commit();
+
+            }
+        });
+
+
 
         binding.settingsButtonAccount.setOnClickListener(new View.OnClickListener() {
             @Override
