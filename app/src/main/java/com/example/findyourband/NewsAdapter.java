@@ -1,6 +1,7 @@
 package com.example.findyourband;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,18 +12,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.findyourband.databinding.ComponentNewsItemBinding;
 
+import com.squareup.picasso.Picasso;
+
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
 
-
     private LayoutInflater layoutInflater;
-    private List<String> newsList;
+    private List<RSSItem> newsList;
 
-    NewsAdapter(Context context, List<String> newsList) {
+    NewsAdapter(Context context, List<RSSItem> newsList) {
         this.layoutInflater = LayoutInflater.from(context);
         this.newsList = newsList;
     }
@@ -38,9 +42,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.titleTextView.setText(newsList.get(position));
-        holder.newsImage.setImageResource(R.drawable.test_news_image);
+
+        holder.titleTextView.setText(newsList.get(position).title);
+        holder.dateTextView.setText(parseDate(newsList.get(position).pubDate));
+        setNewsImageView(holder, newsList.get(position).img);
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -50,15 +58,42 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleTextView;
+
+        TextView dateTextView;
         ImageView newsImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.newsTitleTextView);
             newsImage = itemView.findViewById(R.id.newsCardImage);
+            dateTextView = itemView.findViewById(R.id.newsDateTextView);
+
         }
     }
 
+    private String parseDate(String date) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("d MMMM yyyy года", new Locale("ru", "RU"));
+
+        Date preparedDate = null;
+        try {
+            preparedDate = inputFormat.parse(date);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        String parsedDate = outputFormat.format(preparedDate);
+        return parsedDate;
+
+    }
+
+    private void setNewsImageView(ViewHolder holder, String imgURL) {
+
+        if (imgURL != null) {
+            imgURL = imgURL.replace("150x150", "750x375");
+        }
+        Picasso.get().load(imgURL).error(R.drawable.test_news_image).into(holder.newsImage);
+
+    }
 
 
 
