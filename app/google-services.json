@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1047485470637",
+    "project_id": "findyourband-b9da7",
+    "storage_bucket": "findyourband-b9da7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047485470637:android:4cc8a3262449b24cfcf324",
+        "android_client_info": {
+          "package_name": "com.example.findyourband"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6nPfjgMN2ncpuvxrirXYzfgjtCmLN0rM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

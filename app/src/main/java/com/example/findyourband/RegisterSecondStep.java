@@ -28,6 +28,8 @@ public class RegisterSecondStep extends Fragment {
             @Override
             public void onClick(View v) {
 
+
+
                 Intent intent = new Intent(getActivity(), AppActivity.class);
                 startActivity(intent);
 
