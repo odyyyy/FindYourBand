@@ -27,19 +27,13 @@
 
     <fragment
         android:id="@+id/loginPageFragment"
-        android:name="com.example.findyourband.ui.login.LoginFragment"
+        android:name="com.example.findyourband.LoginFragment"
         android:label="LoginPageFragment" />
 
     <fragment
         android:id="@+id/registerPageFragment"
-        android:name="com.example.findyourband.RegisterFirstStep"
+        android:name="com.example.findyourband.RegisterFragment"
         android:label="RegisterPageFragment" >
-        <action
-            android:id="@+id/action_registerPageFragment_to_registerSecondStep"
-            app:destination="@id/registerSecondStep" />
     </fragment>
-    <fragment
-        android:id="@+id/registerSecondStep"
-        android:name="com.example.findyourband.RegisterSecondStep"
-        android:label="RegisterSecondStep" />
+
 </navigation>

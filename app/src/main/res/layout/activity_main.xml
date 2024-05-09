@@ -9,7 +9,7 @@
 
     tools:context=".MainActivity">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:name="com.example.findyourband.WelcomeScreenFragment"
         android:id="@+id/auth_fragment_container"
         android:layout_width="0dp"
@@ -17,7 +17,7 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/mobile_navigation"
         android:layout_weight="1">
-    </fragment>
+    </androidx.fragment.app.FragmentContainerView>
 
 
 

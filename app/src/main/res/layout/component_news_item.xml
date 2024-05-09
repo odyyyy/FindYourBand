@@ -42,9 +42,9 @@
                 android:layout_margin="8dp"
                 android:fontFamily="@font/pt_serif_caption_font"
                 android:gravity="center_horizontal"
-                android:lines="2"
+                android:lines="3"
                 android:text="Заголовок"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newsCardImage">
 
