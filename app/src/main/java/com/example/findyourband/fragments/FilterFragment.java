@@ -1,6 +1,5 @@
-package com.example.findyourband;
+package com.example.findyourband.fragments;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentFilterBinding;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class FilterFragment extends Fragment {
     FragmentFilterBinding binding;

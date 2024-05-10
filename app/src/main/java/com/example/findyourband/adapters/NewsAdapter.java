@@ -1,8 +1,7 @@
-package com.example.findyourband;
+package com.example.findyourband.adapters;
 
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.findyourband.R;
+import com.example.findyourband.fragments.RSSItem;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -26,7 +27,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private List<RSSItem> newsList;
 
-    NewsAdapter(Context context, List<RSSItem> newsList) {
+    public NewsAdapter(Context context, List<RSSItem> newsList) {
         this.layoutInflater = LayoutInflater.from(context);
         this.newsList = newsList;
     }
@@ -43,9 +44,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.titleTextView.setText(newsList.get(position).title);
-        holder.dateTextView.setText(parseDate(newsList.get(position).pubDate));
-        setNewsImageView(holder, newsList.get(position).img);
+        holder.titleTextView.setText(newsList.get(position).getTitle());
+        holder.dateTextView.setText(parseDate(newsList.get(position).getPubDate()));
+        setNewsImageView(holder, newsList.get(position).getImg());
 
     }
 

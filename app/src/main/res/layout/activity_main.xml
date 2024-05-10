@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:name="com.example.findyourband.WelcomeScreenFragment"
+        android:name="com.example.findyourband.fragments.WelcomeScreenFragment"
         android:id="@+id/auth_fragment_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"

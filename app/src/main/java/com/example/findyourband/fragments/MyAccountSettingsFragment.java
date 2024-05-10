@@ -1,16 +1,19 @@
-package com.example.findyourband;
+package com.example.findyourband.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.findyourband.MainActivity;
+import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentMyAccountSettingsBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class MyAccountSettingsFragment extends Fragment {
@@ -79,6 +82,18 @@ public class MyAccountSettingsFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "SettingsFragmentTag").addToBackStack(null).commit();
 
+            }
+        });
+
+        binding.signOutButtonAccount.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 

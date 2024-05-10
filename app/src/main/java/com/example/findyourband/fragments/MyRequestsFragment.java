@@ -1,4 +1,4 @@
-package com.example.findyourband;
+package com.example.findyourband.fragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentMyRequestsBinding;
 
 

@@ -1,4 +1,4 @@
-package com.example.findyourband;
+package com.example.findyourband.fragments;
 
 
 
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.databinding.FragmentLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainPageFragment"
-        android:name="com.example.findyourband.MainPageFragment"
+        android:name="com.example.findyourband.fragments.MainPageFragment"
         android:label="MainPageFragment" >
         <action
             android:id="@+id/action_mainPageFragment_to_registerPageFragment"
@@ -27,12 +27,12 @@
 
     <fragment
         android:id="@+id/loginPageFragment"
-        android:name="com.example.findyourband.LoginFragment"
+        android:name="com.example.findyourband.fragments.LoginFragment"
         android:label="LoginPageFragment" />
 
     <fragment
         android:id="@+id/registerPageFragment"
-        android:name="com.example.findyourband.RegisterFragment"
+        android:name="com.example.findyourband.fragments.RegisterFragment"
         android:label="RegisterPageFragment" >
     </fragment>
 

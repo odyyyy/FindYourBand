@@ -86,6 +86,31 @@
             android:text="Настройки"
 
             />
+        <Button
+            android:id="@+id/aboutAppButtonAccount"
+            style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="О приложении"/>
+
+
+        <Button
+            android:id="@+id/aboutAuthorButtonAccount"
+            style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="Об авторе"
+
+            />
+
+        <Button
+            android:id="@+id/signOutButtonAccount"
+            style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="Выйти из аккаунта"
+
+            />
     </LinearLayout>
 
 </RelativeLayout>

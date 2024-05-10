@@ -1,5 +1,6 @@
-package com.example.findyourband;
+package com.example.findyourband.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.findyourband.AppActivity;
+import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentWelcomeScreenBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class WelcomeScreenFragment extends Fragment {
@@ -55,8 +59,13 @@ public class WelcomeScreenFragment extends Fragment {
         return view;
     }
 
-
-
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Проверка что пользователь уже залогинен
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent intent = new Intent(getActivity(), AppActivity.class);
+            startActivity(intent);
+        }
+    }
 }

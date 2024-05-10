@@ -1,14 +1,15 @@
-package com.example.findyourband;
+package com.example.findyourband.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.findyourband.RSSItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +17,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.findyourband.R;
+import com.example.findyourband.adapters.NewsAdapter;
 import com.example.findyourband.databinding.FragmentMainPageBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -38,6 +47,8 @@ public class MainPageFragment extends Fragment {
 
     private ArrayList<RSSItem> newsList = new ArrayList<>();
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,15 +57,45 @@ public class MainPageFragment extends Fragment {
 
         View view = binding.getRoot();
 
+        setLoggedInUserNickname();
 
         newsRecyclerView = binding.newsRecyclerView;
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
         new ProcessInBackground().execute();
 
         return view;
     }
+
+
+    // Установка значения логина для приветственного меню сверху
+    private void setLoggedInUserNickname() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String login = dataSnapshot.child("login").getValue(String.class);
+
+
+                binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Ошибка при получении данных пользователя", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /*
+    ----------------------------------------------------------------------------
+                             Парсинг RSS ленты сайта
+    ----------------------------------------------------------------------------
+    */
+
 
     public InputStream getInputStream(URL url) {
         try {
@@ -73,8 +114,10 @@ public class MainPageFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.logo));
+            progressDialog.setMessage("Загрузка...");
 
-            progressDialog.setMessage("Загрузка");
+
             progressDialog.show();
         }
 
@@ -97,10 +140,8 @@ public class MainPageFragment extends Fragment {
                 int eventType = xpp.getEventType();
                 RSSItem item = null;
 
-                int news_count = 0;
+                int news_count = 0; // Ограничение на количество новостей
 
-
-                // TODO: Поставить ограничение на количество новостей
 
                 while (eventType != XmlPullParser.END_DOCUMENT && news_count < 10) {
 
@@ -112,13 +153,12 @@ public class MainPageFragment extends Fragment {
                         } else if (xpp.getName().equalsIgnoreCase("title")) {
                             if (insideItem) {
                                 item = new RSSItem();
-
-                                item.title = xpp.nextText();
+                                item.setTitle(xpp.nextText());
 
                             }
                         } else if (xpp.getName().equalsIgnoreCase("pubDate")) {
                             if (insideItem) {
-                                item.pubDate = xpp.nextText();
+                                item.setPubDate(xpp.nextText());
                             }
                         } else if (xpp.getName().equalsIgnoreCase("enclosure")) {
                             String imageUrl = null;
@@ -128,8 +168,7 @@ public class MainPageFragment extends Fragment {
                                     imageUrl = xpp.getAttributeValue(null, "url");
                                 } catch (Exception e) {
                                 }
-
-                                item.img = imageUrl;
+                                item.setImg(imageUrl);
                             }
                         }
                     } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("item")) {
@@ -162,13 +201,3 @@ public class MainPageFragment extends Fragment {
 
 }
 
-class RSSItem {
-    String title;
-    String link;
-    String pubDate;
-    String img;
-
-    public RSSItem() {
-    }
-
-}
