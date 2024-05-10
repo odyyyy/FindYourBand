@@ -10,8 +10,6 @@ import com.example.findyourband.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends AppCompatActivity {
-    private NavController navController;
-
     private ActivityMainBinding binding;
 
     @Override

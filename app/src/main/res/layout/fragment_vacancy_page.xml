@@ -1,8 +1,8 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <RelativeLayout
         android:id="@+id/vacancyRelativeLayout"
@@ -21,8 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/profileLayout"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="5dp"
             android:text="Объявления"
             android:textSize="32sp" />
 
@@ -33,21 +32,36 @@
             android:layout_height="50dp"
             android:layout_below="@id/profileLayout"
             android:layout_marginStart="70dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/vacancyTextView"
             android:text="Фильтр"
             app:chipBackgroundColor="@color/chip_filter"
             app:chipIcon="@drawable/ic_filter"
             app:chipStrokeWidth="0dp" />
 
+        <Button
+            android:id="@+id/addVacancyBtn"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Разместить объявление"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+
+            android:drawableRight="@drawable/ic_add"
+            android:drawableTint="@color/white"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/vacancyTextView"/>
+
         <TextView
             android:id="@+id/amongOfVacanciesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/vacancyTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
+            android:layout_below="@id/addVacancyBtn"
+            android:layout_marginBottom="5dp"
             android:text="Найдено X объявлений"
+            android:layout_centerHorizontal="true"
             android:textColor="#7B7B7B"
             android:textSize="18sp" />
 
