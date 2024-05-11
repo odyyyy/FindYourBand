@@ -45,10 +45,6 @@ public class VacancyPageFragment extends Fragment {
         adapter = new VacanciesAdapter(getContext(), vacanciesList);
         vacanciesRecyclerView.setAdapter(adapter);
 
-
-
-
-
         binding.filterChip.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -57,6 +53,17 @@ public class VacancyPageFragment extends Fragment {
                 FilterFragment fragment = new FilterFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "filterFragment").addToBackStack("filterFragment").commit();
+            }
+        });
+
+        binding.addVacancyBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                AddNewVacancyFragment fragment = new AddNewVacancyFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "addNewVacancyFragment").addToBackStack("addNewVacancyFragment").commit();
             }
         });
 

@@ -98,7 +98,7 @@
             android:layout_below="@id/badgesLayout"
             android:layout_centerInParent="true"
             android:layout_marginTop="17dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
             android:text="Новости"
             android:textSize="32sp" />
 

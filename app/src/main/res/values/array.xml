@@ -53,7 +53,8 @@
     </string-array>
 
     <string-array name="instruments">
-        <item>Гитара</item>
+        <item>Электро-гитара</item>
+        <item>Акустическая гитара</item>
         <item>Клавишные</item>
         <item>Бас-гитара</item>
         <item>Ударные</item>
@@ -78,6 +79,7 @@
         <item>Панк</item>
         <item>Кантри</item>
         <item>Инди</item>
+        <item>Другое</item>
     </string-array>
 
     <string-array name="experience">

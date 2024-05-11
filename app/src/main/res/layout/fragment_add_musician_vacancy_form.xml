@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".fragments.AddMusicianVacancyFormFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:hint="Город"
+        app:hintTextColor="@color/black"
+        app:startIconDrawable="@drawable/ic_city">
+
+        <AutoCompleteTextView
+
+            android:id="@+id/cityAutoComplete"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:inputType="text"
+            android:popupBackground="@drawable/dropdown_shape"
+            android:popupTheme="@drawable/dropdown_shape"
+            android:textSize="16dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:hint="Опыт"
+        app:startIconDrawable="@drawable/ic_experience">
+
+        <AutoCompleteTextView
+            android:id="@+id/experienceDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:text="" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Выберите жанры (макс. 3)"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/genreChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:selectionRequired="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/rockChip"
+            style="@style/chipStyle"
+            android:text="Rock" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/elecChip"
+            style="@style/chipStyle"
+            android:text="Electronic" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/jazzChip"
+            style="@style/chipStyle"
+            android:text="Jazz" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/metalChip"
+            style="@style/chipStyle"
+            android:text="Metal" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/classicalChip"
+            style="@style/chipStyle"
+            android:text="Classical" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/bluesChip"
+            style="@style/chipStyle"
+            android:text="Blues" />
+        />
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/punkChip"
+            style="@style/chipStyle"
+            android:text="Punk" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/countryChip"
+            style="@style/chipStyle"
+            android:text="Country" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/indieChip"
+            style="@style/chipStyle"
+            android:text="Indie" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/otherChip"
+            style="@style/chipStyle"
+            android:text="Другое" />
+        />
+
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Выберите инструменты (макс. 3)"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Поля для множественного выбора инструментов -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/instrumentChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:selectionRequired="true"
+
+        app:singleLine="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/guitarChip"
+            style="@style/chipStyle"
+            android:text="Электрогитара" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/bassChip"
+            style="@style/chipStyle"
+            android:text="Бас-гитара" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/drumChip"
+            style="@style/chipStyle"
+            android:text="Ударные" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/saxChip"
+            style="@style/chipStyle"
+            android:text="Саксофон" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tubeChip"
+            style="@style/chipStyle"
+            android:text="Труба" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/vioChip"
+            style="@style/chipStyle"
+            android:text="Виолончель" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/violinChip"
+            style="@style/chipStyle"
+            android:text="Скрипка" />
+        />
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/contrabassChip"
+            style="@style/chipStyle"
+            android:text="Контрабас" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/multiInstrumentChip"
+            style="@style/chipStyle"
+            android:text="Мультиинструменталист" />
+        />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/otherInstrumentChip"
+            style="@style/chipStyle"
+            android:text="Другое" />
+        />
+
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="Описание"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/descriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/about_user_shape"
+        android:gravity="top"
+        android:hint="Описание вакансии"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:padding="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="Добавьте аудиофайлы ваших треков"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/audioUploadButton"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/descriptionEditText"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/badge_shape"
+        android:src="@drawable/ic_add" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="Ваши контакты"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/contact1EditText"
+        style="@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Номер телефона"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/contact2EditText"
+        style="@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:hint="Ваш Email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/contact3EditText"
+        style="@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:hint="Страница в социальной сети" />
+
+    <Button
+        android:id="@+id/createVacancyBtn"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:text="Создать объявление" />
+
+</LinearLayout>

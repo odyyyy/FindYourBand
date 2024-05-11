@@ -80,14 +80,6 @@ public class FilterFragment extends Fragment {
         });
 
 
-//        binding.filterChipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
-//            @Override
-//            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
-//                Chip chip = group.findViewById(checkedIds.get(0));
-//                chip.setChipBackgroundColorResource(R.color.chip_active);
-//            }
-//        });
-
 
         return view;
 
