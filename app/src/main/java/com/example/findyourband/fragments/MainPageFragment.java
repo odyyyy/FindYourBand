@@ -2,6 +2,8 @@ package com.example.findyourband.fragments;
 
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -84,7 +86,14 @@ public class MainPageFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String login = dataSnapshot.child("login").getValue(String.class);
+
                 binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login);
+                // Добавление логина в sharedPreferences
+
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("login", login);
+                editor.apply();
             }
 
             @Override

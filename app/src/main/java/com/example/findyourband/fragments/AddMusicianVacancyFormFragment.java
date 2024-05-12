@@ -41,8 +41,6 @@ public class AddMusicianVacancyFormFragment extends Fragment {
             public void onClick(View v) {
                 List<Integer> instrumentCheckedChip = binding.instrumentChipGroup.getCheckedChipIds();
                 List<Integer> genreCheckedChip = binding.genreChipGroup.getCheckedChipIds();
-                Log.d("TAG", instrumentCheckedChip.toString());
-                Log.d("TAG", genreCheckedChip.toString());
 
 
                 if (binding.cityAutoComplete.getText().toString().isEmpty()) {
@@ -58,13 +56,18 @@ public class AddMusicianVacancyFormFragment extends Fragment {
                 } else if (!isAddedAnyMusic()) {
                     Toast.makeText(getContext(), "Добавьте хотя бы один трек", Toast.LENGTH_SHORT).show();
                 } else {
-
                     // Добавление вакансии в БД
 
+
+
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    VacancyPageFragment fragment = new VacancyPageFragment();
+                    VacancyPageFragment frag = new VacancyPageFragment();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, frag, "VacancyPageFragment").addToBackStack(null).commit();
+                    Toast.makeText(getContext(), "Вакансия создана", Toast.LENGTH_SHORT).show();
+
+
+
                 }
 
             }

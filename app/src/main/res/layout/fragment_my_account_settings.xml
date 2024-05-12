@@ -34,9 +34,24 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/manageBandButton"
+            style="@style/ButtonSettingsStyle"
+            android:backgroundTint="#FF5722"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="Управление группой" />
+
+        <Button
+            android:id="@+id/createBandButton"
+            style="@style/ButtonSettingsStyle"
+            android:backgroundTint="#FF5722"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="Создать группу" />
+
+        <Button
             android:id="@+id/myPageButton"
             style="@style/ButtonSettingsStyle"
-            android:drawableStart="@drawable/logo"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
             android:text="Моя страница"
@@ -49,6 +64,8 @@
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
             android:text="Мои объявления" />
+
+
 
 <!--        <Button-->
 <!--            android:id="@+id/myMessagesButton"-->
@@ -71,12 +88,7 @@
             android:drawablePadding="16dp"
             android:text="Избранное" />
 
-<!--        <Button-->
-<!--            android:id="@+id/groupManagementButton"-->
-<!--            style="@style/ButtonSettingsStyle"-->
-<!--            android:drawableEnd="@drawable/ic_arrow_right"-->
-<!--            android:drawablePadding="16dp"-->
-<!--            android:text="Управление группой" />-->
+
 
         <Button
             android:id="@+id/settingsButtonAccount"

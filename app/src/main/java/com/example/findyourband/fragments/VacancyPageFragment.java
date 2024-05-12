@@ -1,5 +1,6 @@
 package com.example.findyourband.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,8 @@ public class VacancyPageFragment extends Fragment {
         binding = FragmentVacancyPageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        setUserLoginInUpperBar();
+
         vacanciesList = getVacanciesData();
 
         vacanciesRecyclerView = binding.vacancyRecyclerView;
@@ -68,6 +71,12 @@ public class VacancyPageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setUserLoginInUpperBar() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
+        String login = preferences.getString("login", "пользователь!");
+        binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login);
     }
 
     private ArrayList<Map<String, ArrayList<String>>> getVacanciesData() {
