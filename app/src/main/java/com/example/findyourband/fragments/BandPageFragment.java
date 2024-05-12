@@ -12,18 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.findyourband.R;
-import com.example.findyourband.databinding.FragmentGroupPageBinding;
+import com.example.findyourband.databinding.FragmentBandPageBinding;
 
 
-public class GroupPageFragment extends Fragment {
+public class BandPageFragment extends Fragment {
 
-    FragmentGroupPageBinding binding;
+    FragmentBandPageBinding binding;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentGroupPageBinding.inflate(inflater, container, false);
+        binding = FragmentBandPageBinding.inflate(inflater, container, false);
 
         binding.arrowBackComponent.setOnClickListener(new View.OnClickListener() {
 
@@ -31,7 +31,7 @@ public class GroupPageFragment extends Fragment {
             public void onClick(View v) {
                 VacancyPageFragment fragment = new VacancyPageFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
             }
         });
 

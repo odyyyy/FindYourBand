@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.R;
-import com.example.findyourband.fragments.GroupPageFragment;
+import com.example.findyourband.fragments.BandPageFragment;
 import com.example.findyourband.fragments.MusicianPageFragment;
 
 import java.util.ArrayList;
@@ -72,14 +72,14 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
                 Fragment fragment;
                 if (vacancy_title.contains("Группа")) {
-                    fragment = new GroupPageFragment();
+                    fragment = new BandPageFragment();
                 } else {
                     fragment = new MusicianPageFragment();
                 }
 
                 FragmentManager fragmentManager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment).addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment).addToBackStack(null).commit();
             }
         });
     }

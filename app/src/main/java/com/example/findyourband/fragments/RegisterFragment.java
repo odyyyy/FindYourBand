@@ -103,6 +103,7 @@ public class RegisterFragment extends Fragment {
                         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
                         userRef.child("email").setValue(email);
                         userRef.child("login").setValue(login);
+                        userRef.child("image").setValue("");
 
                         Intent intent = new Intent(getActivity(), AppActivity.class);
                         startActivity(intent);

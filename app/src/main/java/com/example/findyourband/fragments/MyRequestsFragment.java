@@ -29,7 +29,7 @@ public class MyRequestsFragment extends Fragment {
 
                 MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
             }
         });
 

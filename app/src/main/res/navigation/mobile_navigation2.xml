@@ -6,6 +6,8 @@
     app:startDestination="@+id/navigation_home">
 
 
+
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.findyourband.fragments.MainPageFragment"

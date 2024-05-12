@@ -50,8 +50,19 @@ public class MyAccountSettingsFragment extends Fragment {
 
                 ManageBandFragment fragment = new ManageBandFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "ManageBandFragmentTag").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "ManageBandFragmentTag").addToBackStack(null).commit();
 
+            }
+        });
+
+        binding.createBandButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                CreateBandFragment fragment = new CreateBandFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "CreateBandFragmentTag").addToBackStack(null).commit();
             }
         });
 
@@ -62,7 +73,7 @@ public class MyAccountSettingsFragment extends Fragment {
 
                 MyProfileFragment fragment = new MyProfileFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyProfileFragmentTag").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyProfileFragmentTag").addToBackStack(null).commit();
             }
         });
 
@@ -73,7 +84,7 @@ public class MyAccountSettingsFragment extends Fragment {
 
                 MyVacanciesFragment fragment = new MyVacanciesFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyAdsFragmentTag").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyAdsFragmentTag").addToBackStack(null).commit();
 
             }
         });
@@ -85,7 +96,7 @@ public class MyAccountSettingsFragment extends Fragment {
 
                 MyRequestsFragment fragment = new MyRequestsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "MyRequestsFragmentTag").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyRequestsFragmentTag").addToBackStack(null).commit();
             }
         });
 
@@ -96,7 +107,7 @@ public class MyAccountSettingsFragment extends Fragment {
 
                 FavoritesFragment fragment = new FavoritesFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "FavoritesFragmentTag").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "FavoritesFragmentTag").addToBackStack(null).commit();
 
             }
         });
@@ -109,7 +120,7 @@ public class MyAccountSettingsFragment extends Fragment {
 
                 SettingsFragment fragment = new SettingsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "SettingsFragmentTag").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "SettingsFragmentTag").addToBackStack(null).commit();
 
             }
         });

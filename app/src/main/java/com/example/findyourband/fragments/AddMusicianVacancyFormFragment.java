@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAddMusicianVacancyFormBinding;
-import com.example.findyourband.fragments.VacancyPageFragment;
 
 import java.util.List;
 
@@ -63,7 +61,7 @@ public class AddMusicianVacancyFormFragment extends Fragment {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     VacancyPageFragment frag = new VacancyPageFragment();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, frag, "VacancyPageFragment").addToBackStack(null).commit();
+                    fragmentTransaction.replace(R.id.app_fragment_container, frag, "VacancyPageFragment").addToBackStack(null).commit();
                     Toast.makeText(getContext(), "Вакансия создана", Toast.LENGTH_SHORT).show();
 
 

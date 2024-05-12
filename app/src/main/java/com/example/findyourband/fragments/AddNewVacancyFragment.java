@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAddNewVacancyBinding;
@@ -56,13 +55,37 @@ enum INSTRUMENT {
 
 public class AddNewVacancyFragment extends Fragment {
     FragmentAddNewVacancyBinding binding;
+    Fragment fragment;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         binding = FragmentAddNewVacancyBinding.inflate(inflater, container, false);
-        binding.addVacancyChipGroup.setOnCheckedStateChangeListener(new ChipGroupListener());
+
+
+
+        binding.chipFundMusicBands.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragment = new AddMusicianVacancyFormFragment();
+                fragmentTransaction.replace(R.id.addVacancy_fragment_container, fragment).commit();
+            }
+        });
+
+        binding.chipFindMusician.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragment = new AddBandVacancyFormFragment();
+                fragmentTransaction.replace(R.id.addVacancy_fragment_container, fragment).commit();
+            }
+        });
 
         binding.arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,30 +94,11 @@ public class AddNewVacancyFragment extends Fragment {
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 VacancyPageFragment fragment = new VacancyPageFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
             }
         });
         return binding.getRoot();
     }
 
-    private class ChipGroupListener implements ChipGroup.OnCheckedStateChangeListener {
-        Fragment fragment;
-
-        @Override
-        public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-            if (checkedIds.get(0) == 2131361951) {
-                fragment = new AddMusicianVacancyFormFragment();
-
-            } else {
-                fragment = new AddBandVacancyFormFragment();
-            }
-            fragmentTransaction.replace(R.id.addVacancy_fragment_container, fragment).commit();
-
-
-        }
-    }
 
 }

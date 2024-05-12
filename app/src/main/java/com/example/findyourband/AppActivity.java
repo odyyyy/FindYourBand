@@ -23,8 +23,6 @@ public class AppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_FindYourBand);
-
 
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -33,7 +31,7 @@ public class AppActivity extends AppCompatActivity {
         BottomNavigationView navView = binding.navView;
 
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_app);
+        NavController navController = Navigation.findNavController(this, R.id.app_fragment_container);
         NavigationUI.setupWithNavController(navView, navController);
 
         navView.setOnItemSelectedListener(item -> {
@@ -44,7 +42,7 @@ public class AppActivity extends AppCompatActivity {
                 MainPageFragment fragment = new MainPageFragment();
 
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment,
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment,
                         "MainPageFragment").addToBackStack(null).commit();
 
                 navController.navigate(R.id.navigation_home);
@@ -54,7 +52,7 @@ public class AppActivity extends AppCompatActivity {
 
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment,
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment,
                         "VacancyPageFragment").addToBackStack(null).commit();
                 navController.navigate(R.id.navigation_vacancy);
 
@@ -63,7 +61,7 @@ public class AppActivity extends AppCompatActivity {
 
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-                fragmentTransaction.replace(R.id.nav_host_fragment_activity_app, fragment,
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment,
                         "MyAccountSettingsFragment").addToBackStack(null).commit();
 
                 navController.navigate(R.id.navigation_my_account_settings);
