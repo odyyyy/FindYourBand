@@ -47,7 +47,7 @@ public class SearchBandMembersFragment extends Fragment {
         userSearchList = new ArrayList<>();
 
 
-        searchMembersAdapter =  new BandMembersAdapter(getContext(), userSearchList);
+        searchMembersAdapter =  new BandMembersAdapter(getContext(), userSearchList, this);
 
         searchMembersAdapter.searchDataList(userSearchList);
 
@@ -68,6 +68,7 @@ public class SearchBandMembersFragment extends Fragment {
                     MemberDataClass user = new MemberDataClass(ds.child("login").getValue().toString());
                     userSearchList.add(user);
                 }
+
                 searchMembersAdapter.notifyDataSetChanged();
 
             }
@@ -113,13 +114,12 @@ public class SearchBandMembersFragment extends Fragment {
                 searchList.add(user);
             }
         }
+        // TODO: подумать над сохранением состояния selected в списке при поиске оно сбрасывается
         searchMembersAdapter.searchDataList(searchList);
-
-
     }
 
-    public void getAllUsersFromDB() {
-
+    public void updateSelectedCountText() {
+        int selectedCount = searchMembersAdapter.getSelectedCount();
+        binding.selectedMembersText.setText(String.valueOf(selectedCount));
     }
-
 }

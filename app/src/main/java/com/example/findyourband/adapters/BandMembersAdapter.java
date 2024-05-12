@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.R;
+import com.example.findyourband.SearchBandMembersFragment;
 import com.example.findyourband.services.MemberDataClass;
 
 
@@ -23,9 +25,14 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
     private Context context;
     private List<MemberDataClass> dataList;
 
-    public BandMembersAdapter(Context ctx, List<MemberDataClass> bandMembersList) {
+    private SearchBandMembersFragment fragment;
+
+    private int selectedCount = 0;
+
+    public BandMembersAdapter(Context ctx, List<MemberDataClass> bandMembersList, SearchBandMembersFragment fragment) {
         this.context = ctx;
         this.dataList = bandMembersList;
+        this.fragment = fragment;
 
     }
 
@@ -38,23 +45,50 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull BandMembersAdapter.ViewHolder holder, int position) {
-        Log.d("BandMembersAdapter", "onBindViewHolder: " + dataList.get(position).getNickname());
+        MemberDataClass member = dataList.get(position);
+        holder.memberNickname.setText(member.getNickname());
+
+        holder.memberCard.setOnClickListener(new View.OnClickListener() {
+            boolean isHighlighted = false;
+
+            @Override
+            public void onClick(View v) {
 
 
-        holder.memberNickname.setText(dataList.get(position).getNickname());
-        // TODO: дописать установку картинки из БД
+                // Изменение фона при клике
+                if (!isHighlighted) {
+                    if (getSelectedCount() >= 4) {
+                        Toast.makeText(context, "Вы не можете добавить больше четырех участников", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    v.findViewById(R.id.groupMemberLayout).setBackgroundColor(context.getResources().getColor(R.color.card_selected_color));
+                    isHighlighted = true;
+                    selectedCount++;
+                } else {
+                    // Возврат к обычному фону при повторном клике
+                    v.findViewById(R.id.groupMemberLayout).setBackgroundColor(context.getResources().getColor(R.color.card_member_not_selected));
+                    isHighlighted = false;
+                    selectedCount--;
+                }
+                fragment.updateSelectedCountText();
+            }
+        });
     }
-
 
 
     @Override
     public int getItemCount() {
         return dataList.size();
     }
+
     public void searchDataList(List<MemberDataClass> searchList) {
         dataList = searchList;
         notifyDataSetChanged();
 
+    }
+
+    public int getSelectedCount() {
+        return selectedCount;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
