@@ -1,7 +1,7 @@
 package com.example.findyourband.adapters;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +11,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.R;
 import com.example.findyourband.SearchBandMembersFragment;
+import com.example.findyourband.fragments.CreateBandFragment;
 import com.example.findyourband.services.MemberDataClass;
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.ViewHolder> {
@@ -25,16 +29,17 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
     private Context context;
     private List<MemberDataClass> dataList;
 
-    private SearchBandMembersFragment fragment;
+    private Fragment fragment;
 
     private int selectedCount = 0;
 
-    public BandMembersAdapter(Context ctx, List<MemberDataClass> bandMembersList, SearchBandMembersFragment fragment) {
+    public BandMembersAdapter(Context ctx, List<MemberDataClass> bandMembersList, Fragment fragment) {
         this.context = ctx;
         this.dataList = bandMembersList;
         this.fragment = fragment;
 
     }
+
 
     @NonNull
     @Override
@@ -48,31 +53,38 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
         MemberDataClass member = dataList.get(position);
         holder.memberNickname.setText(member.getNickname());
 
-        holder.memberCard.setOnClickListener(new View.OnClickListener() {
-            boolean isHighlighted = false;
+        // Обработчик нажатия отрабатывает только на странице поиска
+        if (fragment instanceof SearchBandMembersFragment) {
 
-            @Override
-            public void onClick(View v) {
-
-
-                // Изменение фона при клике
-                if (!isHighlighted) {
-                    if (getSelectedCount() >= 4) {
-                        Toast.makeText(context, "Вы не можете добавить больше четырех участников", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    v.findViewById(R.id.groupMemberLayout).setBackgroundColor(context.getResources().getColor(R.color.card_selected_color));
-                    isHighlighted = true;
-                    selectedCount++;
-                } else {
-                    // Возврат к обычному фону при повторном клике
-                    v.findViewById(R.id.groupMemberLayout).setBackgroundColor(context.getResources().getColor(R.color.card_member_not_selected));
-                    isHighlighted = false;
-                    selectedCount--;
-                }
-                fragment.updateSelectedCountText();
+            // Устанавливаем фон в соответствии с состоянием isSelected
+            if (member.isSelected()) {
+                holder.memberCard.findViewById(R.id.groupMemberLayout).setBackgroundColor(context.getResources().getColor(R.color.card_selected_color));
+            } else {
+                holder.memberCard.findViewById(R.id.groupMemberLayout).setBackgroundColor(context.getResources().getColor(R.color.card_member_not_selected));
             }
-        });
+            holder.memberCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (!member.isSelected()) {
+                        if (getSelectedCount() >= 4) {
+                            Toast.makeText(context, "Вы не можете добавить больше четырех участников", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    member.setSelected(!member.isSelected());
+                    notifyItemChanged(position);
+
+                    if (member.isSelected()) {
+
+                        selectedCount++;
+                    } else {
+                        selectedCount--;
+                    }
+                    ((SearchBandMembersFragment) fragment).updateSelectedCountText();
+                }
+            });
+        }
     }
 
 
@@ -89,6 +101,17 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
 
     public int getSelectedCount() {
         return selectedCount;
+    }
+
+    public ArrayList<? extends Parcelable> getSelectedMembers() {
+        List<MemberDataClass> selectedMembers = new ArrayList<>();
+        for (MemberDataClass member : dataList) {
+            if (member.isSelected()) {
+                selectedMembers.add(member);
+            }
+        }
+
+        return (ArrayList<? extends Parcelable>) selectedMembers;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

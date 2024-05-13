@@ -56,6 +56,7 @@ public class SearchBandMembersFragment extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
+        // получение данных при изменении бд
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -79,7 +80,7 @@ public class SearchBandMembersFragment extends Fragment {
             }
         });
 
-
+        // реализация автокомплита
         binding.bandMembersSearchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
 
             @Override
@@ -93,6 +94,21 @@ public class SearchBandMembersFragment extends Fragment {
                 return true;
             }
         });
+
+        binding.applyBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Bundle selectedMembers = new Bundle();
+                selectedMembers.putParcelableArrayList("selectedMembers", searchMembersAdapter.getSelectedMembers());
+
+                CreateBandFragment fragment = new CreateBandFragment();
+                fragment.setArguments(selectedMembers);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "CreateBandFragment").addToBackStack(null).commit();
+            }
+        });
+
         binding.arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +119,12 @@ public class SearchBandMembersFragment extends Fragment {
         });
 
         return binding.getRoot();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
 
     }
 
