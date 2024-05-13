@@ -50,7 +50,6 @@ import java.util.List;
 public class MainPageFragment extends Fragment {
     private FragmentMainPageBinding binding;
     private RecyclerView newsRecyclerView;
-    String userId;
 
 
     @Nullable
@@ -62,7 +61,6 @@ public class MainPageFragment extends Fragment {
         View view = binding.getRoot();
 
         setLoggedInUserNickname();
-        loadDataIsUserBandLeader();
 
         newsRecyclerView = binding.newsRecyclerView;
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -73,54 +71,13 @@ public class MainPageFragment extends Fragment {
         return view;
     }
 
-    private void loadDataIsUserBandLeader() {
-
-        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference().child("bands");
-
-        bandsRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("bandLeader", snapshot.exists());
-                editor.apply();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Ошибка при чтении данных! " + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
 
 
-    // Установка значения логина для приветственного меню сверху
+
     private void setLoggedInUserNickname() {
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String login = dataSnapshot.child("login").getValue(String.class);
-
-                binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login);
-                // Добавление логина в sharedPreferences
-
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("login", login);
-                editor.apply();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Ошибка при получении данных пользователя", Toast.LENGTH_SHORT).show();
-            }
-        });
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String login = sharedPreferences.getString("login", "");
+        binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login + "!");
     }
 
 

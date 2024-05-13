@@ -1,9 +1,12 @@
 package com.example.findyourband;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.findyourband.fragments.MainPageFragment;
 import com.example.findyourband.fragments.MyAccountSettingsFragment;
@@ -20,12 +23,21 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.findyourband.databinding.ActivityAppBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
 public class AppActivity extends AppCompatActivity {
     private final static String TAG = "Logging";
     private ActivityAppBinding binding;
+
+    String userId;
+
 
 
     @Override
@@ -36,13 +48,23 @@ public class AppActivity extends AppCompatActivity {
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+
+        writeLoginFromFirebaseToSharedPreferences();
+        loadDataIsUserBandLeader();
+
         BottomNavigationView navView = binding.navView;
 
 
         NavController navController = Navigation.findNavController(this, R.id.app_fragment_container);
         NavigationUI.setupWithNavController(navView, navController);
 
+        // Получение данных из бд и кеширование их в SharedPreferences
 
+
+
+
+        // Слушатели событий на переход по вкладкам
         navView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
@@ -81,6 +103,30 @@ public class AppActivity extends AppCompatActivity {
         });
     }
 
+    private void writeLoginFromFirebaseToSharedPreferences() {
+
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String login = dataSnapshot.child("login").getValue(String.class);
+
+                // Добавление логина в sharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("login", login);
+                editor.apply();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(AppActivity.this, "Ошибка при получении данных пользователя", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
     @Override
@@ -115,5 +161,27 @@ public class AppActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void loadDataIsUserBandLeader() {
+
+        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference().child("bands");
+
+        bandsRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("bandLeader", snapshot.exists());
+                editor.apply();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(AppActivity.this, "Ошибка при чтении данных! " + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }

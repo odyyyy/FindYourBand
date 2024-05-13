@@ -111,10 +111,11 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
             int eventType = xpp.getEventType();
             RSSItem item = null;
 
-            int news_count = 0; // Ограничение на количество новостей
+            int news_count = 0;
+            final int NEWS_LIMIT = 10; // Ограничение на количество новостей
 
 
-            while (eventType != XmlPullParser.END_DOCUMENT && news_count < 10) {
+            while (eventType != XmlPullParser.END_DOCUMENT && news_count < NEWS_LIMIT) {
 
                 if (eventType == XmlPullParser.START_TAG) {
 
