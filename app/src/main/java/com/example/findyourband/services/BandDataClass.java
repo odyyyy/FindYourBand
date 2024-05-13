@@ -4,16 +4,14 @@ import java.util.List;
 
 public class BandDataClass {
     private String name;
-    private String leaderUserId;
     private String bandImage;
     private List<String> memberUserLogins;
 
     public BandDataClass() {
     }
 
-    public BandDataClass(String name, String leaderUserId, List<String> memberUserIds) {
+    public BandDataClass(String name, List<String> memberUserIds) {
         this.name = name;
-        this.leaderUserId = leaderUserId;
         this.bandImage = "";
         this.memberUserLogins = memberUserIds;
     }
@@ -28,13 +26,6 @@ public class BandDataClass {
         this.name = name;
     }
 
-    public String getLeaderUserId() {
-        return leaderUserId;
-    }
-
-    public void setLeaderUserId(String leaderUserId) {
-        this.leaderUserId = leaderUserId;
-    }
 
     public List<String> getMemberUserLogins() {
         return memberUserLogins;

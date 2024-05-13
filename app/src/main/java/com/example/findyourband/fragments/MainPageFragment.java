@@ -1,11 +1,11 @@
 package com.example.findyourband.fragments;
 
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,10 +49,8 @@ import java.util.List;
 
 public class MainPageFragment extends Fragment {
     private FragmentMainPageBinding binding;
-
     private RecyclerView newsRecyclerView;
-
-    private List<RSSItem> newsList = new ArrayList<>();
+    String userId;
 
 
     @Nullable
@@ -64,6 +62,7 @@ public class MainPageFragment extends Fragment {
         View view = binding.getRoot();
 
         setLoggedInUserNickname();
+        loadDataIsUserBandLeader();
 
         newsRecyclerView = binding.newsRecyclerView;
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -71,14 +70,35 @@ public class MainPageFragment extends Fragment {
         new ParserInBackground(getContext(), newsRecyclerView).execute();
 
 
-
         return view;
+    }
+
+    private void loadDataIsUserBandLeader() {
+
+        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference().child("bands");
+
+        bandsRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("bandLeader", snapshot.exists());
+                editor.apply();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Ошибка при чтении данных! " + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 
     // Установка значения логина для приветственного меню сверху
     private void setLoggedInUserNickname() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
 

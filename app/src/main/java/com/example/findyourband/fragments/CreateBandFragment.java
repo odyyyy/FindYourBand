@@ -1,5 +1,7 @@
 package com.example.findyourband.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -78,13 +80,18 @@ public class CreateBandFragment extends Fragment {
                     }
 
                     // TODO: Проверка картинки. Если она загружена, то добавляем её в объект через Glide (сеттер)
-                    BandDataClass band = new BandDataClass(bandName, leaderID, bandMembersLogins);
+                    BandDataClass band = new BandDataClass(bandName , bandMembersLogins);
 
-                    bandsRef.child(bandId).setValue(band)
+                    bandsRef.child(leaderID).setValue(band)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(getContext(), "Группа успешно создана!", Toast.LENGTH_SHORT).show();
+                                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean("bandLeader", true);
+                                    editor.apply();
+
 
                                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                                     MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();

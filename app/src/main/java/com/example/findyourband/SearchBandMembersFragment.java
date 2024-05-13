@@ -18,6 +18,7 @@ import com.example.findyourband.databinding.FragmentSearchBandMembersBinding;
 import com.example.findyourband.fragments.CreateBandFragment;
 import com.example.findyourband.fragments.VacancyPageFragment;
 import com.example.findyourband.services.MemberDataClass;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,7 +68,8 @@ public class SearchBandMembersFragment extends Fragment {
                 for (DataSnapshot ds : snapshot.getChildren()) {
 
                     MemberDataClass user = new MemberDataClass(ds.child("login").getValue().toString());
-                    userSearchList.add(user);
+                    if (!user.getNickname().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()))
+                        userSearchList.add(user);
                 }
 
                 searchMembersAdapter.notifyDataSetChanged();
@@ -94,7 +96,6 @@ public class SearchBandMembersFragment extends Fragment {
                 return true;
             }
         });
-
         binding.applyBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

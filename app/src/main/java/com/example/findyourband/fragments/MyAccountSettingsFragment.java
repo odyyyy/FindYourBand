@@ -1,21 +1,29 @@
 package com.example.findyourband.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.findyourband.MainActivity;
 import com.example.findyourband.ManageBandFragment;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentMyAccountSettingsBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MyAccountSettingsFragment extends Fragment {
@@ -31,17 +39,7 @@ public class MyAccountSettingsFragment extends Fragment {
 
         setUserLoginInUpperBar();
 
-
-
-        // TODO: Проверка что у пользователя уже есть группа, тогда заменяем кнопку на "Управление группой"
-        if (userBandLeader()) {
-            binding.manageBandButton.setVisibility(View.VISIBLE);
-            binding.createBandButton.setVisibility(View.GONE);
-        }
-        else{
-
-            binding.manageBandButton.setVisibility(View.GONE);
-        }
+        setButtonsIfUserIsBandLeader();
 
         binding.manageBandButton.setOnClickListener(new View.OnClickListener() {
 
@@ -140,9 +138,22 @@ public class MyAccountSettingsFragment extends Fragment {
         return view;
     }
 
-    private boolean userBandLeader() {
-        // получение данных из бд
-        return false;
+    private void setButtonsIfUserIsBandLeader() {
+
+        if (isUserBandLeader()) {
+            binding.manageBandButton.setVisibility(View.VISIBLE);
+            binding.createBandButton.setVisibility(View.GONE);
+        }
+        else {
+            binding.manageBandButton.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean isUserBandLeader() {
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        return preferences.getBoolean("bandLeader", false);
+
     }
 
     private void setUserLoginInUpperBar() {
@@ -150,6 +161,5 @@ public class MyAccountSettingsFragment extends Fragment {
         String login = preferences.getString("login", "Пользователь");
         binding.userImgAndName.nicknameTextView.setText(login);
     }
-
 
 }
