@@ -36,7 +36,6 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
     private Exception exception;
     ProgressDialog progressDialog;
     Context ctx;
-    private final RecyclerView newsRecyclerView;
 
     private ArrayList<RSSItem> newsList;
 
@@ -44,10 +43,8 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
     private XmlPullParser xpp;
 
 
-    public ParserInBackground(Context context, RecyclerView newsRecyclerView) {
+    public ParserInBackground(Context context) {
         ctx = context;
-        this.newsRecyclerView = newsRecyclerView;
-        progressDialog = new ProgressDialog(context);
         newsList = new ArrayList<>();
     }
 
@@ -61,29 +58,17 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
 
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        progressDialog.setIndeterminateDrawable(ctx.getResources().getDrawable(R.drawable.logo));
-        progressDialog.setMessage("Загрузка...");
-
-
-        progressDialog.show();
-    }
 
     @Override
     protected Exception doInBackground(Integer... integers) {
 
-
-        if (isAnyLatestNews()) {
-            try {
-                parseAllNews();
-            } catch (XmlPullParserException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            loadNewsFromCache();
+        try {
+            parseAllNews();
+        } catch (XmlPullParserException e) {
+            throw new RuntimeException(e);
         }
+
+
 
 
         return null;
@@ -161,15 +146,22 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
     @Override
     protected void onPostExecute(Exception s) {
         super.onPostExecute(s);
-        NewsAdapter adapter = new NewsAdapter(ctx, newsList);
-        newsRecyclerView.setAdapter(adapter);
-
-        updateCachedNewsJSON();
-
-        progressDialog.dismiss();
-        Log.d("ParseTest", "Fin");
-
+        writeNewsListToJson(newsList);
     }
+
+    private void writeNewsListToJson(ArrayList<RSSItem> newsList) {
+        Gson gson = new Gson();
+        Type newsListType = new TypeToken<ArrayList<RSSItem>>() {}.getType();
+        String json = gson.toJson(newsList, newsListType);
+        File cacheFile = new File(ctx.getFilesDir(), "cached_news.json");
+
+        try (FileWriter writer = new FileWriter(cacheFile)) {
+            writer.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private void updateCachedNewsJSON() {
@@ -289,29 +281,6 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
         }
 
     }
-
-    private void loadNewsFromCache() {
-        Gson gson = new Gson();
-        File cacheFile = new File(ctx.getFilesDir(), "cached_news.json");
-
-        if (!cacheFile.exists()) {
-            return;
-        }
-
-        try {
-            FileReader reader = new FileReader(cacheFile);
-            Type newsListType = new TypeToken<ArrayList<RSSItem>>(){}.getType();
-            ArrayList<RSSItem> cachedNewsList = gson.fromJson(reader, newsListType);
-            reader.close();
-
-            if (cachedNewsList != null) {
-                newsList.addAll(cachedNewsList);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 
 }

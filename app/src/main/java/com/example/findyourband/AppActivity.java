@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.findyourband.fragments.MainPageFragment;
 import com.example.findyourband.fragments.MyAccountSettingsFragment;
 import com.example.findyourband.fragments.VacancyPageFragment;
+import com.example.findyourband.services.ParserInBackground;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.databinding.ActivityAppBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,17 +41,17 @@ public class AppActivity extends AppCompatActivity {
 
     String userId;
 
-
+    private RecyclerView newsRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
 
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 
+        // Получение данных из бд и кеширование их в SharedPreferences
 
         writeLoginFromFirebaseToSharedPreferences();
         loadDataIsUserBandLeader();
@@ -59,9 +62,9 @@ public class AppActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.app_fragment_container);
         NavigationUI.setupWithNavController(navView, navController);
 
-        // Получение данных из бд и кеширование их в SharedPreferences
-
-
+        newsRecyclerView = binding.container.findViewById(R.id.app_fragment_container).findViewById(R.id.newsRecyclerView);
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        new ParserInBackground(getApplicationContext()).execute();
 
 
         // Слушатели событий на переход по вкладкам

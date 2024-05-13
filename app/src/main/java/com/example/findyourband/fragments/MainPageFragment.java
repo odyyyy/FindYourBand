@@ -50,6 +50,8 @@ import java.util.List;
 public class MainPageFragment extends Fragment {
     private FragmentMainPageBinding binding;
     private RecyclerView newsRecyclerView;
+    List<RSSItem> newsList = new ArrayList<>();
+
 
 
     @Nullable
@@ -65,14 +67,13 @@ public class MainPageFragment extends Fragment {
         newsRecyclerView = binding.newsRecyclerView;
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        new ParserInBackground(getContext(), newsRecyclerView).execute();
+        loadNewsFromCache();
+        newsRecyclerView.setAdapter(new NewsAdapter(getContext(), newsList));
+
 
 
         return view;
     }
-
-
-
 
     private void setLoggedInUserNickname() {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -80,6 +81,27 @@ public class MainPageFragment extends Fragment {
         binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login + "!");
     }
 
+    private void loadNewsFromCache() {
+        Gson gson = new Gson();
+        File cacheFile = new File(getContext().getFilesDir(), "cached_news.json");
+
+        if (!cacheFile.exists()) {
+            return;
+        }
+
+        try {
+            FileReader reader = new FileReader(cacheFile);
+            Type newsListType = new TypeToken<ArrayList<RSSItem>>(){}.getType();
+            ArrayList<RSSItem> cachedNewsList = gson.fromJson(reader, newsListType);
+            reader.close();
+
+            if (cachedNewsList != null) {
+                newsList.addAll(cachedNewsList);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 
