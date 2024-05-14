@@ -16,13 +16,13 @@
 
     <fragment
         android:id="@+id/navigation_vacancy"
-        android:name="com.example.findyourband.fragments.VacancyPageFragment"
+        android:name="com.example.findyourband.fragments.vacancies.VacancyPageFragment"
         android:label="@string/title_vacancy"
         tools:layout="@layout/fragment_vacancy_page" />
 
     <fragment
         android:id="@+id/navigation_my_account_settings"
-        android:name="com.example.findyourband.fragments.MyAccountSettingsFragment"
+        android:name="com.example.findyourband.fragments.settings.MyAccountSettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_my_account_settings" />
 </navigation>

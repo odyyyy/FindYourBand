@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.findyourband.R;
-import com.example.findyourband.fragments.RSSItem;
+import com.example.findyourband.services.RSSItem;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;

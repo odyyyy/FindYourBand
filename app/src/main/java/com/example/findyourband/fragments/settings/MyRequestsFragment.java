@@ -1,4 +1,4 @@
-package com.example.findyourband.fragments;
+package com.example.findyourband.fragments.settings;
 
 import android.os.Bundle;
 
@@ -12,30 +12,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.findyourband.R;
-import com.example.findyourband.databinding.FragmentBandPageBinding;
+import com.example.findyourband.databinding.FragmentMyRequestsBinding;
 
 
-public class BandPageFragment extends Fragment {
+public class MyRequestsFragment extends Fragment {
 
-    FragmentBandPageBinding binding;
-
+    FragmentMyRequestsBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentBandPageBinding.inflate(inflater, container, false);
-
-        binding.arrowBackComponent.setOnClickListener(new View.OnClickListener() {
-
+        binding = FragmentMyRequestsBinding.inflate(inflater, container, false);
+        binding.arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VacancyPageFragment fragment = new VacancyPageFragment();
+
+                MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
             }
         });
 
         return binding.getRoot();
-
     }
 }

@@ -1,5 +1,7 @@
-package com.example.findyourband.fragments;
+package com.example.findyourband.fragments.vacancies;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,25 +13,24 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAddNewVacancyBinding;
-import com.google.android.material.chip.ChipGroup;
-
-import java.util.List;
+import com.google.android.material.chip.Chip;
 
 
 enum GENRE {
-    Rock(2131362090),
-    Electronic(2131361913),
-    Jazz(2131362025),
-    Metal(2131362333),
-    Classical(2131362451),
-    Blues(2131362472),
-    Punk(2131362473),
-    Country(2131361984),
-    Indie(2131362216),
-    Другое(2131362284),
+    Rock(0),
+    Electronic(1),
+    Jazz(2),
+    Metal(3),
+    Classical(4),
+    Blues(5),
+    Punk(6),
+    Country(7),
+    Indie(8),
+    Другое(9),
     ;
 
     GENRE(int i) {
@@ -64,8 +65,7 @@ public class AddNewVacancyFragment extends Fragment {
         binding = FragmentAddNewVacancyBinding.inflate(inflater, container, false);
 
 
-
-        binding.chipFundMusicBands.setOnClickListener(new View.OnClickListener() {
+        binding.chipFindMusicBands.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -80,10 +80,16 @@ public class AddNewVacancyFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragment = new AddBandVacancyFormFragment();
-                fragmentTransaction.replace(R.id.addVacancy_fragment_container, fragment).commit();
+                if (userIsBandLeader()) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragment = new AddBandVacancyFormFragment();
+                    fragmentTransaction.replace(R.id.addVacancy_fragment_container, fragment).commit();
+                } else {
+
+                    v.setClickable(false);
+                    Toast.makeText(getContext(), "Только лидер группы может разместить такое объявление. Создайте группу!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -98,6 +104,11 @@ public class AddNewVacancyFragment extends Fragment {
             }
         });
         return binding.getRoot();
+    }
+
+    private boolean userIsBandLeader() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("bandLeader", false);
     }
 
 

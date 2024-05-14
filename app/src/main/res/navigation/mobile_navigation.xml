@@ -27,12 +27,12 @@
 
     <fragment
         android:id="@+id/loginPageFragment"
-        android:name="com.example.findyourband.fragments.LoginFragment"
+        android:name="com.example.findyourband.fragments.auth.LoginFragment"
         android:label="LoginPageFragment" />
 
     <fragment
         android:id="@+id/registerPageFragment"
-        android:name="com.example.findyourband.fragments.RegisterFragment"
+        android:name="com.example.findyourband.fragments.auth.RegisterFragment"
         android:label="RegisterPageFragment" >
     </fragment>
 

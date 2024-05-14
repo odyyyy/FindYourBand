@@ -15,12 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.R;
-import com.example.findyourband.SearchBandMembersFragment;
-import com.example.findyourband.fragments.CreateBandFragment;
+import com.example.findyourband.fragments.settings.SearchBandMembersFragment;
 import com.example.findyourband.services.MemberDataClass;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

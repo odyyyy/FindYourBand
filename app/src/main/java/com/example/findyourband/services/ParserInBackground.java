@@ -4,13 +4,7 @@ package com.example.findyourband.services;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.findyourband.R;
-import com.example.findyourband.adapters.NewsAdapter;
-import com.example.findyourband.fragments.RSSItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -55,9 +49,7 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
             e.printStackTrace();
             return null;
         }
-
     }
-
 
     @Override
     protected Exception doInBackground(Integer... integers) {

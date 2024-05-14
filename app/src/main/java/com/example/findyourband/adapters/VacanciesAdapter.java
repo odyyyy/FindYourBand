@@ -17,8 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.R;
-import com.example.findyourband.fragments.BandPageFragment;
-import com.example.findyourband.fragments.MusicianPageFragment;
+import com.example.findyourband.fragments.vacancies.BandPageFragment;
+import com.example.findyourband.fragments.vacancies.MusicianPageFragment;
 
 import java.util.ArrayList;
 import java.util.List;

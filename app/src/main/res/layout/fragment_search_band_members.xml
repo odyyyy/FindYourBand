@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".SearchBandMembersFragment">
+    tools:context=".fragments.settings.SearchBandMembersFragment">
 
     <LinearLayout
         android:id="@+id/headerLayout"

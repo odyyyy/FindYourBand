@@ -1,4 +1,4 @@
-package com.example.findyourband.fragments;
+package com.example.findyourband.services;
 
 public class RSSItem {
     private String title;

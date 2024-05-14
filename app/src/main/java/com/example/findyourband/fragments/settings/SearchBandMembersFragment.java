@@ -1,4 +1,4 @@
-package com.example.findyourband;
+package com.example.findyourband.fragments.settings;
 
 import android.os.Bundle;
 
@@ -8,15 +8,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentSearchBandMembersBinding;
-import com.example.findyourband.fragments.CreateBandFragment;
-import com.example.findyourband.fragments.VacancyPageFragment;
+import com.example.findyourband.fragments.settings.CreateBandFragment;
 import com.example.findyourband.services.MemberDataClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -65,10 +66,11 @@ public class SearchBandMembersFragment extends Fragment {
                 if (userSearchList.size() > 0) {
                     userSearchList.clear();
                 }
+                String currentUserLogin = snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("login").getValue().toString();
                 for (DataSnapshot ds : snapshot.getChildren()) {
 
                     MemberDataClass user = new MemberDataClass(ds.child("login").getValue().toString());
-                    if (!user.getNickname().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()))
+                    if (!user.getNickname().equals(currentUserLogin))
                         userSearchList.add(user);
                 }
 

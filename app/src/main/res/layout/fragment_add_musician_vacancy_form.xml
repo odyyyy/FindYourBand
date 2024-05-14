@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".fragments.AddMusicianVacancyFormFragment">
+    tools:context=".fragments.vacancies.AddMusicianVacancyFormFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

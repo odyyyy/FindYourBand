@@ -1,4 +1,4 @@
-package com.example.findyourband.fragments;
+package com.example.findyourband.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;

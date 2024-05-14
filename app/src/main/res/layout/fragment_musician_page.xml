@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        tools:context=".fragments.MusicianPageFragment">
+        tools:context=".fragments.vacancies.MusicianPageFragment">
 
         <RelativeLayout
             android:id="@+id/profileLayout"

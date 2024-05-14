@@ -1,5 +1,7 @@
-package com.example.findyourband.fragments;
+package com.example.findyourband.fragments.vacancies;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,11 +34,12 @@ public class AddBandVacancyFormFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+
+
                 List<Integer> instrumentCheckedChip = binding.instrumentChipGroup.getCheckedChipIds();
-                if (instrumentCheckedChip.isEmpty() ) {
+                if (instrumentCheckedChip.isEmpty()) {
                     Toast.makeText(getContext(), "Выберите хотя бы один инструмент", Toast.LENGTH_SHORT).show();
-                }
-                else if (isAllContactFieldsEmpty()) {
+                } else if (isAllContactFieldsEmpty()) {
                     Toast.makeText(getContext(), "Укажите хотя бы один контакт", Toast.LENGTH_SHORT).show();
                 } else if (!isAddedAnyMusic()) {
                     Toast.makeText(getContext(), "Добавьте хотя бы один трек", Toast.LENGTH_SHORT).show();
@@ -47,7 +50,7 @@ public class AddBandVacancyFormFragment extends Fragment {
                     VacancyPageFragment fragment = new VacancyPageFragment();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
-                    Toast.makeText(getContext(), "Вакансия создана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Объявление создано", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -55,6 +58,8 @@ public class AddBandVacancyFormFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+
 
     private boolean isAddedAnyMusic() {
         // TODO: Проверка наличия хотя бы одного трека

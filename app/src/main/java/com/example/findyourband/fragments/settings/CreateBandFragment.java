@@ -1,4 +1,4 @@
-package com.example.findyourband.fragments;
+package com.example.findyourband.fragments.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,16 +11,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.findyourband.R;
-import com.example.findyourband.SearchBandMembersFragment;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentCreateBandBinding;
 import com.example.findyourband.services.BandDataClass;
@@ -28,7 +25,6 @@ import com.example.findyourband.services.MemberDataClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -69,7 +65,6 @@ public class CreateBandFragment extends Fragment {
 
                     // сохранение названия группы, ID user лидера группы и участников группы в бд
                     DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
-                    String bandId = bandsRef.push().getKey();
 
                     String bandName = binding.bandnameEditText.getText().toString();
                     String leaderID = FirebaseAuth.getInstance().getCurrentUser().getUid();

@@ -1,4 +1,4 @@
-package com.example.findyourband.fragments;
+package com.example.findyourband.fragments.vacancies;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

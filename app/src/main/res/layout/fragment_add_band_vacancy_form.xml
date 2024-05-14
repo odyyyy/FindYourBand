@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/background"
     android:layout_height="wrap_content"
-    tools:context=".fragments.AddMusicianVacancyFormFragment">
+    tools:context=".fragments.vacancies.AddMusicianVacancyFormFragment">
 
     <TextView
         android:layout_width="wrap_content"
