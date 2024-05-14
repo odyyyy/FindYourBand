@@ -5,14 +5,16 @@ import java.util.List;
 public class BandDataClass {
     private String name;
     private String bandImage;
+    private List<String> genres;
     private List<String> memberUserLogins;
 
     public BandDataClass() {
     }
 
-    public BandDataClass(String name, List<String> memberUserIds) {
+    public BandDataClass(String name, List<String> genres, String bandImage, List<String> memberUserIds) {
         this.name = name;
-        this.bandImage = "";
+        this.genres = genres;
+        this.bandImage = bandImage;
         this.memberUserLogins = memberUserIds;
     }
 
@@ -20,6 +22,14 @@ public class BandDataClass {
 
     public String getName() {
         return name;
+    }
+
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 
     public void setName(String name) {
@@ -42,4 +52,6 @@ public class BandDataClass {
     public void setBandImage(String bandImage) {
         this.bandImage = bandImage;
     }
+
+
 }

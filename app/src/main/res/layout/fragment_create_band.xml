@@ -56,6 +56,88 @@
             android:layout_marginTop="24dp"
             android:layout_marginRight="24dp"
             android:hint="Название вашей группы" />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Выберите жанр(ы) (макс. 3)"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/genreChipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:selectionRequired="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/rockChip"
+                style="@style/chipStyle"
+                android:text="Rock" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/elecChip"
+                style="@style/chipStyle"
+                android:text="Electronic" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/jazzChip"
+                style="@style/chipStyle"
+                android:text="Jazz" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/metalChip"
+                style="@style/chipStyle"
+                android:text="Metal" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/classicalChip"
+                style="@style/chipStyle"
+                android:text="Classical" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/bluesChip"
+                style="@style/chipStyle"
+                android:text="Blues" />
+            />
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/punkChip"
+                style="@style/chipStyle"
+                android:text="Punk" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/countryChip"
+                style="@style/chipStyle"
+                android:text="Country" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/indieChip"
+                style="@style/chipStyle"
+                android:text="Indie" />
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/otherChip"
+                style="@style/chipStyle"
+                android:text="Другое" />
+            />
+
+
+        </com.google.android.material.chip.ChipGroup>
+
 
         <TextView
             android:layout_width="wrap_content"

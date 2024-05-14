@@ -1,6 +1,7 @@
 package com.example.findyourband.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
     public void onBindViewHolder(@NonNull VacanciesAdapter.ViewHolder holder, int position) {
         String name = vacanciesList.get(position).get("name").get(0);
         String city =  vacanciesList.get(position).get("city").get(0);
+
         ArrayList<String> instruments =  vacanciesList.get(position).get("instruments");
         ArrayList<String> genres =  vacanciesList.get(position).get("genres");
 

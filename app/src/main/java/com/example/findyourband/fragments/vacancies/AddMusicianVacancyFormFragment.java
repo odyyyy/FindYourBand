@@ -146,4 +146,6 @@ public class AddMusicianVacancyFormFragment extends Fragment {
     private boolean isAllContactFieldsEmpty() {
         return binding.contact1EditText.getText().toString().isEmpty() && binding.contact2EditText.getText().toString().isEmpty() && binding.contact3EditText.getText().toString().isEmpty();
     }
+
+
 }

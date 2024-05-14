@@ -17,7 +17,15 @@ import android.widget.Toast;
 
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAddBandVacancyFormBinding;
+import com.example.findyourband.services.BandVacancyDataClass;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.chip.Chip;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,18 +53,50 @@ public class AddBandVacancyFormFragment extends Fragment {
                     Toast.makeText(getContext(), "Добавьте хотя бы один трек", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    // Добавление вакансии в БД
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    VacancyPageFragment fragment = new VacancyPageFragment();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
-                    Toast.makeText(getContext(), "Объявление создано", Toast.LENGTH_SHORT).show();
+                    DatabaseReference musVacancyRef = FirebaseDatabase.getInstance().getReference("vacancies").child("from_bands");
+
+                    String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    String instrument = getSelectedInstrument();
+
+                    List<String> tracks = new ArrayList<>();
+                    // TODO: добавление треков в массив
+
+                    List<String> contacts = new ArrayList<>();
+                    contacts.add(binding.contact1EditText.getText().toString());
+                    contacts.add(binding.contact2EditText.getText().toString());
+                    contacts.add(binding.contact3EditText.getText().toString());
+
+                    String description = binding.descriptionEditText.getText().toString();
+
+                    BandVacancyDataClass bandVacancy = new BandVacancyDataClass(instrument, description, tracks, contacts);
+                    musVacancyRef.child(userID).setValue(bandVacancy).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getContext(), "Объявление успешно создано!", Toast.LENGTH_SHORT).show();
+
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            VacancyPageFragment fragment = new VacancyPageFragment();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Ошибка при создании объявления: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
 
 
         return binding.getRoot();
+    }
+
+    private String getSelectedInstrument() {
+        Integer selectedInstrumentID = binding.instrumentChipGroup.getCheckedChipIds().get(0);
+
+        return ((Chip) binding.instrumentChipGroup.findViewById(selectedInstrumentID)).getText().toString();
     }
 
 

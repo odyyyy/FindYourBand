@@ -13,15 +13,11 @@ public class MusicianVacancyDataClass {
     String description;
 
 
-
     List<String> tracks;
     List<String> contacts;
 
     public MusicianVacancyDataClass() {
     }
-
-
-
 
 
     public MusicianVacancyDataClass(String city, String experience, List<String> genres, List<String> instruments, String description, List<String> tracks, List<String> contacts) {
@@ -39,14 +35,17 @@ public class MusicianVacancyDataClass {
     public String getCity() {
         return city;
     }
+
     @PropertyName("city")
     public void setCity(String city) {
         this.city = city;
     }
+
     @PropertyName("experience")
     public String getExperience() {
         return experience;
     }
+
     @PropertyName("experience")
     public void setExperience(String experience) {
         this.experience = experience;
@@ -61,34 +60,42 @@ public class MusicianVacancyDataClass {
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }
+
     @PropertyName("instruments")
     public List<String> getInstruments() {
         return instruments;
     }
+
     @PropertyName("instruments")
     public void setInstruments(List<String> instruments) {
         this.instruments = instruments;
     }
+
     @PropertyName("description")
     public String getDescription() {
         return description;
     }
+
     @PropertyName("description")
     public void setDescription(String description) {
         this.description = description;
     }
+
     @PropertyName("tracks")
     public List<String> getTracks() {
         return tracks;
     }
+
     @PropertyName("tracks")
     public void setTracks(List<String> tracks) {
         this.tracks = tracks;
     }
+
     @PropertyName("contacts")
     public List<String> getContacts() {
         return contacts;
     }
+
     @PropertyName("contacts")
     public void setContacts(List<String> contacts) {
         this.contacts = contacts;

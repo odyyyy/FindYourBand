@@ -24,6 +24,7 @@ import com.example.findyourband.services.BandDataClass;
 import com.example.findyourband.services.MemberDataClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,6 +38,10 @@ public class CreateBandFragment extends Fragment {
 
     BandMembersAdapter searchMembersAdapter;
 
+    String bandNameSavedState = "";
+
+    String TAG = "CreateBandFragment";
+
     ArrayList<MemberDataClass> selectedMembersArray;
     Bundle selectedMembers;
 
@@ -46,7 +51,9 @@ public class CreateBandFragment extends Fragment {
 
         binding = FragmentCreateBandBinding.inflate(inflater, container, false);
         setSelectedBandMembers();
+        Log.d(TAG, bandNameSavedState);
 
+        binding.bandnameEditText.setText(bandNameSavedState);
         //selectedMembers.getParcelableArrayList("selectedMembers");
 
 
@@ -55,27 +62,35 @@ public class CreateBandFragment extends Fragment {
         binding.createBandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<Integer> genreCheckedChipIds = binding.genreChipGroup.getCheckedChipIds();
                 if (binding.bandnameEditText.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Введите название группы", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (selectedMembersArray != null && selectedMembersArray.size() < 1) {
                     Toast.makeText(getContext(), "Добавьтя хотя бы одного участника", Toast.LENGTH_SHORT).show();
                     return;
-                } else {
+                } else if (genreCheckedChipIds.isEmpty() || genreCheckedChipIds.size() > 3) {
+                    Toast.makeText(getContext(), "Выберите от 1 до 3 жанров", Toast.LENGTH_SHORT).show();}
 
-                    // сохранение названия группы, ID user лидера группы и участников группы в бд
+                else {
+
                     DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
 
                     String bandName = binding.bandnameEditText.getText().toString();
                     String leaderID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                    List<String> genres = getGenreNamesArray(binding.genreChipGroup.getCheckedChipIds());
+
+                    // TODO: Проверка картинки. Если она загружена, то добавляем её в объект через Glide (сеттер)
+                    String image = "";
+
 
                     List<String> bandMembersLogins = new ArrayList<>();
                     for (MemberDataClass member : selectedMembersArray) {
                         bandMembersLogins.add(member.getNickname());
                     }
 
-                    // TODO: Проверка картинки. Если она загружена, то добавляем её в объект через Glide (сеттер)
-                    BandDataClass band = new BandDataClass(bandName , bandMembersLogins);
+                    BandDataClass band = new BandDataClass(bandName, genres , image, bandMembersLogins);
 
                     bandsRef.child(leaderID).setValue(band)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -136,6 +151,8 @@ public class CreateBandFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         // TODO: Восстановление состояния
         super.onCreate(savedInstanceState);
+
+
 //        if (savedInstanceState != null) {
 //            String bandName = savedInstanceState.getString("bandName");
 //            String image = savedInstanceState.getString("image");
@@ -159,6 +176,16 @@ public class CreateBandFragment extends Fragment {
         }
     }
 
+    private List<String> getGenreNamesArray(List<Integer> genreCheckedChipIds) {
+
+        List<String> genreNames = new ArrayList<>();
+        for (int genreId : genreCheckedChipIds) {
+            genreNames.add(((Chip) binding.genreChipGroup.findViewById(genreId)).getText().toString());
+        }
+        return genreNames;
+    }
+
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -172,8 +199,13 @@ public class CreateBandFragment extends Fragment {
         if (binding.bandMemberListView.getAdapter() != null) {
             outState.putParcelableArrayList("selectedMembers", searchMembersAdapter.getSelectedMembers());
         }
-        Log.d("CreateBandFragment", binding.bandnameEditText.getText().toString());
-        Log.d("CreateBandFragment", outState.toString());
-
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bandNameSavedState = binding.bandnameEditText.getText().toString();
+    }
+
+
 }
