@@ -22,13 +22,18 @@ import com.example.findyourband.fragments.vacancies.BandPageFragment;
 import com.example.findyourband.fragments.vacancies.MusicianPageFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
     private List<Map<String, ArrayList<String>>> vacanciesList;
+
+    private List<Map<String, ArrayList<String>>> alreadyUploadedVacancies = new ArrayList<>();
 
     public VacanciesAdapter(Context context, List<Map<String, ArrayList<String>>> vacanciesList) {
         this.layoutInflater = LayoutInflater.from(context);
@@ -47,6 +52,8 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull VacanciesAdapter.ViewHolder holder, int position) {
+
+
         String name = vacanciesList.get(position).get("name").get(0);
         String city =  vacanciesList.get(position).get("city").get(0);
 
@@ -56,6 +63,9 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         LinearLayout instrumentsLayout = holder.itemView.findViewById(R.id.instrumentsVacancyLayout);
         LinearLayout genresLayout = holder.itemView.findViewById(R.id.genreVacancyLayout);
 
+        if (alreadyUploadedVacancies.contains(createVacancy(name, city, instruments, genres))) {
+            return;
+        }
 
 
 
@@ -64,6 +74,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         holder.city.setText(city);
         holder.image.setImageResource(R.drawable.paul);
 
+        alreadyUploadedVacancies.add(createVacancy(name, city, instruments, genres));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
 
@@ -89,6 +100,16 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
     @Override
     public int getItemCount() {
         return vacanciesList.size();
+    }
+
+
+    private Map<String, ArrayList<String>> createVacancy(String nickname, String city, List<String> instruments, List<String> genres) {
+        Map<String, ArrayList<String>> vacancy = new HashMap<>();
+        vacancy.put("name", new ArrayList<>(Arrays.asList(nickname)));
+        vacancy.put("city", new ArrayList<>(Arrays.asList(city)));
+        vacancy.put("instruments", new ArrayList<>(instruments));
+        vacancy.put("genres", new ArrayList<>(genres));
+        return vacancy;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

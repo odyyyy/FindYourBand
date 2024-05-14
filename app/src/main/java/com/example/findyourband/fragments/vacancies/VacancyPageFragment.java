@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 interface OnLoginLoadedListener {
     void onLoginLoaded(String login);
@@ -46,7 +47,6 @@ public class VacancyPageFragment extends Fragment  {
     VacanciesAdapter adapter;
 
 
-
     ArrayList<Map<String, ArrayList<String>>> vacanciesList = new ArrayList<Map<String, ArrayList<String>>>();
 
     @Nullable
@@ -58,12 +58,12 @@ public class VacancyPageFragment extends Fragment  {
 
         setUserLoginInUpperBar();
 
-        loadVacanciesDataFromDatabase();
 
         vacanciesRecyclerView = binding.vacancyRecyclerView;
         vacanciesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new VacanciesAdapter(getContext(), vacanciesList);
         vacanciesRecyclerView.setAdapter(adapter);
+        loadVacanciesDataFromDatabase();
 
 
         binding.filterChip.setOnClickListener(new View.OnClickListener() {
@@ -97,17 +97,6 @@ public class VacancyPageFragment extends Fragment  {
         binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login);
     }
 
-    private ArrayList<Map<String, ArrayList<String>>> getVacanciesData() {
-        ArrayList<Map<String, ArrayList<String>>> vacanciesData = new ArrayList<>();
-
-        vacanciesData.add(createVacancy("User", "Москва", Arrays.asList("Гитара", "Барабаны"), Arrays.asList("Рок", "Поп")));
-        vacanciesData.add(createVacancy("User_With_Long_Name_2", "Санкт-Петербург", Arrays.asList("Клавиши", "Бас-гитара"), Arrays.asList("Джаз", "Фанк")));
-        vacanciesData.add(createVacancy("Группа BandName", "Новосибирск", Arrays.asList("Скрипка", "Флейта"), Arrays.asList("Классика", "Вокал")));
-        vacanciesData.add(createVacancy("MusicUser4", "Екатеринбург", Arrays.asList("Саксофон", "Труба"), Arrays.asList("Блюз", "Электроника")));
-        vacanciesData.add(createVacancy("User5", "Казань", Arrays.asList("Ударные", "Синтезатор"), Arrays.asList("Хип-хоп", "Рэгги")));
-
-        return vacanciesData;
-    }
 
     private void loadVacanciesDataFromDatabase() {
         DatabaseReference vacanciesRef = FirebaseDatabase.getInstance().getReference("vacancies");
@@ -116,7 +105,7 @@ public class VacancyPageFragment extends Fragment  {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    ArrayList<Map<String, ArrayList<String>>> vacanciesData = new ArrayList<>();
+                    vacanciesList.clear();
                     for (DataSnapshot vacancySnapshot : dataSnapshot.getChildren()) {
                         getUserLoginByID(vacancySnapshot.getKey(), new OnLoginLoadedListener() {
                             @Override
@@ -136,13 +125,11 @@ public class VacancyPageFragment extends Fragment  {
                                 vacancy.put("city", new ArrayList<>(Arrays.asList(city)));
                                 vacancy.put("instruments", new ArrayList<>(instruments));
                                 vacancy.put("genres", new ArrayList<>(genres));
-                                vacanciesData.add(vacancy);
-
-                                if (login != null) {
-                                    vacanciesList.addAll(vacanciesData);
-                                    Log.d("vacanciesList", vacanciesList.toString());
-                                    adapter.notifyDataSetChanged();
+                                if (!vacanciesList.contains(vacancy)) {
+                                    vacanciesList.add(vacancy);
                                 }
+
+                                adapter.notifyDataSetChanged();
                             }
                         });
                     }
@@ -155,6 +142,7 @@ public class VacancyPageFragment extends Fragment  {
             }
         });
     }
+
 
 
     private Map<String, ArrayList<String>> createVacancy(String nickname, String city, List<String> instruments, List<String> genres) {
@@ -182,7 +170,6 @@ public class VacancyPageFragment extends Fragment  {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("getUserLoginByID", "Error getting user data: " + e.getMessage());
                 listener.onLoginLoaded(null);
             }
         });
