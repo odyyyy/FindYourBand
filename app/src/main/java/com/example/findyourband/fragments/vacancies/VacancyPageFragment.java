@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -66,6 +67,7 @@ public class VacancyPageFragment extends Fragment  {
         loadVacanciesDataFromDatabase();
 
 
+
         binding.filterChip.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -91,6 +93,8 @@ public class VacancyPageFragment extends Fragment  {
         return view;
     }
 
+
+
     private void setUserLoginInUpperBar() {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
         String login = preferences.getString("login", "пользователь!");
@@ -101,6 +105,7 @@ public class VacancyPageFragment extends Fragment  {
     private void loadVacanciesDataFromDatabase() {
         DatabaseReference vacanciesRef = FirebaseDatabase.getInstance().getReference("vacancies");
 
+        // Запрос на получение объявлений от музыкантов
         vacanciesRef.child("from_musicians").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
@@ -120,14 +125,11 @@ public class VacancyPageFragment extends Fragment  {
                                     genres.add(genreSnapshot.getValue(String.class));
                                 }
 
-                                Map<String, ArrayList<String>> vacancy = new HashMap<>();
-                                vacancy.put("name", new ArrayList<>(Arrays.asList(login)));
-                                vacancy.put("city", new ArrayList<>(Arrays.asList(city)));
-                                vacancy.put("instruments", new ArrayList<>(instruments));
-                                vacancy.put("genres", new ArrayList<>(genres));
+                                Map<String, ArrayList<String>> vacancy = createVacancy(login, city, instruments, genres);
                                 if (!vacanciesList.contains(vacancy)) {
                                     vacanciesList.add(vacancy);
                                 }
+                                binding.amongOfVacanciesTextView.setText("Найдено " + vacanciesList.size() + " объявлений");
 
                                 adapter.notifyDataSetChanged();
                             }
@@ -141,7 +143,55 @@ public class VacancyPageFragment extends Fragment  {
                 Toast.makeText(getContext(), "Ошибка загрузки объявлений", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // Запрос на получение объявлений от групп
+        vacanciesRef.child("from_bands").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    vacanciesList.clear();
+                    for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
+                        String bandId = bandSnapshot.getKey();
+                        DatabaseReference bandRef = FirebaseDatabase.getInstance().getReference("bands").child(bandId);
+                        ArrayList<String> instruments = new ArrayList<>(Collections.singletonList(bandSnapshot.child("instrument").getValue(String.class)));
+                        bandRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            @Override
+                            public void onSuccess(DataSnapshot bandDataSnapshot) {
+                                if (bandDataSnapshot.exists()) {
+                                    String city = bandDataSnapshot.child("city").getValue(String.class);
+                                    String name = "Группа " + bandDataSnapshot.child("name").getValue(String.class);
+
+                                    ArrayList<String> genres = new ArrayList<>();
+                                    for (DataSnapshot genreSnapshot : bandDataSnapshot.child("genres").getChildren()) {
+                                        genres.add(genreSnapshot.getValue(String.class));
+                                    }
+
+                                    Map<String, ArrayList<String>> band = createVacancy(name, city, instruments, genres);
+                                    if (!vacanciesList.contains(band)) {
+                                        vacanciesList.add(band);
+                                    }
+                                    binding.amongOfVacanciesTextView.setText("Найдено " + vacanciesList.size() + " объявлений");
+
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Ошибка загрузки данных о группе", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Ошибка загрузки объявлений", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
 
 

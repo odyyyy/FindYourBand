@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findyourband.fragments.MainPageFragment;
@@ -112,7 +113,7 @@ public class AppActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String login = dataSnapshot.child("login").getValue(String.class);
-
+                ((TextView)binding.container.findViewById(R.id.app_fragment_container).findViewById(R.id.welcomeTextView)).setText("Добро пожаловать,\n" + login + "!");
                 // Добавление логина в sharedPreferences
                 SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -4,6 +4,8 @@ import java.util.List;
 
 public class BandDataClass {
     private String name;
+
+    private String city;
     private String bandImage;
     private List<String> genres;
     private List<String> memberUserLogins;
@@ -11,14 +13,23 @@ public class BandDataClass {
     public BandDataClass() {
     }
 
-    public BandDataClass(String name, List<String> genres, String bandImage, List<String> memberUserIds) {
+
+
+    public BandDataClass(String name, String city, List<String> genres, String bandImage, List<String> memberUserIds) {
         this.name = name;
+        this.city = city;
         this.genres = genres;
         this.bandImage = bandImage;
         this.memberUserLogins = memberUserIds;
     }
 
+    public String getCity() {
+        return city;
+    }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getName() {
         return name;

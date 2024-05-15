@@ -164,9 +164,13 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/bassChip"
             style="@style/chipStyle"
-            android:text="Бас-гитара" />
+            android:text="Бас" />
         />
-
+        <com.google.android.material.chip.Chip
+            android:id="@+id/vocalChip"
+            style="@style/chipStyle"
+            android:text="Вокал" />
+        />
         <com.google.android.material.chip.Chip
             android:id="@+id/drumChip"
             style="@style/chipStyle"

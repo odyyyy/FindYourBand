@@ -2,6 +2,7 @@ package com.example.findyourband.adapters;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.findyourband.R;
 import com.example.findyourband.fragments.vacancies.BandPageFragment;
 import com.example.findyourband.fragments.vacancies.MusicianPageFragment;
+import com.example.findyourband.services.INSTRUMENT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,29 +54,47 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull VacanciesAdapter.ViewHolder holder, int position) {
-
-
         String name = vacanciesList.get(position).get("name").get(0);
-        String city =  vacanciesList.get(position).get("city").get(0);
+        String city = vacanciesList.get(position).get("city").get(0);
 
-        ArrayList<String> instruments =  vacanciesList.get(position).get("instruments");
-        ArrayList<String> genres =  vacanciesList.get(position).get("genres");
+        ArrayList<String> instruments = vacanciesList.get(position).get("instruments");
+        ArrayList<String> genres = vacanciesList.get(position).get("genres");
 
         LinearLayout instrumentsLayout = holder.itemView.findViewById(R.id.instrumentsVacancyLayout);
         LinearLayout genresLayout = holder.itemView.findViewById(R.id.genreVacancyLayout);
 
-        if (alreadyUploadedVacancies.contains(createVacancy(name, city, instruments, genres))) {
-            return;
+        instrumentsLayout.removeAllViews();
+        genresLayout.removeAllViews();
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(90, 90);
+        layoutParams.setMarginStart(10);
+
+        for (String instrument : instruments) {
+            ImageView instrumentImageView = new ImageView(holder.itemView.getContext());
+            instrumentImageView.setLayoutParams(layoutParams);
+            instrumentImageView.setImageResource(INSTRUMENT.valueOf(instrument).getImageId());
+            instrumentsLayout.addView(instrumentImageView);
         }
 
+        ContextThemeWrapper newContext = new ContextThemeWrapper(holder.itemView.getContext(), R.style.genreTextViewStyle);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMarginEnd(12);
 
+        for (String genre : genres) {
+            TextView genreTextView = new TextView(newContext);
+            genreTextView.setText(genre);
+            genreTextView.setLayoutParams(params);
+            genresLayout.addView(genreTextView);
+        }
 
-        // TODO:дописать установку параметров для инструментов и жанров
         holder.name.setText(name);
         holder.city.setText(city);
+
         holder.image.setImageResource(R.drawable.paul);
 
-        alreadyUploadedVacancies.add(createVacancy(name, city, instruments, genres));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
 

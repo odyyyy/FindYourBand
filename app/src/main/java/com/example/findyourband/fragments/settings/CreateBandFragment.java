@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.findyourband.R;
@@ -53,8 +54,11 @@ public class CreateBandFragment extends Fragment {
         setSelectedBandMembers();
         Log.d(TAG, bandNameSavedState);
 
+
+        binding.cityAutoComplete.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.cities)));
+
         binding.bandnameEditText.setText(bandNameSavedState);
-        //selectedMembers.getParcelableArrayList("selectedMembers");
+
 
 
         // TODO: Нужно сохранять состояние, чтобы оно оставалось прежним
@@ -66,18 +70,24 @@ public class CreateBandFragment extends Fragment {
                 if (binding.bandnameEditText.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Введите название группы", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (selectedMembersArray != null && selectedMembersArray.size() < 1) {
+                }
+                else if (binding.cityAutoComplete.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Выберите город", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (selectedMembersArray != null && selectedMembersArray.size() < 1) {
                     Toast.makeText(getContext(), "Добавьтя хотя бы одного участника", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (genreCheckedChipIds.isEmpty() || genreCheckedChipIds.size() > 3) {
-                    Toast.makeText(getContext(), "Выберите от 1 до 3 жанров", Toast.LENGTH_SHORT).show();}
-
-                else {
+                    Toast.makeText(getContext(), "Выберите от 1 до 3 жанров", Toast.LENGTH_SHORT).show();
+                } else {
 
                     DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
 
                     String bandName = binding.bandnameEditText.getText().toString();
                     String leaderID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                    String city = binding.cityAutoComplete.getText().toString();
 
                     List<String> genres = getGenreNamesArray(binding.genreChipGroup.getCheckedChipIds());
 
@@ -90,7 +100,7 @@ public class CreateBandFragment extends Fragment {
                         bandMembersLogins.add(member.getNickname());
                     }
 
-                    BandDataClass band = new BandDataClass(bandName, genres , image, bandMembersLogins);
+                    BandDataClass band = new BandDataClass(bandName, city, genres, image, bandMembersLogins);
 
                     bandsRef.child(leaderID).setValue(band)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -186,20 +196,6 @@ public class CreateBandFragment extends Fragment {
     }
 
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (!binding.bandnameEditText.getText().toString().equals("")) {
-            outState.putString("bandName", binding.bandnameEditText.getText().toString());
-        }
-        // TODO: Сохранение картинки Glide
-        if (binding.avatarImageView.getDrawable() != null) {
-            outState.putString("image", binding.avatarImageView.getDrawable().toString());
-        }
-        if (binding.bandMemberListView.getAdapter() != null) {
-            outState.putParcelableArrayList("selectedMembers", searchMembersAdapter.getSelectedMembers());
-        }
-    }
 
     @Override
     public void onPause() {

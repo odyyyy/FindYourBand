@@ -45,7 +45,7 @@ public class MainPageFragment extends Fragment {
 
         View view = binding.getRoot();
 
-        setLoggedInUserNickname();
+        //setLoggedInUserNickname();
 
         newsRecyclerView = binding.newsRecyclerView;
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

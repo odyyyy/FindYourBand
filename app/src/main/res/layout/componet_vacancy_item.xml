@@ -77,22 +77,9 @@
                 android:layout_below="@id/cityVacancyTextView"
                 android:layout_alignParentStart="true"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="10dp">
 
-                <ImageView
-                    android:layout_width="@dimen/instument_img_width_and_height"
-                    android:layout_height="@dimen/instument_img_width_and_height"
-                    android:src="@drawable/ic_instrument" />
 
-                <ImageView
-                    android:layout_width="@dimen/instument_img_width_and_height"
-                    android:layout_height="@dimen/instument_img_width_and_height"
-                    android:src="@drawable/ic_instrument" />
-
-                <ImageView
-                    android:layout_width="@dimen/instument_img_width_and_height"
-                    android:layout_height="@dimen/instument_img_width_and_height"
-                    android:src="@drawable/ic_instrument" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,19 +91,19 @@
 
                 android:orientation="horizontal"
                 android:padding="15dp">
+<!--                <TextView-->
+<!--                    style="@style/genreTextViewStyle"-->
+<!--                    android:text="Blues" />-->
 
-                <TextView
-                    style="@style/genreTextViewStyle"
-                    android:text="Blues" />
+<!--                <TextView-->
+<!--                    style="@style/genreTextViewStyle"-->
+<!--                    android:text="Metal" />-->
 
-                <TextView
-                    style="@style/genreTextViewStyle"
-                    android:text="Metal" />
+<!--                <TextView-->
+<!--                    style="@style/genreTextViewStyle"-->
 
-                <TextView
-                    style="@style/genreTextViewStyle"
+<!--                    android:text="Prog. Rock" />-->
 
-                    android:text="Prog. Rock" />
 
             </LinearLayout>
 

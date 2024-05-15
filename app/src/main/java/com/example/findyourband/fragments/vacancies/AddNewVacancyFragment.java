@@ -20,40 +20,6 @@ import com.example.findyourband.databinding.FragmentAddNewVacancyBinding;
 import com.google.android.material.chip.Chip;
 
 
-enum GENRE {
-    Rock(0),
-    Electronic(1),
-    Jazz(2),
-    Metal(3),
-    Classical(4),
-    Blues(5),
-    Punk(6),
-    Country(7),
-    Indie(8),
-    Другое(9),
-    ;
-
-    GENRE(int i) {
-    }
-}
-
-enum INSTRUMENT {
-    Электрогитара(2131362326),
-    Бас(2131362033),
-    Ударные(2131362132),
-    Саксофон(2131362181),
-    Труба(2131361958),
-    Виолончель(2131361918),
-    Скрипка(2131362309),
-    Контрабас(2131361988),
-    Мультиинструменталист(2131362120),
-    Другое(2131362283);
-
-    INSTRUMENT(int i) {
-    }
-}
-
-
 public class AddNewVacancyFragment extends Fragment {
     FragmentAddNewVacancyBinding binding;
     Fragment fragment;

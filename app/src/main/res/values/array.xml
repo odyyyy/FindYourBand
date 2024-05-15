@@ -50,13 +50,61 @@
         <item>Брянск</item>
         <item>Белгород</item>
         <item>Сургут</item>
+        <item>Балашиха</item>
+        <item>Архангельск</item>
+        <item>Севастополь</item>
+        <item>Калуга</item>
+        <item>Саранск</item>
+        <item>Якутск</item>
+        <item>Курган</item>
+        <item>Смоленск</item>
+        <item>Владикавказ</item>
+        <item>Мурманск</item>
+        <item>Стерлитамак</item>
+        <item>Грозный</item>
+        <item>Орёл</item>
+        <item>Владимир</item>
+        <item>Тамбов</item>
+        <item>Кострома</item>
+        <item>Петрозаводск</item>
+        <item>Нальчик</item>
+        <item>Йошкар-Ола</item>
+        <item>Химки</item>
+        <item>Комсомольск-на-Амуре</item>
+        <item>Сызрань</item>
+        <item>Подольск</item>
+        <item>Бийск</item>
+        <item>Прокопьевск</item>
+        <item>Армавир</item>
+        <item>Балаково</item>
+        <item>Энгельс</item>
+        <item>Королёв</item>
+        <item>Мытищи</item>
+        <item>Абакан</item>
+        <item>Нижнекамск</item>
+        <item>Братск</item>
+        <item>Орск</item>
+        <item>Ангарск</item>
+        <item>Электросталь</item>
+        <item>Череповец</item>
+        <item>Миасс</item>
+        <item>Псков</item>
+        <item>Балаково</item>
+        <item>Люберцы</item>
+        <item>Северодвинск</item>
+        <item>Норильск</item>
+        <item>Дзержинск</item>
+        <item>Каменск-Уральский</item>
+        <item>Старый Оскол</item>
+        <item>Великий Новгород</item>
+        <item>Жуковский</item>
     </string-array>
 
     <string-array name="instruments">
         <item>Электро-гитара</item>
-        <item>Акустическая гитара</item>
+        <item>Бас</item>
         <item>Клавишные</item>
-        <item>Бас-гитара</item>
+        <item>Вокал</item>
         <item>Ударные</item>
         <item>Саксофон</item>
         <item>Труба</item>
