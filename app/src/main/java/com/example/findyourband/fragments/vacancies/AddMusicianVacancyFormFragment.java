@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -73,7 +74,7 @@ public class AddMusicianVacancyFormFragment extends Fragment {
                     List<String> instruments = getInstrumentNamesArray(instrumentCheckedChipIds);
                     String description = binding.descriptionEditText.getText().toString();
 
-                    List<String> tracks = new ArrayList<>();
+                    List<String> tracks = new ArrayList<>(Arrays.asList("Трек 1", "Трек 2", "Трек 3"));
                     // TODO: добавление треков в массив
 
                     List<String> contacts = new ArrayList<>();

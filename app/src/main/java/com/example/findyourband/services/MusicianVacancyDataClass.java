@@ -12,7 +12,6 @@ public class MusicianVacancyDataClass {
     List<String> instruments;
     String description;
 
-
     List<String> tracks;
     List<String> contacts;
 

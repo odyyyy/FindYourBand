@@ -33,7 +33,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_background">
+                app:srcCompat="@drawable/user_default_avatar">
 
             </ImageView>
 
@@ -77,7 +77,21 @@
                 android:layout_below="@id/cityVacancyTextView"
                 android:layout_alignParentStart="true"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                >
+                <ImageView
+                    android:src="@drawable/ic_guitar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+                <ImageView
+                    android:src="@drawable/ic_guitar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+                <ImageView
+                    android:src="@drawable/ic_guitar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+
 
 
             </LinearLayout>
@@ -91,18 +105,18 @@
 
                 android:orientation="horizontal"
                 android:padding="15dp">
-<!--                <TextView-->
-<!--                    style="@style/genreTextViewStyle"-->
-<!--                    android:text="Blues" />-->
+                <TextView
+                    style="@style/genreTextViewStyle"
+                    android:text="Blues" />
 
-<!--                <TextView-->
-<!--                    style="@style/genreTextViewStyle"-->
-<!--                    android:text="Metal" />-->
+                <TextView
+                    style="@style/genreTextViewStyle"
+                    android:text="Metal" />
 
-<!--                <TextView-->
-<!--                    style="@style/genreTextViewStyle"-->
+                <TextView
+                    style="@style/genreTextViewStyle"
 
-<!--                    android:text="Prog. Rock" />-->
+                    android:text="Prog. Rock" />
 
 
             </LinearLayout>

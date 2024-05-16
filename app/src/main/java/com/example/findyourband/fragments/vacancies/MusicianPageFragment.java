@@ -8,17 +8,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentMusicianPageBinding;
+import com.example.findyourband.services.INSTRUMENT;
+
+import java.util.List;
 
 
 public class MusicianPageFragment extends Fragment {
 
-    private final static String TAG = "musicianPageFragment";
     FragmentMusicianPageBinding binding;
 
     @Nullable
@@ -27,6 +33,80 @@ public class MusicianPageFragment extends Fragment {
 
         binding = FragmentMusicianPageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        Bundle musicianData = getArguments();
+
+
+        if (musicianData != null) {
+            // TODO: Установка картинки
+            if (!musicianData.getString("image").equals("")) {
+                binding.musicianAvatarAndNickname.avatarImageView.setImageBitmap(musicianData.getParcelable("img"));
+            }
+            else
+                binding.musicianAvatarAndNickname.avatarImageView.setImageResource(R.drawable.user_default_avatar);
+
+            binding.musicianAvatarAndNickname.nicknameTextView.setText(musicianData.getString("name"));
+            binding.musicianCityTextView.setText(musicianData.getString("city"));
+
+            ContextThemeWrapper newContext = new ContextThemeWrapper(getContext(), R.style.genreTextViewStyle);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMarginEnd(20);
+            for (String genre : musicianData.getStringArrayList("genres")) {
+                TextView genreTextView = new TextView(newContext);
+                genreTextView.setText(genre);
+                genreTextView.setLayoutParams(params);
+                binding.genreVacancyPageLayout.addView(genreTextView);
+            }
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+            layoutParams.setMarginStart(10);
+
+            for (String instrument : musicianData.getStringArrayList("instruments")) {
+                ImageView instrumentImageView = new ImageView(getContext());
+                instrumentImageView.setLayoutParams(layoutParams);
+                instrumentImageView.setImageResource(INSTRUMENT.valueOf(instrument).getImageId());
+                binding.instrumentsVacancyPageLayout.addView(instrumentImageView);
+            }
+
+            binding.experienceValueTextView.setText(musicianData.getString("experience"));
+
+            String description = musicianData.getString("description");
+            TextView descriptionTextView = binding.musicianDescriptionValueLayout.findViewById(R.id.aboutMeContentTextView);
+            if (!description.equals("")) {
+                binding.musicianDescriptionValueLayout.setVisibility(View.VISIBLE);
+                descriptionTextView.setText(description);
+            }
+            else {
+                descriptionTextView.setText("Описание отсутствует");
+            }
+
+
+            // TODO: Установка треков
+            List<String> tracks = musicianData.getStringArrayList("tracks");
+
+            List<String> contacts = musicianData.getStringArrayList("contacts");
+
+            if (contacts.get(0).equals("")) {
+                binding.musicianContactsValueLayout.removeView(binding.contactPhoneLayout);
+            } else {
+                binding.musicianPhoneNumberText.setText(contacts.get(0));
+            }
+            if (contacts.get(1).equals("")) {
+                binding.musicianContactsValueLayout.removeView(binding.contactEmailLayout);
+            } else {
+                binding.musicianEmailText.setText(contacts.get(1));
+            }
+            if (contacts.get(2).equals("")) {
+                binding.musicianContactsValueLayout.removeView(binding.contactSocialMediaLayout);
+            } else {
+                binding.musicianSocialMediaText.setText(contacts.get(2));
+            }
+
+
+        }
 
 
         binding.arrowBackComponent.setOnClickListener(new View.OnClickListener() {
@@ -45,58 +125,4 @@ public class MusicianPageFragment extends Fragment {
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
-    }
-
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        Log.d(TAG, "onViewStateRestored");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach");
-    }
 }

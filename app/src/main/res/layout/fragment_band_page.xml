@@ -4,55 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragments.vacancies.BandPageFragment">
 
 
-    <RelativeLayout
-        android:id="@+id/profileLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/avatarImageView"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logo" />
-
-        <TextView
-            android:id="@+id/welcomeTextView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/profileLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-            android:layout_marginStart="16dp"
-            android:text="Никнейм"
-            android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/avatarImageView"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo" />
 
-        <ImageView
-            android:id="@+id/arrowBackComponent"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_arrow_right" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/welcomeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+
+                android:layout_marginStart="16dp"
+                android:text="Никнейм"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/arrowBackComponent"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/groupNameAndImageLayout"
-            android:layout_below="@+id/profileLayout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/profileLayout"
             android:gravity="center_horizontal"
 
-            android:layout_height="match_parent">
-
+            android:orientation="vertical">
 
 
             <ImageView
@@ -73,7 +73,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/musicianCityTextView"
+            android:id="@+id/bandCityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/groupNameAndImageLayout"
@@ -90,7 +90,7 @@
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/musicianCityTextView"
+            android:layout_below="@id/bandCityTextView"
             android:layout_centerHorizontal="true"
             android:text="Отправить заявку" />
 
@@ -98,7 +98,7 @@
             android:id="@+id/genreVacancyPageLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/sendRequestVacancyPageBtn"
+            android:layout_below="@id/wantToFindLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
 
@@ -106,29 +106,61 @@
             android:orientation="horizontal"
             android:padding="15dp">
 
-            <TextView
-                style="@style/genreTextViewStyle"
+<!--            <TextView-->
+<!--                style="@style/genreTextViewStyle"-->
 
-                android:text="Prog. Rock" />
+<!--                android:text="Prog. Rock" />-->
 
-            <TextView
-                style="@style/genreTextViewStyle"
-                android:text="Blues" />
+<!--            <TextView-->
+<!--                style="@style/genreTextViewStyle"-->
+<!--                android:text="Blues" />-->
 
-            <TextView
-                style="@style/genreTextViewStyle"
-                android:text="Metal" />
+<!--            <TextView-->
+<!--                style="@style/genreTextViewStyle"-->
+<!--                android:text="Metal" />-->
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/wantToFindLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/sendRequestVacancyPageBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/genreVacancyPageLayout"
+                android:text="В поиске:"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/wantFindInstrumentImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_guitar" />
+
+        </LinearLayout>
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/groupMembersTextView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/"-->
 
         <LinearLayout
             android:id="@+id/groupMembersLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_below="@+id/genreVacancyPageLayout"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <LinearLayout
@@ -136,63 +168,63 @@
                 style="@style/groupMembersLayoutStyle">
 
                 <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/logo"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/logo" />
 
 
                 <TextView
-                    android:layout_marginEnd="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
 
-                    android:textSize="16sp"
-                    android:text="Лидер группы"/>
+                    android:text="Лидер группы"
+                    android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_marginTop="1dp"
-                    android:src="@drawable/ic_star_groupleader"
                     android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="15dp"/>
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/ic_star_groupleader" />
 
                 <ImageView
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_instrument"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="30dp"/>
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_instrument" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/groupMemberThird"
                 style="@style/groupMembersLayoutStyle">
 
                 <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/logo"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/logo" />
 
 
                 <TextView
-                    android:layout_marginEnd="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
 
-                    android:textSize="16sp"
-                    android:text="Участник группы 1"/>
-
+                    android:text="Участник группы 1"
+                    android:textSize="16sp" />
 
 
                 <ImageView
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_instrument"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="30dp"/>
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_instrument" />
             </LinearLayout>
 
             <LinearLayout
@@ -200,31 +232,29 @@
                 style="@style/groupMembersLayoutStyle">
 
                 <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/logo"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/logo" />
 
 
                 <TextView
-                    android:layout_marginEnd="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
 
-                    android:textSize="16sp"
-                    android:text="Участник группы 2"/>
-
+                    android:text="Участник группы 2"
+                    android:textSize="16sp" />
 
 
                 <ImageView
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_instrument"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="30dp"/>
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_instrument" />
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -278,8 +308,8 @@
             android:id="@+id/musicExamplesLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_below="@+id/musicExampleMusicianVacancy"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <LinearLayout
@@ -291,15 +321,16 @@
                     android:layout_width="270dp"
                     android:layout_height="wrap_content"
 
-                    android:textSize="16sp"
-                    android:text="Название композиции"/>
+                    android:text="Название композиции"
+                    android:textSize="16sp" />
 
                 <ImageView
-                    android:src="@drawable/ic_play_music"
                     android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="15dp"/>
+                    android:src="@drawable/ic_play_music" />
             </LinearLayout>
+
             <LinearLayout
 
                 android:id="@+id/musicExampleSecond"
@@ -309,14 +340,14 @@
                     android:layout_width="270dp"
                     android:layout_height="wrap_content"
 
-                    android:textSize="16sp"
-                    android:text="Название композиции"/>
+                    android:text="Название композиции"
+                    android:textSize="16sp" />
 
                 <ImageView
-                    android:src="@drawable/ic_play_music"
                     android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="15dp"/>
+                    android:src="@drawable/ic_play_music" />
             </LinearLayout>
 
             <LinearLayout
@@ -328,40 +359,41 @@
                     android:layout_width="270dp"
                     android:layout_height="wrap_content"
 
-                    android:textSize="16sp"
-                    android:text="Название композиции"/>
+                    android:text="Название композиции"
+                    android:textSize="16sp" />
 
                 <ImageView
-                    android:src="@drawable/ic_play_music"
                     android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="15dp"/>
+                    android:src="@drawable/ic_play_music" />
             </LinearLayout>
 
 
-
         </LinearLayout>
+
         <TextView
             android:id="@+id/MusicianContactsTextView"
-            android:text="Контакты"
-            android:layout_centerHorizontal="true"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:layout_marginTop="30dp"
-            android:layout_below="@+id/musicExamplesLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/musicExamplesLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Контакты"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_marginBottom="30dp"
             android:id="@+id/musicianContactsValueLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/MusicianContactsTextView"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/contactPhoneLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -369,9 +401,9 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_phone" />
 
                 <TextView
                     android:id="@+id/musicianPhoneNumberText"
@@ -383,6 +415,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/contactEmailLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -391,21 +424,22 @@
                 android:orientation="horizontal">
 
                 <ImageView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_email" />
 
                 <TextView
+
                     android:id="@+id/musicianEmailText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="bandname@email.ru"
+                    android:text="musician@email.ru"
                     android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/contactSocialMediaLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -415,15 +449,16 @@
 
                 <ImageView
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_socialmedia" />
 
                 <TextView
+                    android:id="@+id/musicianSocialMediaText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="bandnameSocialMedia"
+                    android:text="musicianSocialMedia"
                     android:textSize="20sp" />
             </LinearLayout>
 

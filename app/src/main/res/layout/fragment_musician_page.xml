@@ -87,18 +87,18 @@
             android:orientation="horizontal"
             android:padding="15dp">
 
-            <TextView
-                style="@style/genreTextViewStyle"
+<!--            <TextView-->
+<!--                style="@style/genreTextViewStyle"-->
 
-                android:text="Prog. Rock" />
+<!--                android:text="Prog. Rock" />-->
 
-            <TextView
-                style="@style/genreTextViewStyle"
-                android:text="Blues" />
+<!--            <TextView-->
+<!--                style="@style/genreTextViewStyle"-->
+<!--                android:text="Blues" />-->
 
-            <TextView
-                style="@style/genreTextViewStyle"
-                android:text="Metal" />
+<!--            <TextView-->
+<!--                style="@style/genreTextViewStyle"-->
+<!--                android:text="Metal" />-->
 
 
         </LinearLayout>
@@ -125,23 +125,22 @@
             android:padding="10dp">
 
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_instrument" />
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:src="@drawable/ic_instrument" />-->
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_instrument" />
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:src="@drawable/ic_instrument" />-->
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_instrument" />
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/ic_instrument" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -307,6 +306,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/contactPhoneLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -314,9 +314,9 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_phone" />
 
                 <TextView
                     android:id="@+id/musicianPhoneNumberText"
@@ -328,6 +328,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/contactEmailLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -336,12 +337,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_email" />
 
                 <TextView
+
                     android:id="@+id/musicianEmailText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -351,6 +352,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/contactSocialMediaLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -360,11 +362,12 @@
 
                 <ImageView
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_socialmedia" />
 
                 <TextView
+                    android:id="@+id/musicianSocialMediaText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

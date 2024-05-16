@@ -1,6 +1,8 @@
 package com.example.findyourband.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -35,7 +37,6 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
     private LayoutInflater layoutInflater;
     private List<Map<String, ArrayList<String>>> vacanciesList;
 
-    private List<Map<String, ArrayList<String>>> alreadyUploadedVacancies = new ArrayList<>();
 
     public VacanciesAdapter(Context context, List<Map<String, ArrayList<String>>> vacanciesList) {
         this.layoutInflater = LayoutInflater.from(context);
@@ -53,8 +54,9 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
 
     @Override
-    public void onBindViewHolder(@NonNull VacanciesAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VacanciesAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String name = vacanciesList.get(position).get("name").get(0);
+        String image = vacanciesList.get(position).get("image").get(0);
         String city = vacanciesList.get(position).get("city").get(0);
 
         ArrayList<String> instruments = vacanciesList.get(position).get("instruments");
@@ -66,7 +68,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         instrumentsLayout.removeAllViews();
         genresLayout.removeAllViews();
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(90, 90);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(80, 80);
         layoutParams.setMarginStart(10);
 
         for (String instrument : instruments) {
@@ -93,6 +95,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         holder.name.setText(name);
         holder.city.setText(city);
 
+        // TODO: загрузка картинки image
         holder.image.setImageResource(R.drawable.paul);
 
 
@@ -100,16 +103,34 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
             @Override
             public void onClick(View v) {
-                TextView vacancyTextView = v.findViewById(R.id.nameVacancyTextView);
+                TextView vacancyTextView = ((TextView) v.findViewById(R.id.nameVacancyTextView));
                 String vacancy_title = vacancyTextView.getText().toString();
+
+                String description = vacanciesList.get(position).get("description").get(0);
+                ArrayList<String> tracks = vacanciesList.get(position).get("tracks");
+                ArrayList<String> contacts = vacanciesList.get(position).get("contacts");
+
+                Bundle vacancyData = new Bundle();
+                vacancyData.putString("name", name);
+                vacancyData.putString("image", image);
+                vacancyData.putString( "city", city);
+                vacancyData.putStringArrayList("instruments", instruments);
+                vacancyData.putStringArrayList("genres", genres);
+                vacancyData.putString("description", description);
+                vacancyData.putStringArrayList("tracks", tracks);
+                vacancyData.putStringArrayList("contacts", contacts);
+
 
                 Fragment fragment;
                 if (vacancy_title.contains("Группа")) {
                     fragment = new BandPageFragment();
+                    vacancyData.putString("members", vacanciesList.get(position).get("members").get(0));
                 } else {
                     fragment = new MusicianPageFragment();
+                    vacancyData.putString("experience", vacanciesList.get(position).get("experience").get(0));
                 }
 
+                fragment.setArguments(vacancyData);
                 FragmentManager fragmentManager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.app_fragment_container, fragment).addToBackStack(null).commit();
