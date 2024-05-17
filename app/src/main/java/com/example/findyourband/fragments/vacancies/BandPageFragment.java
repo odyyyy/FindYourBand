@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.findyourband.R;
+import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentBandPageBinding;
 import com.example.findyourband.services.INSTRUMENT;
 
@@ -69,6 +71,10 @@ public class BandPageFragment extends Fragment {
             }
 
             List<String> members = bandData.getStringArrayList("members");
+//            BandMembersAdapter searchMembersAdapter = new BandMembersAdapter(getContext(), selectedMembersArray, this);
+//
+//            binding.bandMemberVacancyRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+//            binding.bandMemberVacancyRecycleView.setAdapter(searchMembersAdapter);
             // TODO: загрузка участников группы
 
             String description = bandData.getString("description");

@@ -83,7 +83,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMarginEnd(12);
+        params.setMarginEnd(18);
 
         for (String genre : genres) {
             TextView genreTextView = new TextView(newContext);

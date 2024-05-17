@@ -69,7 +69,7 @@ public class SearchBandMembersFragment extends Fragment {
                 String currentUserLogin = snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("login").getValue().toString();
                 for (DataSnapshot ds : snapshot.getChildren()) {
 
-                    MemberDataClass user = new MemberDataClass(ds.child("login").getValue().toString());
+                    MemberDataClass user = new MemberDataClass(ds.child("login").getValue().toString(), ds.child("image").getValue().toString(), (ArrayList<String>) ds.child("instruments").getValue());
                     if (!user.getNickname().equals(currentUserLogin))
                         userSearchList.add(user);
                 }
@@ -139,7 +139,6 @@ public class SearchBandMembersFragment extends Fragment {
                 searchList.add(user);
             }
         }
-        // TODO: подумать над сохранением состояния selected в списке при поиске оно сбрасывается
         searchMembersAdapter.searchDataList(searchList);
     }
 

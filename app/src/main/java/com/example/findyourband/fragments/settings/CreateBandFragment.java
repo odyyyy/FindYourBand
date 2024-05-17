@@ -52,7 +52,6 @@ public class CreateBandFragment extends Fragment {
 
         binding = FragmentCreateBandBinding.inflate(inflater, container, false);
         setSelectedBandMembers();
-        Log.d(TAG, bandNameSavedState);
 
 
         binding.cityAutoComplete.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.cities)));

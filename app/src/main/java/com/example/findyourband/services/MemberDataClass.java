@@ -5,10 +5,17 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 public class MemberDataClass implements Parcelable {
 
     private String nickname;
     private String image;
+    private ArrayList<String> instruments;
+
+
+
+    private boolean isLeader;
     private boolean isSelected;
     public MemberDataClass(String nickname) {
         this.nickname = nickname;
@@ -21,10 +28,20 @@ public class MemberDataClass implements Parcelable {
         this.isSelected = false;
     }
 
+    public MemberDataClass(String nickname, String image, ArrayList<String> instruments) {
+        this.nickname = nickname;
+        this.image = image;
+        this.instruments = instruments;
+        this.isSelected = false;
+        this.isLeader = false;
+    }
+
     public MemberDataClass(Parcel in) {
         nickname = in.readString();
         image = in.readString();
+        instruments = in.createStringArrayList();
         isSelected = in.readByte() != 0;
+        isLeader = in.readByte() != 0;
     }
 
     public static final Creator<MemberDataClass> CREATOR = new Creator<MemberDataClass>() {
@@ -63,6 +80,22 @@ public class MemberDataClass implements Parcelable {
         this.nickname = nickname;
     }
 
+    public ArrayList<String> getInstruments() {
+        return instruments;
+    }
+
+    public void setInstruments(ArrayList<String> instruments) {
+        this.instruments = instruments;
+    }
+
+    public boolean isLeader() {
+        return isLeader;
+    }
+
+    public void setLeader(boolean leader) {
+        isLeader = leader;
+    }
+
 
     @Override
     public int describeContents() {
@@ -74,5 +107,7 @@ public class MemberDataClass implements Parcelable {
         dest.writeString(this.nickname);
         dest.writeString(this.image);
         dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isLeader ? (byte) 1 : (byte) 0);
+        dest.writeStringList(this.instruments);
     }
 }

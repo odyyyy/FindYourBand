@@ -1,5 +1,6 @@
 package com.example.findyourband.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -47,9 +48,18 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BandMembersAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BandMembersAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         MemberDataClass member = dataList.get(position);
         holder.memberNickname.setText(member.getNickname());
+        if (member.getImage() != "") {
+            // TODO: вставить картинку пользователя glide
+
+            holder.memberImage.setImageResource(R.drawable.logo);
+        }
+        else
+            holder.memberImage.setImageResource(R.drawable.user_default_avatar);
+
+        // TODO: добавления ImageView инструментов в Layout
 
         // Обработчик нажатия отрабатывает только на странице поиска
         if (fragment instanceof SearchBandMembersFragment) {

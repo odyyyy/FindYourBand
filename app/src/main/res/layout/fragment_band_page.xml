@@ -155,115 +155,121 @@
         <!--            android:layout_height="wrap_content"-->
         <!--            android:layout_below="@+id/"-->
 
-        <LinearLayout
-            android:id="@+id/groupMembersLayout"
+<!--        <LinearLayout-->
+<!--            android:id="@+id/groupMembersLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/genreVacancyPageLayout"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/groupMemberSecond"-->
+<!--                style="@style/groupMembersLayoutStyle">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:src="@drawable/logo" />-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="5dp"-->
+
+<!--                    android:text="Лидер группы"-->
+<!--                    android:textSize="16sp" />-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="15dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginTop="1dp"-->
+<!--                    android:src="@drawable/ic_star_groupleader" />-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:src="@drawable/ic_instrument" />-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/groupMemberThird"-->
+<!--                style="@style/groupMembersLayoutStyle">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:src="@drawable/logo" />-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="5dp"-->
+
+<!--                    android:text="Участник группы 1"-->
+<!--                    android:textSize="16sp" />-->
+
+
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:src="@drawable/ic_instrument" />-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/groupMemberOneLead"-->
+<!--                style="@style/groupMembersLayoutStyle">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:src="@drawable/logo" />-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="5dp"-->
+
+<!--                    android:text="Участник группы 2"-->
+<!--                    android:textSize="16sp" />-->
+
+
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:src="@drawable/ic_instrument" />-->
+<!--            </LinearLayout>-->
+<!--    </LinearLayout>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bandMemberVacancyRecycleView"
+            android:layout_below="@+id/genreVacancyPageLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/genreVacancyPageLayout"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/groupMemberSecond"
-                style="@style/groupMembersLayoutStyle">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/logo" />
+            android:layout_marginTop="20dp" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-
-                    android:text="Лидер группы"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="1dp"
-                    android:src="@drawable/ic_star_groupleader" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_instrument" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/groupMemberThird"
-                style="@style/groupMembersLayoutStyle">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/logo" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-
-                    android:text="Участник группы 1"
-                    android:textSize="16sp" />
-
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_instrument" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/groupMemberOneLead"
-                style="@style/groupMembersLayoutStyle">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/logo" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-
-                    android:text="Участник группы 2"
-                    android:textSize="16sp" />
-
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_instrument" />
-            </LinearLayout>
-
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/DescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/groupMembersLayout"
+            android:layout_below="@id/bandMemberVacancyRecycleView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="О нас"
