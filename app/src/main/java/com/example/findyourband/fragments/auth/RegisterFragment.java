@@ -1,9 +1,9 @@
 package com.example.findyourband.fragments.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -13,9 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.findyourband.AppActivity;
+import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentRegisterBinding;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +56,7 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getContext(), "Почта не должна содержать пробелов", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    proceedToNextStep();
+                    checkIsUserLoginAlreadyExists();
                 }
             }
         });
@@ -71,11 +70,9 @@ public class RegisterFragment extends Fragment {
     }
 
 
-    private void proceedToNextStep() {
+    private void checkIsUserLoginAlreadyExists() {
         /* Проверка что не существует пользователя с таким никнеймом */
-        String email = binding.registerEmail.getText().toString();
         String login = binding.registerLogin.getText().toString();
-        String password = binding.registerPassword1.getText().toString();
 
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
         usersRef.orderByChild("login").equalTo(login).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -84,7 +81,7 @@ public class RegisterFragment extends Fragment {
                 if (dataSnapshot.exists()) {
                     Toast.makeText(getContext(), "Пользователь с таким логином уже существует", Toast.LENGTH_SHORT).show();
                 } else {
-                    createUser(email, login, password);
+                    processNextRegistrationStep(login);
                 }
             }
 
@@ -95,23 +92,23 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    private void createUser(String email, String login, String password) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-                        userRef.child("email").setValue(email);
-                        userRef.child("login").setValue(login);
-                        userRef.child("image").setValue("");
+    void processNextRegistrationStep(String login) {
+        String email = binding.registerEmail.getText().toString();
+        String password = binding.registerPassword1.getText().toString();
 
-                        Intent intent = new Intent(getActivity(), AppActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+        Bundle registrationData = new Bundle();
+        registrationData.putString("email", email);
+        registrationData.putString("password", password);
+        registrationData.putString("login", login);
+
+        RegisterChooseInstrumentsFragment registerChooseInstrumentsFragment = new RegisterChooseInstrumentsFragment();
+        registerChooseInstrumentsFragment.setArguments(registrationData);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.auth_fragment_container, registerChooseInstrumentsFragment);
+        fragmentTransaction.addToBackStack(null).commit();
+
     }
+
 
 
     private boolean isAnyEmptyFields() {

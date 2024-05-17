@@ -124,7 +124,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
                 Fragment fragment;
                 if (vacancy_title.contains("Группа")) {
                     fragment = new BandPageFragment();
-                    vacancyData.putString("members", vacanciesList.get(position).get("members").get(0));
+                    vacancyData.putStringArrayList("members", vacanciesList.get(position).get("members"));
                 } else {
                     fragment = new MusicianPageFragment();
                     vacancyData.putString("experience", vacanciesList.get(position).get("experience").get(0));

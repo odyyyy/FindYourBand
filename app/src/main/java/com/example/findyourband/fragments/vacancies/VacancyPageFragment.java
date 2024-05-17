@@ -91,7 +91,7 @@ public class VacancyPageFragment extends Fragment {
     private void setUserLoginInUpperBar() {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
         String login = preferences.getString("login", "пользователь!");
-        binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login);
+        binding.profileLayout.welcomeTextView.setText("Добро пожаловать,\n" + login + "!");
     }
 
 
@@ -241,7 +241,6 @@ public class VacancyPageFragment extends Fragment {
         vacancy.put("description", new ArrayList<>(Collections.singletonList(description)));
         vacancy.put("tracks", new ArrayList<>(tracks));
         vacancy.put("contacts", new ArrayList<>(contacts));
-
 
 
         if (experience != null) {

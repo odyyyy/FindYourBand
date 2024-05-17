@@ -67,6 +67,7 @@ public class AddMusicianVacancyFormFragment extends Fragment {
                     // Добавление вакансии в БД
 
                     DatabaseReference musVacancyRef = FirebaseDatabase.getInstance().getReference("vacancies").child("from_musicians");
+
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     String city = binding.cityAutoComplete.getText().toString();
                     String experience = binding.experienceDropDown.getText().toString();

@@ -13,15 +13,26 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentBandPageBinding;
+import com.example.findyourband.services.BandDataClass;
 import com.example.findyourband.services.INSTRUMENT;
+import com.example.findyourband.services.MemberDataClass;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -70,12 +81,17 @@ public class BandPageFragment extends Fragment {
                 binding.genreVacancyPageLayout.addView(genreTextView);
             }
 
-            List<String> members = bandData.getStringArrayList("members");
-//            BandMembersAdapter searchMembersAdapter = new BandMembersAdapter(getContext(), selectedMembersArray, this);
-//
-//            binding.bandMemberVacancyRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-//            binding.bandMemberVacancyRecycleView.setAdapter(searchMembersAdapter);
-            // TODO: загрузка участников группы
+
+
+            List<MemberDataClass> members = getBandMembersData(bandData.getStringArrayList("members"));
+
+            BandMembersAdapter searchMembersAdapter = new BandMembersAdapter(getContext(), members, this);
+
+            binding.bandMemberVacancyRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.bandMemberVacancyRecycleView.setAdapter(searchMembersAdapter);
+
+
+
 
             String description = bandData.getString("description");
             TextView descriptionTextView = binding.musicianDescriptionValueLayout.findViewById(R.id.aboutMeContentTextView);
@@ -103,6 +119,8 @@ public class BandPageFragment extends Fragment {
             }
         }
 
+
+
         binding.arrowBackComponent.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -116,4 +134,52 @@ public class BandPageFragment extends Fragment {
         return binding.getRoot();
 
     }
+
+    private List<MemberDataClass> getBandMembersData(ArrayList<String> membersNames) {
+        List<MemberDataClass> members = new ArrayList<>();
+        DatabaseReference userBandMembersRef = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
+
+        userBandMembersRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot snapshot) {
+                for (DataSnapshot memberSnapshot : snapshot.getChildren()) {
+                    String name = memberSnapshot.child("login").getValue(String.class);
+                    if (membersNames.contains(name)) {
+                        String img = memberSnapshot.child("image").getValue(String.class);
+
+                        GenericTypeIndicator<ArrayList<String>> genericTypeIndicator = new GenericTypeIndicator<ArrayList<String>>() {};
+                        ArrayList<String> instruments = memberSnapshot.child("instruments").getValue(genericTypeIndicator);
+                        MemberDataClass memberData = new MemberDataClass(name, img, instruments);
+
+                        String memberKey = memberSnapshot.getKey();
+
+                        bandsRef.child(memberKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    memberData.setLeader(true);
+                                }
+                                members.add(memberData);
+                                if (binding.bandMemberVacancyRecycleView.getAdapter() != null) {
+                                    members.sort(Comparator.comparing(MemberDataClass::isLeader).reversed());
+
+                                    binding.bandMemberVacancyRecycleView.getAdapter().notifyDataSetChanged();
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.e("FirebaseError", "Отмена: " + databaseError.getMessage());
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        return members;
+    }
+
+
+
 }

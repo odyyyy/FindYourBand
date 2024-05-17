@@ -25,13 +25,17 @@ import com.example.findyourband.services.BandDataClass;
 import com.example.findyourband.services.MemberDataClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class CreateBandFragment extends Fragment {
@@ -39,9 +43,6 @@ public class CreateBandFragment extends Fragment {
 
     BandMembersAdapter searchMembersAdapter;
 
-    String bandNameSavedState = "";
-
-    String TAG = "CreateBandFragment";
 
     ArrayList<MemberDataClass> selectedMembersArray;
     Bundle selectedMembers;
@@ -51,12 +52,11 @@ public class CreateBandFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         binding = FragmentCreateBandBinding.inflate(inflater, container, false);
+        loadState();
         setSelectedBandMembers();
 
 
         binding.cityAutoComplete.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.cities)));
-
-        binding.bandnameEditText.setText(bandNameSavedState);
 
 
 
@@ -98,41 +98,53 @@ public class CreateBandFragment extends Fragment {
                     for (MemberDataClass member : selectedMembersArray) {
                         bandMembersLogins.add(member.getNickname());
                     }
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
+                    Task<DataSnapshot> loginTask = userRef.child(leaderID).child("login").get();
 
-                    BandDataClass band = new BandDataClass(bandName, city, genres, image, bandMembersLogins);
+                    loginTask.addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                        @Override
+                        public void onSuccess(DataSnapshot dataSnapshot) {
+                            String login = dataSnapshot.getValue(String.class);
+                            bandMembersLogins.add(login);
 
-                    bandsRef.child(leaderID).setValue(band)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getContext(), "Группа успешно создана!", Toast.LENGTH_SHORT).show();
-                                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putBoolean("bandLeader", true);
-                                    editor.apply();
+                            BandDataClass band = new BandDataClass(bandName, city, genres, image, bandMembersLogins);
 
+                            bandsRef.child(leaderID).setValue(band)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getContext(), "Группа успешно создана!", Toast.LENGTH_SHORT).show();
+                                            SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putBoolean("bandLeader", true);
+                                            editor.apply();
 
-                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                    MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getContext(), "Ошибка при создании группы: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                            MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(), "Ошибка при создании группы: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Не удалось получить логин: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-
             }
         });
 
         binding.arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -144,7 +156,7 @@ public class CreateBandFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-
+                saveState();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 SearchBandMembersFragment fragment = new SearchBandMembersFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -156,21 +168,51 @@ public class CreateBandFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        // TODO: Восстановление состояния
-        super.onCreate(savedInstanceState);
+    private void saveState() {
 
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("CreateBandState_" + uid, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("bandName", binding.bandnameEditText.getText().toString());
+        editor.putString("city", binding.cityAutoComplete.getText().toString());
 
-//        if (savedInstanceState != null) {
-//            String bandName = savedInstanceState.getString("bandName");
-//            String image = savedInstanceState.getString("image");
-//            binding.bandnameEditText.setText(bandName);
-//
-//            if (image != null) {
-//                Log.d("CreateBandFragment", image);
-//            }
+        Set<String> chipIds = new HashSet<>();
+        for (int id : binding.genreChipGroup.getCheckedChipIds()) {
+            chipIds.add(String.valueOf(id));
+        }
+        editor.putStringSet("selectedChips", chipIds);
+
+        //editor.putString("imagePath", getImagePath());
+
+        editor.apply();
+    }
+
+    private void loadState() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("CreateBandState_" + uid, Context.MODE_PRIVATE);
+        String bandName = sharedPreferences.getString("bandName", "");
+        String city = sharedPreferences.getString("city", "");
+
+        binding.bandnameEditText.setText(bandName);
+        binding.cityAutoComplete.setText(city);
+
+        Set<String> chipIds = sharedPreferences.getStringSet("selectedChips", new HashSet<>());
+        for (String id : chipIds) {
+            int chipId = Integer.parseInt(id);
+            Chip chip = binding.genreChipGroup.findViewById(chipId);
+            if (chip != null) {
+                chip.setChecked(true);
+            }
+        }
+
+//        String imagePath = sharedPreferences.getString("imagePath", "");
+//        if (!imagePath.isEmpty()) {
+//            Glide.with(this).load(imagePath).into(binding.bandImageView);
 //        }
+    }
+
+    private String getImagePath() {
+        return "";
     }
 
 
@@ -192,14 +234,6 @@ public class CreateBandFragment extends Fragment {
             genreNames.add(((Chip) binding.genreChipGroup.findViewById(genreId)).getText().toString());
         }
         return genreNames;
-    }
-
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        bandNameSavedState = binding.bandnameEditText.getText().toString();
     }
 
 

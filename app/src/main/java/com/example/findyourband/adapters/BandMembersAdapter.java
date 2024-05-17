@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.R;
 import com.example.findyourband.fragments.settings.SearchBandMembersFragment;
+import com.example.findyourband.services.INSTRUMENT;
 import com.example.findyourband.services.MemberDataClass;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.ViewHolder> {
@@ -39,7 +43,6 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
 
     }
 
-
     @NonNull
     @Override
     public BandMembersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,16 +53,33 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
     @Override
     public void onBindViewHolder(@NonNull BandMembersAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         MemberDataClass member = dataList.get(position);
+
         holder.memberNickname.setText(member.getNickname());
         if (member.getImage() != "") {
             // TODO: вставить картинку пользователя glide
-
             holder.memberImage.setImageResource(R.drawable.logo);
         }
         else
             holder.memberImage.setImageResource(R.drawable.user_default_avatar);
 
-        // TODO: добавления ImageView инструментов в Layout
+
+        holder.bandLeaderImageView.setVisibility(View.GONE);
+        if (member.isLeader()){
+            holder.bandLeaderImageView.setVisibility(View.VISIBLE);
+        }
+
+        holder.instrumentsLayout.removeAllViews();
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(80, 80);
+        layoutParams.setMarginStart(20);
+        for (String instrument : member.getInstruments()) {
+            ImageView instrumentView = new ImageView(context);
+            instrumentView.setLayoutParams(layoutParams);
+            instrumentView.setImageResource(INSTRUMENT.valueOf(instrument).getImageId());
+
+            holder.instrumentsLayout.addView(instrumentView);
+        }
+
 
         // Обработчик нажатия отрабатывает только на странице поиска
         if (fragment instanceof SearchBandMembersFragment) {
@@ -107,6 +127,10 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
 
     }
 
+    public void sortDataList(Comparator<MemberDataClass> comparator) {
+        Collections.sort(dataList, comparator);
+        notifyDataSetChanged();
+    }
     public int getSelectedCount() {
         return selectedCount;
     }
@@ -126,7 +150,12 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
         ImageView memberImage;
 
         TextView memberNickname;
+        ImageView bandLeaderImageView;
         CardView memberCard;
+
+        LinearLayout instrumentsLayout;
+
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -134,6 +163,8 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
             memberImage = itemView.findViewById(R.id.memberImage);
             memberNickname = itemView.findViewById(R.id.memberNickname);
             memberCard = itemView.findViewById(R.id.memberCard);
+            instrumentsLayout = itemView.findViewById(R.id.memberCardInstrumentsLayout);
+            bandLeaderImageView = itemView.findViewById(R.id.bandLeaderImageView);
 
         }
     }
