@@ -1,5 +1,7 @@
 package com.example.findyourband.fragments.settings;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,8 @@ import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentSearchBandMembersBinding;
 import com.example.findyourband.fragments.settings.CreateBandFragment;
 import com.example.findyourband.services.MemberDataClass;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class SearchBandMembersFragment extends Fragment {
     FragmentSearchBandMembersBinding binding;
     BandMembersAdapter searchMembersAdapter;
@@ -37,7 +42,6 @@ public class SearchBandMembersFragment extends Fragment {
     List<MemberDataClass> userSearchList;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
-
 
     @Nullable
     @Override
@@ -48,8 +52,7 @@ public class SearchBandMembersFragment extends Fragment {
 
         userSearchList = new ArrayList<>();
 
-
-        searchMembersAdapter =  new BandMembersAdapter(getContext(), userSearchList, this);
+        searchMembersAdapter = new BandMembersAdapter(getContext(), userSearchList, this);
 
         searchMembersAdapter.searchDataList(userSearchList);
 
@@ -68,14 +71,21 @@ public class SearchBandMembersFragment extends Fragment {
                 }
                 String currentUserLogin = snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("login").getValue().toString();
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    String login = ds.child("login").getValue().toString();
+                    MemberDataClass user = new MemberDataClass(login, ds.child("image").getValue().toString(), (ArrayList<String>) ds.child("instruments").getValue());
 
-                    MemberDataClass user = new MemberDataClass(ds.child("login").getValue().toString(), ds.child("image").getValue().toString(), (ArrayList<String>) ds.child("instruments").getValue());
-                    if (!user.getNickname().equals(currentUserLogin))
-                        userSearchList.add(user);
+                    if (!user.getNickname().equals(currentUserLogin)) {
+                        isUserAlreadyInBand(login, new BandCheckCallback() {
+                            @Override
+                            public void onCheckCompleted(boolean isInBand) {
+                                if (!isInBand) {
+                                    userSearchList.add(user);
+                                    searchMembersAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                    }
                 }
-
-                searchMembersAdapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -98,6 +108,7 @@ public class SearchBandMembersFragment extends Fragment {
                 return true;
             }
         });
+
         binding.applyBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -122,13 +133,6 @@ public class SearchBandMembersFragment extends Fragment {
         });
 
         return binding.getRoot();
-
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
     }
 
     public void searchList(String text) {
@@ -140,6 +144,31 @@ public class SearchBandMembersFragment extends Fragment {
             }
         }
         searchMembersAdapter.searchDataList(searchList);
+    }
+
+    private void isUserAlreadyInBand(String login, BandCheckCallback callback) {
+        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
+
+        bandsRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
+                    ArrayList<String> members = (ArrayList<String>) bandSnapshot.child("memberUserLogins").getValue();
+                    if (members != null && members.contains(login)) {
+                        callback.onCheckCompleted(true);
+                        return;
+                    }
+                }
+                callback.onCheckCompleted(false);
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getContext(), "Ошибка проверки пользователя", Toast.LENGTH_SHORT).show();
+            callback.onCheckCompleted(false);
+        });
+    }
+
+    public interface BandCheckCallback {
+        void onCheckCompleted(boolean isInBand);
     }
 
     public void updateSelectedCountText() {

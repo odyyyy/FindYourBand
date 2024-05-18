@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.VacanciesAdapter;
 import com.example.findyourband.databinding.FragmentVacancyPageBinding;
+import com.example.findyourband.services.OnLoginLoadedListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,10 +30,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-interface OnLoginLoadedListener {
-    void onLoginAndImgLoaded(String login, String img);
-}
 
 
 public class VacancyPageFragment extends Fragment {

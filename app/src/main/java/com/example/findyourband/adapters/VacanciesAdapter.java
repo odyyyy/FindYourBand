@@ -157,8 +157,6 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
         TextView name;
         TextView city;
-        ImageView instruments; // TODO: Инструментов может быть от 1 до 3, позже переделать в список или др.
-        TextView genres; // TODO: Аналогично
 
         ImageView image;
 
@@ -169,8 +167,6 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
             name = itemView.findViewById(R.id.nameVacancyTextView);
             image = itemView.findViewById(R.id.vacancyCardImage);
             city = itemView.findViewById(R.id.cityVacancyTextView);
-            // TODO: дописать для genre и instrument
-
 
             cardView = itemView.findViewById(R.id.vacancyCardView);
         }

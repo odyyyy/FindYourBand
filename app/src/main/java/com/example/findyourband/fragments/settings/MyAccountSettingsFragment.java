@@ -57,15 +57,15 @@ public class MyAccountSettingsFragment extends Fragment {
         });
 
 
-        binding.myPageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                MyProfileFragment fragment = new MyProfileFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyProfileFragmentTag").addToBackStack(null).commit();
-            }
-        });
+//        binding.myPageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                MyProfileFragment fragment = new MyProfileFragment();
+//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyProfileFragmentTag").addToBackStack(null).commit();
+//            }
+//        });
 
         binding.myVacanciesButton.setOnClickListener(new View.OnClickListener() {
 
@@ -90,17 +90,17 @@ public class MyAccountSettingsFragment extends Fragment {
             }
         });
 
-        binding.favoritesButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                FavoritesFragment fragment = new FavoritesFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "FavoritesFragmentTag").addToBackStack(null).commit();
-
-            }
-        });
+//        binding.favoritesButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                FavoritesFragment fragment = new FavoritesFragment();
+//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "FavoritesFragmentTag").addToBackStack(null).commit();
+//
+//            }
+//        });
 
 
 

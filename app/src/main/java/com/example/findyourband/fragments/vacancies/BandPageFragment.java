@@ -1,5 +1,6 @@
 package com.example.findyourband.fragments.vacancies;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,8 @@ public class BandPageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentBandPageBinding.inflate(inflater, container, false);
+
+        setUserNicknameInUpperBar();
 
         Bundle bandData = this.getArguments();
 
@@ -133,6 +136,12 @@ public class BandPageFragment extends Fragment {
 
         return binding.getRoot();
 
+    }
+
+    private void setUserNicknameInUpperBar() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
+        String login = preferences.getString("login", "пользователь!");
+        binding.welcomeTextView.setText( login );
     }
 
     private List<MemberDataClass> getBandMembersData(ArrayList<String> membersNames) {

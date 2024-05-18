@@ -2,65 +2,247 @@ package com.example.findyourband.fragments.settings;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.findyourband.R;
+import com.example.findyourband.adapters.VacanciesAdapter;
+import com.example.findyourband.databinding.FragmentMyVacanciesBinding;
+import com.example.findyourband.services.OnLoginLoadedListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyVacanciesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MyVacanciesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    FragmentMyVacanciesBinding binding;
+    VacanciesAdapter adapter;
+    private List<Map<String, ArrayList<String>>> vacanciesList = new ArrayList<Map<String, ArrayList<String>>>();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MyVacanciesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyVacanciesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyVacanciesFragment newInstance(String param1, String param2) {
-        MyVacanciesFragment fragment = new MyVacanciesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        binding = FragmentMyVacanciesBinding.inflate(inflater, container, false);
+
+
+        binding.myVacanciesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new VacanciesAdapter(getContext(), vacanciesList);
+
+        binding.myVacanciesRecyclerView.setAdapter(adapter);
+
+        loadVacanciesDataFromDatabase();
+
+        binding.arrowBack.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                SettingsFragment fragment = new SettingsFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "SettingsFragment").addToBackStack("SettingsFragment").commit();
+            }
+        });
+
+        return binding.getRoot();
+    }
+
+    private void loadVacanciesDataFromDatabase() {
+        DatabaseReference vacanciesRef = FirebaseDatabase.getInstance().getReference("vacancies");
+
+        // Запрос на получение объявлений от музыкантов
+        vacanciesRef.child("from_musicians").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    vacanciesList.clear();
+                    for (DataSnapshot vacancySnapshot : dataSnapshot.getChildren()) {
+                        String UserID = vacancySnapshot.getKey();
+
+                        if (UserID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+
+
+                            getUserLoginAndImgByID(UserID, new OnLoginLoadedListener() {
+                                @Override
+                                public void onLoginAndImgLoaded(String login, String img) {
+                                    String city = vacancySnapshot.child("city").getValue(String.class);
+                                    List<String> instruments = new ArrayList<>();
+                                    List<String> genres = new ArrayList<>();
+                                    for (DataSnapshot instrumentSnapshot : vacancySnapshot.child("instruments").getChildren()) {
+                                        instruments.add(instrumentSnapshot.getValue(String.class));
+                                    }
+                                    for (DataSnapshot genreSnapshot : vacancySnapshot.child("genres").getChildren()) {
+                                        genres.add(genreSnapshot.getValue(String.class));
+                                    }
+                                    String description = vacancySnapshot.child("description").getValue(String.class);
+                                    String experience = vacancySnapshot.child("experience").getValue(String.class);
+
+                                    List<String> tracks = new ArrayList<>();
+                                    if (vacancySnapshot.child("tracks").exists()) {
+                                        for (DataSnapshot trackSnapshot : vacancySnapshot.child("tracks").getChildren()) {
+                                            tracks.add(trackSnapshot.getValue(String.class));
+                                        }
+                                    }
+
+
+                                    List<String> contacts = new ArrayList<>();
+                                    for (DataSnapshot contactSnapshot : vacancySnapshot.child("contacts").getChildren()) {
+                                        contacts.add(contactSnapshot.getValue(String.class));
+                                    }
+
+
+                                    Map<String, ArrayList<String>> vacancy = createVacancy(login, img, city, instruments, genres, description,
+                                            tracks, contacts, experience, null);
+                                    if (!vacanciesList.contains(vacancy)) {
+                                        vacanciesList.add(vacancy);
+                                    }
+
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Ошибка загрузки объявлений", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Запрос на получение объявлений от групп
+        vacanciesRef.child("from_bands").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    vacanciesList.clear();
+                    for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
+                        String bandId = bandSnapshot.getKey();
+                        if (!bandId.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                            continue;
+                        }
+
+                        DatabaseReference bandRef = FirebaseDatabase.getInstance().getReference("bands").child(bandId);
+                        ArrayList<String> instruments = new ArrayList<>(Collections.singletonList(bandSnapshot.child("instrument").getValue(String.class)));
+
+                        String description = bandSnapshot.child("description").getValue(String.class);
+
+                        List<String> tracks = new ArrayList<>();
+                        if (dataSnapshot.child("tracks").exists()) {
+                            for (DataSnapshot trackSnapshot : bandSnapshot.child("tracks").getChildren()) {
+                                tracks.add(trackSnapshot.getValue(String.class));
+                            }
+                        }
+                        List<String> contacts = new ArrayList<>();
+
+                        for (DataSnapshot contactSnapshot : bandSnapshot.child("contacts").getChildren()) {
+                            contacts.add(contactSnapshot.getValue(String.class));
+                        }
+
+
+                        bandRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            @Override
+                            public void onSuccess(DataSnapshot bandDataSnapshot) {
+                                if (bandDataSnapshot.exists()) {
+                                    String name = "Группа " + bandDataSnapshot.child("name").getValue(String.class);
+                                    String img = bandDataSnapshot.child("bandImage").getValue(String.class);
+
+                                    String city = bandDataSnapshot.child("city").getValue(String.class);
+
+                                    ArrayList<String> genres = new ArrayList<>();
+                                    for (DataSnapshot genreSnapshot : bandDataSnapshot.child("genres").getChildren()) {
+                                        genres.add(genreSnapshot.getValue(String.class));
+                                    }
+                                    List<String> members = new ArrayList<>();
+                                    for (DataSnapshot memberSnapshot : bandDataSnapshot.child("memberUserLogins").getChildren()) {
+                                        members.add(memberSnapshot.getValue(String.class));
+                                    }
+
+
+                                    Map<String, ArrayList<String>> band = createVacancy(name, img, city, instruments, genres, description, tracks, contacts, null, members);
+                                    if (!vacanciesList.contains(band)) {
+                                        vacanciesList.add(band);
+                                    }
+
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Ошибка загрузки данных о группе", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Ошибка загрузки объявлений", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private Map<String, ArrayList<String>> createVacancy(String nickname, String img, String city, List<String> instruments,
+                                                         List<String> genres, String description, List<String> tracks,
+                                                         List<String> contacts, String experience, List<String> members) {
+        Map<String, ArrayList<String>> vacancy = new HashMap<>();
+        vacancy.put("name", new ArrayList<>(Collections.singletonList(nickname)));
+        vacancy.put("image", new ArrayList<>(Collections.singletonList(img)));
+        vacancy.put("city", new ArrayList<>(Collections.singletonList(city)));
+        vacancy.put("instruments", new ArrayList<>(instruments));
+        vacancy.put("genres", new ArrayList<>(genres));
+        vacancy.put("description", new ArrayList<>(Collections.singletonList(description)));
+        vacancy.put("tracks", new ArrayList<>(tracks));
+        vacancy.put("contacts", new ArrayList<>(contacts));
+
+
+        if (experience != null) {
+            vacancy.put("experience", new ArrayList<>(Collections.singletonList(experience)));
         }
+        if (members != null) {
+            vacancy.put("members", new ArrayList<>(members));
+        }
+        return vacancy;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_vacancies, container, false);
+    private void getUserLoginAndImgByID(String userID, OnLoginLoadedListener listener) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userID);
+
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String login = dataSnapshot.child("login").getValue(String.class);
+                    String img = dataSnapshot.child("image").getValue(String.class);
+                    listener.onLoginAndImgLoaded(login, img);
+                } else {
+                    listener.onLoginAndImgLoaded(null, null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onLoginAndImgLoaded(null, null);
+            }
+        });
     }
 }

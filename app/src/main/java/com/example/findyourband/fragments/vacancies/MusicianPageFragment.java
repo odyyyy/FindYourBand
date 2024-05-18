@@ -1,5 +1,6 @@
 package com.example.findyourband.fragments.vacancies;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,8 @@ public class MusicianPageFragment extends Fragment {
 
         binding = FragmentMusicianPageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        setUserNicknameInUpperBar();
+
 
         Bundle musicianData = getArguments();
 
@@ -123,6 +126,10 @@ public class MusicianPageFragment extends Fragment {
 
 
     }
-
+    private void setUserNicknameInUpperBar() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
+        String login = preferences.getString("login", "пользователь!");
+        binding.welcomeTextView.setText(login);
+    }
 
 }
