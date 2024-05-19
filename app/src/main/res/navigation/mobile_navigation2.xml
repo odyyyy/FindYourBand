@@ -3,26 +3,191 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation2"
-    app:startDestination="@+id/navigation_home">
-
-
-
+    app:startDestination="@id/navigation_home">
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.findyourband.fragments.MainPageFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_main_page" />
+        tools:layout="@layout/fragment_main_page">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_vacancy"
+            app:destination="@id/navigation_vacancy" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_vacancy"
         android:name="com.example.findyourband.fragments.vacancies.VacancyPageFragment"
         android:label="@string/title_vacancy"
-        tools:layout="@layout/fragment_vacancy_page" />
+        tools:layout="@layout/fragment_vacancy_page">
+        <action
+            android:id="@+id/action_navigation_vacancy_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+        <action
+            android:id="@+id/action_navigation_vacancy_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_vacancy_to_filterFragment"
+            app:destination="@id/filterFragment" />
+        <action
+            android:id="@+id/action_navigation_vacancy_to_addNewVacancyFragment"
+            app:destination="@id/addNewVacancyFragment" />
+        <action
+            android:id="@+id/action_navigation_vacancy_to_musicianPageFragment"
+            app:destination="@id/musicianPageFragment" />
+        <action
+            android:id="@+id/action_navigation_vacancy_to_bandPageFragment"
+            app:destination="@id/bandPageFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_my_account_settings"
         android:name="com.example.findyourband.fragments.settings.MyAccountSettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_my_account_settings" />
+        tools:layout="@layout/fragment_my_account_settings">
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_navigation_vacancy"
+            app:destination="@id/navigation_vacancy" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_manageBandFragment"
+            app:destination="@id/manageBandFragment" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_myVacanciesFragment"
+            app:destination="@id/myVacanciesFragment" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_myRequestsFragment"
+            app:destination="@id/myRequestsFragment" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_aboutAppFragment"
+            app:destination="@id/aboutAppFragment" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_aboutAuthorFragment"
+            app:destination="@id/aboutAuthorFragment" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_createBandFragment"
+            app:destination="@id/createBandFragment" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_navigation_home2"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_navigation_vacancy2"
+            app:destination="@id/navigation_vacancy" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.example.findyourband.fragments.vacancies.FilterFragment"
+        android:label="FilterFragment" >
+        <action
+            android:id="@+id/action_filterFragment_to_navigation_vacancy"
+            app:destination="@id/navigation_vacancy" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewVacancyFragment"
+        android:name="com.example.findyourband.fragments.vacancies.AddNewVacancyFragment"
+        android:label="AddNewVacancyFragment" >
+        <action
+            android:id="@+id/action_addNewVacancyFragment_to_navigation_vacancy"
+            app:destination="@id/navigation_vacancy" />
+    </fragment>
+    <fragment
+        android:id="@+id/musicianPageFragment"
+        android:name="com.example.findyourband.fragments.vacancies.MusicianPageFragment"
+        android:label="MusicianPageFragment" >
+        <action
+            android:id="@+id/action_musicianPageFragment_to_navigation_vacancy"
+            app:destination="@id/navigation_vacancy" />
+    </fragment>
+    <fragment
+        android:id="@+id/bandPageFragment"
+        android:name="com.example.findyourband.fragments.vacancies.BandPageFragment"
+        android:label="BandPageFragment" >
+        <action
+            android:id="@+id/action_bandPageFragment_to_navigation_vacancy"
+            app:destination="@id/navigation_vacancy" />
+    </fragment>
+    <fragment
+        android:id="@+id/createBandFragment"
+        android:name="com.example.findyourband.fragments.settings.CreateBandFragment"
+        android:label="CreateBandFragment" >
+        <action
+            android:id="@+id/action_createBandFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+        <action
+            android:id="@+id/action_createBandFragment_to_searchBandMembersFragment"
+            app:destination="@id/searchBandMembersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageBandFragment"
+        android:name="com.example.findyourband.fragments.settings.ManageBandFragment"
+        android:label="fragment_manage_band"
+        tools:layout="@layout/fragment_manage_band" >
+        <action
+            android:id="@+id/action_manageBandFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/myVacanciesFragment"
+        android:name="com.example.findyourband.fragments.settings.MyVacanciesFragment"
+        android:label="fragment_my_vacancies"
+        tools:layout="@layout/fragment_my_vacancies" >
+        <action
+            android:id="@+id/action_myVacanciesFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/myRequestsFragment"
+        android:name="com.example.findyourband.fragments.settings.MyRequestsFragment"
+        android:label="MyRequestsFragment" >
+        <action
+            android:id="@+id/action_myRequestsFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.findyourband.fragments.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="com.example.findyourband.fragments.settings.AboutAppFragment"
+        android:label="fragment_about_app"
+        tools:layout="@layout/fragment_about_app" >
+        <action
+            android:id="@+id/action_aboutAppFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutAuthorFragment"
+        android:name="com.example.findyourband.fragments.settings.AboutAuthorFragment"
+        android:label="fragment_about_author"
+        tools:layout="@layout/fragment_about_author" >
+        <action
+            android:id="@+id/action_aboutAuthorFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchBandMembersFragment"
+        android:name="com.example.findyourband.fragments.settings.SearchBandMembersFragment"
+        android:label="fragment_search_band_members"
+        tools:layout="@layout/fragment_search_band_members" >
+        <action
+            android:id="@+id/action_searchBandMembersFragment_to_createBandFragment"
+            app:destination="@id/createBandFragment" />
+    </fragment>
 </navigation>

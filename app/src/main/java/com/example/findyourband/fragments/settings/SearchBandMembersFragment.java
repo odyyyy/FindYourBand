@@ -1,7 +1,5 @@
 package com.example.findyourband.fragments.settings;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,19 +8,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentSearchBandMembersBinding;
-import com.example.findyourband.fragments.settings.CreateBandFragment;
+import com.example.findyourband.services.AlreadyBandMemberChecker;
 import com.example.findyourband.services.MemberDataClass;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,7 +71,7 @@ public class SearchBandMembersFragment extends Fragment {
                     MemberDataClass user = new MemberDataClass(login, ds.child("image").getValue().toString(), (ArrayList<String>) ds.child("instruments").getValue());
 
                     if (!user.getNickname().equals(currentUserLogin)) {
-                        isUserAlreadyInBand(login, new BandCheckCallback() {
+                        AlreadyBandMemberChecker.isUserAlreadyInBand(login, new AlreadyBandMemberChecker.BandCheckCallback() {
                             @Override
                             public void onCheckCompleted(boolean isInBand) {
                                 if (!isInBand) {
@@ -116,19 +112,14 @@ public class SearchBandMembersFragment extends Fragment {
                 Bundle selectedMembers = new Bundle();
                 selectedMembers.putParcelableArrayList("selectedMembers", searchMembersAdapter.getSelectedMembers());
 
-                CreateBandFragment fragment = new CreateBandFragment();
-                fragment.setArguments(selectedMembers);
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "CreateBandFragment").addToBackStack(null).commit();
+                AppActivity.navController.navigate(R.id.action_searchBandMembersFragment_to_createBandFragment, selectedMembers);
             }
         });
 
         binding.arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateBandFragment fragment = new CreateBandFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                AppActivity.navController.navigate(R.id.action_searchBandMembersFragment_to_createBandFragment);
             }
         });
 
@@ -146,30 +137,6 @@ public class SearchBandMembersFragment extends Fragment {
         searchMembersAdapter.searchDataList(searchList);
     }
 
-    private void isUserAlreadyInBand(String login, BandCheckCallback callback) {
-        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
-
-        bandsRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
-                    ArrayList<String> members = (ArrayList<String>) bandSnapshot.child("memberUserLogins").getValue();
-                    if (members != null && members.contains(login)) {
-                        callback.onCheckCompleted(true);
-                        return;
-                    }
-                }
-                callback.onCheckCompleted(false);
-            }
-        }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), "Ошибка проверки пользователя", Toast.LENGTH_SHORT).show();
-            callback.onCheckCompleted(false);
-        });
-    }
-
-    public interface BandCheckCallback {
-        void onCheckCompleted(boolean isInBand);
-    }
 
     public void updateSelectedCountText() {
         int selectedCount = searchMembersAdapter.getSelectedCount();

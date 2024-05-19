@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -14,14 +14,15 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentBandPageBinding;
-import com.example.findyourband.services.BandDataClass;
+
 import com.example.findyourband.services.INSTRUMENT;
 import com.example.findyourband.services.MemberDataClass;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -123,14 +124,10 @@ public class BandPageFragment extends Fragment {
         }
 
 
-
         binding.arrowBackComponent.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                VacancyPageFragment fragment = new VacancyPageFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                AppActivity.navController.navigate(R.id.action_bandPageFragment_to_navigation_vacancy);
             }
         });
 

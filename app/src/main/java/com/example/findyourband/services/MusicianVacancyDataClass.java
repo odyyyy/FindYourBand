@@ -7,6 +7,9 @@ import java.util.List;
 public class MusicianVacancyDataClass {
     String city;
     String experience;
+    String id;
+
+
 
     List<String> genres;
     List<String> instruments;
@@ -19,6 +22,17 @@ public class MusicianVacancyDataClass {
     }
 
 
+    public MusicianVacancyDataClass(String id, String city, String experience, List<String> genres, List<String> instruments, String description, List<String> tracks, List<String> contacts) {
+        this.id = id;
+        this.city = city;
+        this.experience = experience;
+        this.genres = genres;
+        this.instruments = instruments;
+        this.description = description;
+        this.tracks = tracks;
+        this.contacts = contacts;
+    }
+
     public MusicianVacancyDataClass(String city, String experience, List<String> genres, List<String> instruments, String description, List<String> tracks, List<String> contacts) {
         this.city = city;
         this.experience = experience;
@@ -30,6 +44,15 @@ public class MusicianVacancyDataClass {
     }
 
 
+    @PropertyName("id")
+    public String getId() {
+        return id;
+    }
+
+    @PropertyName("id")
+    public void setId(String id) {
+        this.id = id;
+    }
     @PropertyName("city")
     public String getCity() {
         return city;

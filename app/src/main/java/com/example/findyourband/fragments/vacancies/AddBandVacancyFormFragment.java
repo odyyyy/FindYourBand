@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAddBandVacancyFormBinding;
 import com.example.findyourband.services.BandVacancyDataClass;
@@ -62,6 +63,8 @@ public class AddBandVacancyFormFragment extends Fragment {
                     List<String> tracks = new ArrayList<>(Arrays.asList("Трек 1", "Трек 2", "Трек 3"));
                     // TODO: добавление треков в массив
 
+                    String Id = musVacancyRef.push().getKey();
+
 
                     List<String> contacts = new ArrayList<>();
                     contacts.add(binding.contact1EditText.getText().toString());
@@ -70,16 +73,13 @@ public class AddBandVacancyFormFragment extends Fragment {
 
                     String description = binding.descriptionEditText.getText().toString();
 
-                    BandVacancyDataClass bandVacancy = new BandVacancyDataClass(instrument, description, tracks, contacts);
+                    BandVacancyDataClass bandVacancy = new BandVacancyDataClass(Id,instrument, description, tracks, contacts);
                     musVacancyRef.child(userID).setValue(bandVacancy).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(getContext(), "Объявление успешно создано!", Toast.LENGTH_SHORT).show();
+                            AppActivity.navController.navigate(R.id.action_addNewVacancyFragment_to_navigation_vacancy);
 
-                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                            VacancyPageFragment fragment = new VacancyPageFragment();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

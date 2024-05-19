@@ -13,24 +13,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
-import com.example.findyourband.fragments.vacancies.BandPageFragment;
-import com.example.findyourband.fragments.vacancies.MusicianPageFragment;
+
 import com.example.findyourband.services.INSTRUMENT;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.ViewHolder> {
 
@@ -106,34 +102,30 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
                 TextView vacancyTextView = ((TextView) v.findViewById(R.id.nameVacancyTextView));
                 String vacancy_title = vacancyTextView.getText().toString();
 
+                String id = vacanciesList.get(position).get("id").get(0);
+
                 String description = vacanciesList.get(position).get("description").get(0);
                 ArrayList<String> tracks = vacanciesList.get(position).get("tracks");
                 ArrayList<String> contacts = vacanciesList.get(position).get("contacts");
-
                 Bundle vacancyData = new Bundle();
+                vacancyData.putString("id", id);
                 vacancyData.putString("name", name);
                 vacancyData.putString("image", image);
-                vacancyData.putString( "city", city);
+                vacancyData.putString("city", city);
                 vacancyData.putStringArrayList("instruments", instruments);
                 vacancyData.putStringArrayList("genres", genres);
                 vacancyData.putString("description", description);
                 vacancyData.putStringArrayList("tracks", tracks);
                 vacancyData.putStringArrayList("contacts", contacts);
 
-
-                Fragment fragment;
                 if (vacancy_title.contains("Группа")) {
-                    fragment = new BandPageFragment();
                     vacancyData.putStringArrayList("members", vacanciesList.get(position).get("members"));
-                } else {
-                    fragment = new MusicianPageFragment();
-                    vacancyData.putString("experience", vacanciesList.get(position).get("experience").get(0));
-                }
+                    AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_bandPageFragment, vacancyData);
 
-                fragment.setArguments(vacancyData);
-                FragmentManager fragmentManager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment).addToBackStack(null).commit();
+                } else {
+                    vacancyData.putString("experience", vacanciesList.get(position).get("experience").get(0));
+                    AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_musicianPageFragment, vacancyData);
+                }
             }
         });
     }
@@ -143,15 +135,6 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         return vacanciesList.size();
     }
 
-
-    private Map<String, ArrayList<String>> createVacancy(String nickname, String city, List<String> instruments, List<String> genres) {
-        Map<String, ArrayList<String>> vacancy = new HashMap<>();
-        vacancy.put("name", new ArrayList<>(Arrays.asList(nickname)));
-        vacancy.put("city", new ArrayList<>(Arrays.asList(city)));
-        vacancy.put("instruments", new ArrayList<>(instruments));
-        vacancy.put("genres", new ArrayList<>(genres));
-        return vacancy;
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

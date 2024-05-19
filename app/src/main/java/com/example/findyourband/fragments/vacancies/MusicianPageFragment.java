@@ -6,9 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +14,32 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentMusicianPageBinding;
 import com.example.findyourband.services.INSTRUMENT;
+import com.example.findyourband.services.RequestDataClass;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class MusicianPageFragment extends Fragment {
 
     FragmentMusicianPageBinding binding;
+
+    String currentUserLogin;
+    String musicianLogin;
 
     @Nullable
     @Override
@@ -37,10 +50,17 @@ public class MusicianPageFragment extends Fragment {
         setUserNicknameInUpperBar();
 
 
+
         Bundle musicianData = getArguments();
 
 
         if (musicianData != null) {
+            String id = musicianData.getString("id");
+            if (isRequestAlreadySend(id)) {
+
+            }
+
+
             // TODO: Установка картинки
             if (!musicianData.getString("image").equals("")) {
                 binding.musicianAvatarAndNickname.avatarImageView.setImageBitmap(musicianData.getParcelable("img"));
@@ -111,25 +131,110 @@ public class MusicianPageFragment extends Fragment {
 
         }
 
+        hideButtonIfUsersVacancy();
 
         binding.arrowBackComponent.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                VacancyPageFragment fragment = new VacancyPageFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                AppActivity.navController.navigate(R.id.action_musicianPageFragment_to_navigation_vacancy);
             }
         });
+
+        binding.sendRequestVacancyPageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
+
+                if (binding.sendRequestVacancyPageBtn.getText().toString().equals("Заявка отправлена")) {
+                    Toast.makeText(getContext(), "Вы уже отправляли заявку!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                bandsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.child(currentUserID).exists()) {
+                            sendRequest();
+
+                        } else {
+                            Toast.makeText(getContext(), "Только лидер группы может отправлять запросы музыкантам!", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(getContext(), "Ошибка проверки статуса группы: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            private void sendRequest() {
+                DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
+                RequestDataClass requestDataClass = new RequestDataClass(currentUserLogin, musicianLogin, "send",  false);
+                String requestID = musicianData.getString("id");
+
+                requestsRef.child(requestID).setValue(requestDataClass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "Заявка успешно отправлена!", Toast.LENGTH_SHORT).show();
+                        changeBtnStateAfterSendRequest();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Ошибка при создании заявки: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
         return view;
 
 
     }
+
+    private boolean isRequestAlreadySend(String id) {
+
+        DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
+
+        requestsRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot request : dataSnapshot.getChildren()) {
+                    if (request.getKey().equals(id) && request.child("from").getValue(String.class).equals(currentUserLogin)) {
+                        changeBtnStateAfterSendRequest();
+                        return;
+                    }
+                }
+
+            }
+        });
+
+        return false;
+    }
+
+    private void hideButtonIfUsersVacancy() {
+        musicianLogin = binding.musicianAvatarAndNickname.nicknameTextView.getText().toString();
+        if (currentUserLogin.equals(musicianLogin)) {
+            binding.sendRequestVacancyPageBtn.setVisibility(View.GONE);
+        }
+    }
+
+    private void changeBtnStateAfterSendRequest() {
+        binding.sendRequestVacancyPageBtn.setBackgroundColor(getContext().getResources().getColor(R.color.orange));
+        binding.sendRequestVacancyPageBtn.setText("Заявка отправлена");
+    }
+
     private void setUserNicknameInUpperBar() {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
-        String login = preferences.getString("login", "пользователь!");
-        binding.welcomeTextView.setText(login);
+        currentUserLogin = preferences.getString("login", "пользователь!");
+        binding.welcomeTextView.setText(currentUserLogin);
     }
 
 }

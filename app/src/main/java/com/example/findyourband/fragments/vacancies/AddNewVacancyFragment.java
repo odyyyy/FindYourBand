@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAddNewVacancyBinding;
 import com.google.android.material.chip.Chip;
@@ -62,11 +63,7 @@ public class AddNewVacancyFragment extends Fragment {
         binding.arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                VacancyPageFragment fragment = new VacancyPageFragment();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
+                AppActivity.navController.navigate(R.id.action_addNewVacancyFragment_to_navigation_vacancy);
             }
         });
         return binding.getRoot();

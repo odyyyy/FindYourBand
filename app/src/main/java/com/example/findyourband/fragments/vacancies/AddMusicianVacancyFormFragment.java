@@ -5,16 +5,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
+
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAddMusicianVacancyFormBinding;
 import com.example.findyourband.services.MusicianVacancyDataClass;
@@ -67,7 +67,7 @@ public class AddMusicianVacancyFormFragment extends Fragment {
                     // Добавление вакансии в БД
 
                     DatabaseReference musVacancyRef = FirebaseDatabase.getInstance().getReference("vacancies").child("from_musicians");
-
+                    String ID = musVacancyRef.push().getKey();
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     String city = binding.cityAutoComplete.getText().toString();
                     String experience = binding.experienceDropDown.getText().toString();
@@ -83,7 +83,7 @@ public class AddMusicianVacancyFormFragment extends Fragment {
                     contacts.add(binding.contact2EditText.getText().toString());
                     contacts.add(binding.contact3EditText.getText().toString());
 
-                    MusicianVacancyDataClass musVacancy = new MusicianVacancyDataClass(city,
+                    MusicianVacancyDataClass musVacancy = new MusicianVacancyDataClass(ID,city,
                             experience,
                             genres,
                             instruments,
@@ -96,11 +96,7 @@ public class AddMusicianVacancyFormFragment extends Fragment {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(getContext(), "Объявление успешно создано!", Toast.LENGTH_SHORT).show();
-
-                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                            VacancyPageFragment frag = new VacancyPageFragment();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.app_fragment_container, frag, "VacancyPageFragment").addToBackStack(null).commit();
+                            AppActivity.navController.navigate(R.id.action_addNewVacancyFragment_to_navigation_vacancy);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
 

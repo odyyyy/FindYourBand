@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentFilterBinding;
 
@@ -43,13 +44,7 @@ public class FilterFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                VacancyPageFragment fragment = new VacancyPageFragment();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "VacancyPageFragment").addToBackStack(null).commit();
-
+                AppActivity.navController.navigate(R.id.action_filterFragment_to_navigation_vacancy);
 
             }
         });

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.VacanciesAdapter;
 import com.example.findyourband.databinding.FragmentVacancyPageBinding;
@@ -56,27 +59,19 @@ public class VacancyPageFragment extends Fragment {
         adapter = new VacanciesAdapter(getContext(), vacanciesList);
         vacanciesRecyclerView.setAdapter(adapter);
         loadVacanciesDataFromDatabase();
-
+        NavController navController = AppActivity.navController;
 
         binding.filterChip.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-                FilterFragment fragment = new FilterFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "filterFragment").addToBackStack("filterFragment").commit();
+                navController.navigate(R.id.action_navigation_vacancy_to_filterFragment);
             }
         });
 
         binding.addVacancyBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-                AddNewVacancyFragment fragment = new AddNewVacancyFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "addNewVacancyFragment").addToBackStack("addNewVacancyFragment").commit();
+                navController.navigate(R.id.action_navigation_vacancy_to_addNewVacancyFragment);
             }
         });
 
@@ -124,6 +119,8 @@ public class VacancyPageFragment extends Fragment {
                                     }
                                 }
 
+                                String id = vacancySnapshot.child("id").getValue(String.class);
+
 
                                 List<String> contacts = new ArrayList<>();
                                 for (DataSnapshot contactSnapshot : vacancySnapshot.child("contacts").getChildren()) {
@@ -131,7 +128,7 @@ public class VacancyPageFragment extends Fragment {
                                 }
 
 
-                                Map<String, ArrayList<String>> vacancy = createVacancy(login, img, city, instruments, genres, description,
+                                Map<String, ArrayList<String>> vacancy = createVacancy(id, login, img, city, instruments, genres, description,
                                         tracks, contacts, experience, null);
                                 if (!vacanciesList.contains(vacancy)) {
                                     vacanciesList.add(vacancy);
@@ -162,6 +159,7 @@ public class VacancyPageFragment extends Fragment {
                         DatabaseReference bandRef = FirebaseDatabase.getInstance().getReference("bands").child(bandId);
                         ArrayList<String> instruments = new ArrayList<>(Collections.singletonList(bandSnapshot.child("instrument").getValue(String.class)));
 
+                        String vacancyID = bandSnapshot.child("id").getValue(String.class);
                         String description = bandSnapshot.child("description").getValue(String.class);
 
                         List<String> tracks = new ArrayList<>();
@@ -198,7 +196,7 @@ public class VacancyPageFragment extends Fragment {
                                     }
 
 
-                                    Map<String, ArrayList<String>> band = createVacancy(name, img, city, instruments, genres, description, tracks, contacts, null, members);
+                                    Map<String, ArrayList<String>> band = createVacancy(vacancyID,name, img, city, instruments, genres, description, tracks, contacts, null, members);
                                     if (!vacanciesList.contains(band)) {
                                         vacanciesList.add(band);
                                     }
@@ -225,10 +223,11 @@ public class VacancyPageFragment extends Fragment {
     }
 
 
-    private Map<String, ArrayList<String>> createVacancy(String nickname, String img, String city, List<String> instruments,
+    private Map<String, ArrayList<String>> createVacancy(String id, String nickname, String img, String city, List<String> instruments,
                                                          List<String> genres, String description, List<String> tracks,
                                                          List<String> contacts, String experience, List<String> members) {
         Map<String, ArrayList<String>> vacancy = new HashMap<>();
+        vacancy.put("id", new ArrayList<>(Collections.singletonList(id)));
         vacancy.put("name", new ArrayList<>(Collections.singletonList(nickname)));
         vacancy.put("image", new ArrayList<>(Collections.singletonList(img)));
         vacancy.put("city", new ArrayList<>(Collections.singletonList(city)));

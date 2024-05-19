@@ -7,8 +7,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentCreateBandBinding;
@@ -55,13 +58,8 @@ public class CreateBandFragment extends Fragment {
         loadState();
         setSelectedBandMembers();
 
-
         binding.cityAutoComplete.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.cities)));
 
-
-
-        // TODO: Нужно сохранять состояние, чтобы оно оставалось прежним
-        //  при возврате с страницы поиска учатсника
         binding.createBandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,10 +117,11 @@ public class CreateBandFragment extends Fragment {
                                             editor.putBoolean("bandLeader", true);
                                             editor.apply();
 
-                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                            MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
-                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
+                                            NavController navController = NavHostFragment.findNavController(CreateBandFragment.this);
+                                            NavOptions navOptions = new NavOptions.Builder()
+                                                    .setPopUpTo(R.id.navigation_my_account_settings, true)
+                                                    .build();
+                                            navController.navigate(R.id.action_createBandFragment_to_navigation_my_account_settings, null, navOptions);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -145,10 +144,7 @@ public class CreateBandFragment extends Fragment {
         binding.arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                MyAccountSettingsFragment fragment = new MyAccountSettingsFragment();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "MyAccountSettingsFragment").addToBackStack(null).commit();
+                AppActivity.navController.navigate(R.id.action_createBandFragment_to_navigation_my_account_settings);
             }
         });
 
@@ -157,11 +153,7 @@ public class CreateBandFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveState();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                SearchBandMembersFragment fragment = new SearchBandMembersFragment();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "SearchBandMembersFragment").addToBackStack(null).commit();
-
+                AppActivity.navController.navigate(R.id.action_createBandFragment_to_searchBandMembersFragment);
             }
         });
 

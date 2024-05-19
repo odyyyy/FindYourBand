@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/nickname_text"
             android:layout_width="wrap_content"
-            android:layout_height="22dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:maxLines="1"
@@ -37,7 +37,7 @@
             android:singleLine="true"
             android:text="Никнейм"
             android:textColor="#FF000000"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/arrow_back"
@@ -68,7 +68,7 @@
         android:id="@+id/container_chat_field"
         android:layout_width="332dp"
         android:layout_height="69dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal">
 
 

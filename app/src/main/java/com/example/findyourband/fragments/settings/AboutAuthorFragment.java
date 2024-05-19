@@ -12,10 +12,10 @@ import com.example.findyourband.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RequestsStatusFragment#newInstance} factory method to
+ * Use the {@link AboutAuthorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RequestsStatusFragment extends Fragment {
+public class AboutAuthorFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class RequestsStatusFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public RequestsStatusFragment() {
+    public AboutAuthorFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class RequestsStatusFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RequestsStatusFragment.
+     * @return A new instance of fragment AboutAuthorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RequestsStatusFragment newInstance(String param1, String param2) {
-        RequestsStatusFragment fragment = new RequestsStatusFragment();
+    public static AboutAuthorFragment newInstance(String param1, String param2) {
+        AboutAuthorFragment fragment = new AboutAuthorFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class RequestsStatusFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_requests_status, container, false);
+        return inflater.inflate(R.layout.fragment_about_author, container, false);
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.VacanciesAdapter;
 import com.example.findyourband.databinding.FragmentMyVacanciesBinding;
@@ -54,9 +54,7 @@ public class MyVacanciesFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                SettingsFragment fragment = new SettingsFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, "SettingsFragment").addToBackStack("SettingsFragment").commit();
+                AppActivity.navController.navigate(R.id.action_myVacanciesFragment_to_navigation_my_account_settings);
             }
         });
 
@@ -99,6 +97,7 @@ public class MyVacanciesFragment extends Fragment {
                                             tracks.add(trackSnapshot.getValue(String.class));
                                         }
                                     }
+                                    String id = vacancySnapshot.child("id").getValue(String.class);
 
 
                                     List<String> contacts = new ArrayList<>();
@@ -107,7 +106,7 @@ public class MyVacanciesFragment extends Fragment {
                                     }
 
 
-                                    Map<String, ArrayList<String>> vacancy = createVacancy(login, img, city, instruments, genres, description,
+                                    Map<String, ArrayList<String>> vacancy = createVacancy(id, login, img, city, instruments, genres, description,
                                             tracks, contacts, experience, null);
                                     if (!vacanciesList.contains(vacancy)) {
                                         vacanciesList.add(vacancy);
@@ -155,6 +154,7 @@ public class MyVacanciesFragment extends Fragment {
                         for (DataSnapshot contactSnapshot : bandSnapshot.child("contacts").getChildren()) {
                             contacts.add(contactSnapshot.getValue(String.class));
                         }
+                        String vacancyID = bandSnapshot.child("id").getValue(String.class);
 
 
                         bandRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -176,7 +176,7 @@ public class MyVacanciesFragment extends Fragment {
                                     }
 
 
-                                    Map<String, ArrayList<String>> band = createVacancy(name, img, city, instruments, genres, description, tracks, contacts, null, members);
+                                    Map<String, ArrayList<String>> band = createVacancy(vacancyID, name, img, city, instruments, genres, description, tracks, contacts, null, members);
                                     if (!vacanciesList.contains(band)) {
                                         vacanciesList.add(band);
                                     }
@@ -201,10 +201,11 @@ public class MyVacanciesFragment extends Fragment {
         });
     }
 
-    private Map<String, ArrayList<String>> createVacancy(String nickname, String img, String city, List<String> instruments,
+    private Map<String, ArrayList<String>> createVacancy(String id, String nickname, String img, String city, List<String> instruments,
                                                          List<String> genres, String description, List<String> tracks,
                                                          List<String> contacts, String experience, List<String> members) {
         Map<String, ArrayList<String>> vacancy = new HashMap<>();
+        vacancy.put("id", new ArrayList<>(Collections.singletonList(id)));
         vacancy.put("name", new ArrayList<>(Collections.singletonList(nickname)));
         vacancy.put("image", new ArrayList<>(Collections.singletonList(img)));
         vacancy.put("city", new ArrayList<>(Collections.singletonList(city)));
