@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 
 public class MusicianPageFragment extends Fragment {
@@ -56,9 +57,7 @@ public class MusicianPageFragment extends Fragment {
 
         if (musicianData != null) {
             String id = musicianData.getString("id");
-            if (isRequestAlreadySend(id)) {
-
-            }
+            updateBtnStateIfRequestExists(id);
 
 
             // TODO: Установка картинки
@@ -172,6 +171,7 @@ public class MusicianPageFragment extends Fragment {
             }
 
             private void sendRequest() {
+
                 DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
                 RequestDataClass requestDataClass = new RequestDataClass(currentUserLogin, musicianLogin, "send",  false);
                 String requestID = musicianData.getString("id");
@@ -197,7 +197,7 @@ public class MusicianPageFragment extends Fragment {
 
     }
 
-    private boolean isRequestAlreadySend(String id) {
+    private void  updateBtnStateIfRequestExists(String id) {
 
         DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
 
@@ -216,7 +216,6 @@ public class MusicianPageFragment extends Fragment {
             }
         });
 
-        return false;
     }
 
     private void hideButtonIfUsersVacancy() {

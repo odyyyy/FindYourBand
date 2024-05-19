@@ -32,13 +32,13 @@ enum STATUS {
     }
 }
 
-public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> {
+public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequestsAdapter.ViewHolder> {
 
 
     private LayoutInflater layoutInflater;
     private List<RequestDataClass> requestsList;
 
-    public RequestsAdapter(Context context, List<RequestDataClass> requestsList) {
+    public OutcomeRequestsAdapter(Context context, List<RequestDataClass> requestsList) {
         this.layoutInflater = LayoutInflater.from(context);
         this.requestsList = requestsList;
     }
@@ -54,6 +54,11 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        RequestDataClass request = requestsList.get(position);
+        holder.requestToNicknameText.setText(request.getTo());
+        holder.statusImageView.setImageResource(STATUS.valueOf(request.getStatus()).getStatusId());
+        holder.requestToImageText.setImageResource(R.drawable.user_default_avatar);
 
 
 
@@ -71,9 +76,16 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
 
         ImageView statusImageView;
         ImageView requestToImageText;
+        ImageView requestDecisionImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            requestToNicknameText = itemView.findViewById(R.id.text_nickname);
+            statusImageView = itemView.findViewById(R.id.requestStatusImageView);
+            requestToImageText = itemView.findViewById(R.id.request_to_image_user_avatar);
+            requestDecisionImageView = itemView.findViewById(R.id.requestStatusImageView2);
+
+            requestDecisionImageView.setVisibility(View.GONE);
 
         }
     }

@@ -5,7 +5,7 @@ public class RequestDataClass {
     private String to;
 
     private String status; // send, accept, deny
-    private boolean type; // 0 - musician, 1 - band
+    private boolean type; // 0 - from band to musician, 1 - from musician to band
 
     public RequestDataClass() {
     }

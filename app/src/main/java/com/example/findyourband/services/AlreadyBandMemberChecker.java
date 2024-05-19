@@ -34,4 +34,6 @@ public class AlreadyBandMemberChecker {
             callback.onCheckCompleted(false);
         });
     }
+
+
 }

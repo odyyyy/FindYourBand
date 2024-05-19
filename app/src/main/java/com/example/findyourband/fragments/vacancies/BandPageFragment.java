@@ -17,15 +17,20 @@ import android.view.ViewGroup;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentBandPageBinding;
 
+import com.example.findyourband.services.AlreadyBandMemberChecker;
 import com.example.findyourband.services.INSTRUMENT;
 import com.example.findyourband.services.MemberDataClass;
+import com.example.findyourband.services.RequestDataClass;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +46,8 @@ import java.util.List;
 public class BandPageFragment extends Fragment {
 
     FragmentBandPageBinding binding;
+    List<MemberDataClass> members;
+    String currentUserLogin;
 
 
     @Nullable
@@ -53,6 +60,7 @@ public class BandPageFragment extends Fragment {
         Bundle bandData = this.getArguments();
 
         if (bandData != null) {
+            updateBtnStateIfRequestExists(bandData.getString("id"));
             String bandName = bandData.getString("name");
             binding.bandnameTextView.setText(bandName);
 
@@ -87,7 +95,7 @@ public class BandPageFragment extends Fragment {
 
 
 
-            List<MemberDataClass> members = getBandMembersData(bandData.getStringArrayList("members"));
+            members = getBandMembersData(bandData.getStringArrayList("members"));
 
             BandMembersAdapter searchMembersAdapter = new BandMembersAdapter(getContext(), members, this);
 
@@ -122,6 +130,7 @@ public class BandPageFragment extends Fragment {
                 binding.musicianSocialMediaText.setText(contacts.get(2));
             }
         }
+        hideButtonIfBandsVacancy();
 
 
         binding.arrowBackComponent.setOnClickListener(new View.OnClickListener() {
@@ -131,14 +140,86 @@ public class BandPageFragment extends Fragment {
             }
         });
 
+        binding.sendRequestVacancyPageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
+
+                if (binding.sendRequestVacancyPageBtn.getText().toString().equals("Заявка отправлена")) {
+                    Toast.makeText(getContext(), "Вы уже отправляли заявку!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                bandsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        AlreadyBandMemberChecker.isUserAlreadyInBand(currentUserLogin, new AlreadyBandMemberChecker.BandCheckCallback() {
+
+                            @Override
+                            public void onCheckCompleted(boolean isInBand) {
+                                if (isInBand) {
+                                    Toast.makeText(getContext(), "Участники групп не могут отправлять заявки музыкантам!", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                sendRequest();
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(getContext(), "Ошибка проверки статуса группы: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+            private void sendRequest() {
+
+                DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
+                String bandLeaderLogin = getBandLeaderLogin();
+                RequestDataClass requestDataClass = new RequestDataClass(currentUserLogin,
+                        bandLeaderLogin != null ? bandLeaderLogin : binding.bandnameTextView.getText().toString(),
+                        "send",
+                        true);
+                String requestID = bandData.getString("id");
+
+                requestsRef.child(requestID).setValue(requestDataClass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "Заявка успешно отправлена!", Toast.LENGTH_SHORT).show();
+                        changeBtnStateAfterSendRequest();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Ошибка при создании заявки: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            private String getBandLeaderLogin() {
+                for (MemberDataClass member : members) {
+                    if (member.isLeader()) {
+                        binding.sendRequestVacancyPageBtn.setVisibility(View.GONE);
+                        return member.getNickname();
+                    }
+                }
+                return null;
+            }
+        });
+
         return binding.getRoot();
 
     }
 
+
+
     private void setUserNicknameInUpperBar() {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
-        String login = preferences.getString("login", "пользователь!");
-        binding.welcomeTextView.setText( login );
+        currentUserLogin = preferences.getString("login", "пользователь!");
+        binding.welcomeTextView.setText( currentUserLogin );
     }
 
     private List<MemberDataClass> getBandMembersData(ArrayList<String> membersNames) {
@@ -186,6 +267,37 @@ public class BandPageFragment extends Fragment {
         return members;
     }
 
+    private void hideButtonIfBandsVacancy() {
+        for (MemberDataClass member : members) {
+            if (member.getNickname().equals(currentUserLogin)) {
+                binding.sendRequestVacancyPageBtn.setVisibility(View.GONE);
+                break;
+            }
+        }
+    }
+    private void changeBtnStateAfterSendRequest() {
+        binding.sendRequestVacancyPageBtn.setBackgroundColor(getContext().getResources().getColor(R.color.orange));
+        binding.sendRequestVacancyPageBtn.setText("Заявка отправлена");
+    }
 
+    private void  updateBtnStateIfRequestExists(String id) {
 
+        DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
+
+        requestsRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot request : dataSnapshot.getChildren()) {
+                    if (request.getKey().equals(id) && request.child("from").getValue(String.class).equals(currentUserLogin)) {
+                        changeBtnStateAfterSendRequest();
+                        return;
+                    }
+                }
+
+            }
+        });
+
+    }
 }
