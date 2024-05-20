@@ -186,7 +186,7 @@ public class BandPageFragment extends Fragment {
                         "send",
                         true);
 
-                requestsRef.child(requestID).setValue(requestDataClass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                requestsRef.child(requestsRef.push().getKey() + currentUserLogin).setValue(requestDataClass).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getContext(), "Заявка успешно отправлена!", Toast.LENGTH_SHORT).show();

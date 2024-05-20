@@ -61,7 +61,7 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
         holder.denyImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: изменение статуса заявки в бд
+
                 DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
                 requestsRef.child(request.getId()).child("status").getRef().setValue("deny").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

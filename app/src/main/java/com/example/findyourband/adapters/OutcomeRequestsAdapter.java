@@ -105,6 +105,21 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
                             }
                         });
                     }
+                    else{
+                        vacanciesRef.child("from_musicians").get().addOnSuccessListener(dataSnapshot -> {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                if (snapshot.child("id").getValue(String.class).equals(request.getId())) {
+                                    ArrayList<String> contacts = new ArrayList<>();
+                                    for (DataSnapshot contactSnapshot : snapshot.child("contacts").getChildren()) {
+                                        contacts.add(contactSnapshot.getValue(String.class));
+                                    }
+                                    showContactsDialog(v.getContext(), contacts);
+                                }
+                                break;
+                            }
+                        });
+
+                    }
 
                 }
             });
