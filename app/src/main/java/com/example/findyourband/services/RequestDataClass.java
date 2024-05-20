@@ -13,7 +13,9 @@ public class RequestDataClass {
     public RequestDataClass() {
     }
 
-    public RequestDataClass(String from, String to, String status, boolean type) {
+
+    public RequestDataClass(String id, String from, String to, String status, boolean type) {
+        this.id = id;
         this.from = from;
         this.to = to;
         this.status = status;
@@ -25,6 +27,16 @@ public class RequestDataClass {
         this.to = to;
         this.type = type;
     }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getFrom() {
         return from;
     }
@@ -44,6 +56,7 @@ public class RequestDataClass {
     public void setStatus(String status) {
         this.status = status;
     }
+
     public void setTo(String to) {
         this.to = to;
     }
@@ -55,12 +68,13 @@ public class RequestDataClass {
     public void setType(boolean type) {
         this.type = type;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RequestDataClass that = (RequestDataClass) o;
-        return from.equals(that.from) && to.equals(that.to) && status.equals(that.status) && type == that.type ;
+        return from.equals(that.from) && to.equals(that.to) && status.equals(that.status) && type == that.type;
     }
 
     @Override

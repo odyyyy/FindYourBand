@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    android:background="@drawable/rounded_dialog_background"
+    android:padding="16dp">
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/contactsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Контакты"
+        android:textStyle="bold"
+        android:paddingBottom="48dp"
+        android:textSize="26sp"/>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/contactListTextView"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Загрузка контактов..."
+        android:textSize="20sp"/>
+
+</LinearLayout>

@@ -171,10 +171,10 @@ public class MusicianPageFragment extends Fragment {
             }
 
             private void sendRequest() {
+                String requestID = musicianData.getString("id");
 
                 DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
-                RequestDataClass requestDataClass = new RequestDataClass(currentUserLogin, musicianLogin, "send",  false);
-                String requestID = musicianData.getString("id");
+                RequestDataClass requestDataClass = new RequestDataClass(requestID, currentUserLogin, musicianLogin, "send",  false);
 
                 requestsRef.child(requestID).setValue(requestDataClass).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

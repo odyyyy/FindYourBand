@@ -8,7 +8,8 @@
 
     <FrameLayout
         android:layout_margin="15dp"
-        android:id="@+id/container_chat_field1"
+        android:id="@+id/container_request"
+
         android:background="@drawable/music_example_shape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

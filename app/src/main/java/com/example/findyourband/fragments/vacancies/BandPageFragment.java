@@ -179,11 +179,12 @@ public class BandPageFragment extends Fragment {
 
                 DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
                 String bandLeaderLogin = getBandLeaderLogin();
-                RequestDataClass requestDataClass = new RequestDataClass(currentUserLogin,
+                String requestID = bandData.getString("id");
+
+                RequestDataClass requestDataClass = new RequestDataClass(requestID,currentUserLogin,
                         bandLeaderLogin != null ? bandLeaderLogin : binding.bandnameTextView.getText().toString(),
                         "send",
                         true);
-                String requestID = bandData.getString("id");
 
                 requestsRef.child(requestID).setValue(requestDataClass).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

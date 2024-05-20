@@ -13,6 +13,9 @@
     <color name="card_member_not_selected">#E2E2E2</color>
     <color name="card_selected_color">#979797</color>
     <color name="genre_bcg_color">#373737</color>
+    <color name="accept_green_color">#BCFDB1</color>
+    <color name="deny_red_color">#FDB1B1</color>
+    <color name="denyColor">#FF1503</color>
 
 
 </resources>

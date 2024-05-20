@@ -20,6 +20,8 @@ import com.example.findyourband.adapters.OutcomeRequestsAdapter;
 import com.example.findyourband.databinding.FragmentMyRequestsBinding;
 import com.example.findyourband.services.RequestDataClass;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -75,71 +77,81 @@ public class MyRequestsFragment extends Fragment {
         String currentUserLogin = binding.nicknameText.getText().toString();
 
         requestsRef.get().addOnSuccessListener(dataSnapshot -> {
+            List<Task<DataSnapshot>> tasks = new ArrayList<>();
             for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                 RequestDataClass request = requestSnapshot.getValue(RequestDataClass.class);
                 if (request != null) {
-
-                }
-
-                if (request.getTo().equals(currentUserLogin) && !request.getStatus().equals("deny")) {
-                    processIncomeRequest(bandsRef, request);
-                }
-                else if (request.getFrom().equals(currentUserLogin)) {
-                    processOutcomeRequest(bandsRef, request);
+                    if (request.getTo().equals(currentUserLogin) && !request.getStatus().equals("deny")) {
+                        tasks.add(bandsRef.get().continueWithTask(task -> {
+                            DataSnapshot dataSnapshot1 = task.getResult();
+                            processIncomeRequest(dataSnapshot1, request);
+                            return Tasks.forResult(null);
+                        }));
+                    } else if (request.getFrom().equals(currentUserLogin)) {
+                        tasks.add(bandsRef.get().continueWithTask(task -> {
+                            DataSnapshot dataSnapshot1 = task.getResult();
+                            processOutcomeRequest(dataSnapshot1, request);
+                            return Tasks.forResult(null);
+                        }));
+                    }
                 }
             }
+
+            Tasks.whenAll(tasks).addOnSuccessListener(unused -> {
+                // Дождались выполнения всех задач
+                filterOutcomeRequests();
+            });
         });
     }
 
-    private void processIncomeRequest(DatabaseReference bandsRef, RequestDataClass request) {
+    private void processIncomeRequest(DataSnapshot dataSnapshot, RequestDataClass request) {
         if (!request.isType()) {
-            bandsRef.get().addOnSuccessListener(dataSnapshot -> {
-                for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
-                    List<String> members = new ArrayList<>();
-                    for (DataSnapshot memberSnapshot : bandSnapshot.child("memberUserLogins").getChildren()) {
-                        members.add(memberSnapshot.getValue(String.class));
-                    }
-                    if (!members.isEmpty() && members.get(members.size() - 1).equals(request.getFrom())) {
-                        request.setFrom("Группа " + bandSnapshot.child("name").getValue(String.class));
-                        incomeRequestsList.add(request);
-                        incomeRequestsAdapter.notifyDataSetChanged();
-                        break;
-                    }
+            for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
+                List<String> members = new ArrayList<>();
+                for (DataSnapshot memberSnapshot : bandSnapshot.child("memberUserLogins").getChildren()) {
+                    members.add(memberSnapshot.getValue(String.class));
                 }
-            });
+                if (!members.isEmpty() && members.get(members.size() - 1).equals(request.getFrom())) {
+                    request.setFrom("Группа " + bandSnapshot.child("name").getValue(String.class));
+                    incomeRequestsList.add(request);
+                    incomeRequestsAdapter.notifyDataSetChanged();
+                    break;
+                }
+            }
         } else {
             incomeRequestsList.add(request);
             incomeRequestsAdapter.notifyDataSetChanged();
         }
     }
 
-    private void processOutcomeRequest(DatabaseReference bandsRef, RequestDataClass request) {
+    private void processOutcomeRequest(DataSnapshot dataSnapshot, RequestDataClass request) {
         if (request.isType()) {
-            bandsRef.get().addOnSuccessListener(dataSnapshot -> {
-                for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
-                    List<String> members = new ArrayList<>();
-                    for (DataSnapshot memberSnapshot : bandSnapshot.child("memberUserLogins").getChildren()) {
-                        members.add(memberSnapshot.getValue(String.class));
-                    }
-                    if (!members.isEmpty() && members.get(members.size() - 1).equals(request.getTo())) {
-                        request.setTo("Группа " + bandSnapshot.child("name").getValue(String.class));
-
-
-                        if (!incomeRequestsList.isEmpty() && !incomeRequestsList.get(0).getFrom().equals(request.getTo())) {
-
-                            outcomeRequestsList.add(request);
-                            outcomeRequestsAdapter.notifyDataSetChanged();
-                        }
-
-                        break;
-                    }
+            for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
+                List<String> members = new ArrayList<>();
+                for (DataSnapshot memberSnapshot : bandSnapshot.child("memberUserLogins").getChildren()) {
+                    members.add(memberSnapshot.getValue(String.class));
                 }
-            });
+                if (!members.isEmpty() && members.get(members.size() - 1).equals(request.getTo())) {
+                    request.setTo("Группа " + bandSnapshot.child("name").getValue(String.class));
+                    outcomeRequestsList.add(request);
+                    break;
+                }
+            }
         } else {
-
             outcomeRequestsList.add(request);
-            outcomeRequestsAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void filterOutcomeRequests() {
+        List<RequestDataClass> filteredOutcomeRequests = new ArrayList<>();
+        for (RequestDataClass request : outcomeRequestsList) {
+            if (incomeRequestsList.isEmpty() || !incomeRequestsList.get(0).getFrom().equals(request.getTo())) {
+                filteredOutcomeRequests.add(request);
+            }
+        }
+        outcomeRequestsList.clear();
+        outcomeRequestsList.addAll(filteredOutcomeRequests);
+        outcomeRequestsAdapter.notifyDataSetChanged();
     }
 
 
