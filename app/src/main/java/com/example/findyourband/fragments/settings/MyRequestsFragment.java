@@ -80,10 +80,12 @@ public class MyRequestsFragment extends Fragment {
                 if (request != null) {
 
                 }
-                if (request.getFrom().equals(currentUserLogin)) {
-                    processOutcomeRequest(bandsRef, request);
-                } else if (request.getTo().equals(currentUserLogin)) {
+
+                if (request.getTo().equals(currentUserLogin) && !request.getStatus().equals("deny")) {
                     processIncomeRequest(bandsRef, request);
+                }
+                else if (request.getFrom().equals(currentUserLogin)) {
+                    processOutcomeRequest(bandsRef, request);
                 }
             }
         });

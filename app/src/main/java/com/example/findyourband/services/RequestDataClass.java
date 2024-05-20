@@ -1,6 +1,9 @@
 package com.example.findyourband.services;
 
+import java.util.Objects;
+
 public class RequestDataClass {
+    private String id;
     private String from;
     private String to;
 
@@ -52,6 +55,16 @@ public class RequestDataClass {
     public void setType(boolean type) {
         this.type = type;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RequestDataClass that = (RequestDataClass) o;
+        return from.equals(that.from) && to.equals(that.to) && status.equals(that.status) && type == that.type ;
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to, status, type);
+    }
 }
