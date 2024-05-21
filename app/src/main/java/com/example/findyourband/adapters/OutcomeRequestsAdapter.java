@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -132,14 +133,28 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
         View dialogView = inflater.inflate(R.layout.dialog_contacts, null);
         dialogBuilder.setView(dialogView);
 
-        TextView contactListTextView = dialogView.findViewById(R.id.contactListTextView);
+        LinearLayout contactLayout = dialogView.findViewById(R.id.contactsLayout);
 
         StringBuilder contactsDisplay = new StringBuilder();
         for (String contact : contacts) {
             contactsDisplay.append(contact).append("\n\n");
         }
 
-        contactListTextView.setText(contactsDisplay.toString());
+        if (contacts.get(0).equals("")) {
+            contactLayout.removeView(dialogView.findViewById(R.id.contactPhoneLayout));
+        } else {
+            ((TextView) dialogView.findViewById(R.id.phoneNumberText)).setText(contacts.get(0));
+        }
+        if (contacts.get(1).equals("")) {
+            contactLayout.removeView(dialogView.findViewById(R.id.contactEmailLayout));
+        } else {
+            ((TextView) dialogView.findViewById(R.id.emailText)).setText(contacts.get(1));
+        }
+        if (contacts.get(2).equals("")) {
+            contactLayout.removeView(dialogView.findViewById(R.id.contactSocialMediaLayout));
+        } else {
+            ((TextView) dialogView.findViewById(R.id.socialMediaText)).setText(contacts.get(2));
+        }
 
         dialogBuilder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
 

@@ -298,177 +298,177 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/musicExampleMusicianVacancy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/musicianDescriptionValueLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:text="Примеры работ"
+<!--        <TextView-->
+<!--            android:id="@+id/musicExampleMusicianVacancy"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/musicianDescriptionValueLayout"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:text="Примеры работ"-->
 
-            android:textSize="28sp"
-            android:textStyle="bold" />
+<!--            android:textSize="28sp"-->
+<!--            android:textStyle="bold" />-->
 
-        <LinearLayout
-            android:id="@+id/musicExamplesLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/musicExampleMusicianVacancy"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/musicExamplesLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/musicExampleMusicianVacancy"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:orientation="vertical">-->
 
-            <LinearLayout
+<!--            <LinearLayout-->
 
-                android:id="@+id/musicExampleOne"
-                style="@style/musicExampleLayoutStyle">
+<!--                android:id="@+id/musicExampleOne"-->
+<!--                style="@style/musicExampleLayoutStyle">-->
 
-                <TextView
-                    android:layout_width="270dp"
-                    android:layout_height="wrap_content"
+<!--                <TextView-->
+<!--                    android:layout_width="270dp"-->
+<!--                    android:layout_height="wrap_content"-->
 
-                    android:text="Название композиции"
-                    android:textSize="16sp" />
+<!--                    android:text="Название композиции"-->
+<!--                    android:textSize="16sp" />-->
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_play_music" />
-            </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="15dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:src="@drawable/ic_play_music" />-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
+<!--            <LinearLayout-->
 
-                android:id="@+id/musicExampleSecond"
-                style="@style/musicExampleLayoutStyle">
+<!--                android:id="@+id/musicExampleSecond"-->
+<!--                style="@style/musicExampleLayoutStyle">-->
 
-                <TextView
-                    android:layout_width="270dp"
-                    android:layout_height="wrap_content"
+<!--                <TextView-->
+<!--                    android:layout_width="270dp"-->
+<!--                    android:layout_height="wrap_content"-->
 
-                    android:text="Название композиции"
-                    android:textSize="16sp" />
+<!--                    android:text="Название композиции"-->
+<!--                    android:textSize="16sp" />-->
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_play_music" />
-            </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="15dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:src="@drawable/ic_play_music" />-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
+<!--            <LinearLayout-->
 
-                android:id="@+id/musicExampleThird"
-                style="@style/musicExampleLayoutStyle">
+<!--                android:id="@+id/musicExampleThird"-->
+<!--                style="@style/musicExampleLayoutStyle">-->
 
-                <TextView
-                    android:layout_width="270dp"
-                    android:layout_height="wrap_content"
+<!--                <TextView-->
+<!--                    android:layout_width="270dp"-->
+<!--                    android:layout_height="wrap_content"-->
 
-                    android:text="Название композиции"
-                    android:textSize="16sp" />
+<!--                    android:text="Название композиции"-->
+<!--                    android:textSize="16sp" />-->
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_play_music" />
-            </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="15dp"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:src="@drawable/ic_play_music" />-->
+<!--            </LinearLayout>-->
 
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
-        <TextView
-            android:id="@+id/MusicianContactsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/musicExamplesLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:text="Контакты"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/MusicianContactsTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/musicExamplesLayout"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:text="Контакты"-->
+<!--            android:textSize="28sp"-->
+<!--            android:textStyle="bold" />-->
 
-        <LinearLayout
-            android:id="@+id/musicianContactsValueLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/MusicianContactsTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/musicianContactsValueLayout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/MusicianContactsTextView"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginBottom="30dp"-->
+<!--            android:orientation="vertical">-->
 
-            <LinearLayout
-                android:id="@+id/contactPhoneLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/contactPhoneLayout"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_phone" />
+<!--                <ImageView-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:src="@drawable/ic_phone" />-->
 
-                <TextView
-                    android:id="@+id/musicianPhoneNumberText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="+71234567890"
-                    android:textSize="20sp" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/musicianPhoneNumberText"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:text="+71234567890"-->
+<!--                    android:textSize="20sp" />-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/contactEmailLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
+<!--            <LinearLayout-->
+<!--                android:id="@+id/contactEmailLayout"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:gravity="center_vertical"-->
 
-                android:orientation="horizontal">
+<!--                android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_email" />
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:src="@drawable/ic_email" />-->
 
-                <TextView
+<!--                <TextView-->
 
-                    android:id="@+id/musicianEmailText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="musician@email.ru"
-                    android:textSize="20sp" />
-            </LinearLayout>
+<!--                    android:id="@+id/musicianEmailText"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:text="musician@email.ru"-->
+<!--                    android:textSize="20sp" />-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/contactSocialMediaLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
+<!--            <LinearLayout-->
+<!--                android:id="@+id/contactSocialMediaLayout"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:gravity="center_vertical"-->
 
-                android:orientation="horizontal">
+<!--                android:orientation="horizontal">-->
 
-                <ImageView
+<!--                <ImageView-->
 
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_socialmedia" />
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:src="@drawable/ic_socialmedia" />-->
 
-                <TextView
-                    android:id="@+id/musicianSocialMediaText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="musicianSocialMedia"
-                    android:textSize="20sp" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/musicianSocialMediaText"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:text="musicianSocialMedia"-->
+<!--                    android:textSize="20sp" />-->
+<!--            </LinearLayout>-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
     </RelativeLayout>
 

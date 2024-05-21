@@ -111,22 +111,6 @@ public class MusicianPageFragment extends Fragment {
 
             List<String> contacts = musicianData.getStringArrayList("contacts");
 
-            if (contacts.get(0).equals("")) {
-                binding.musicianContactsValueLayout.removeView(binding.contactPhoneLayout);
-            } else {
-                binding.musicianPhoneNumberText.setText(contacts.get(0));
-            }
-            if (contacts.get(1).equals("")) {
-                binding.musicianContactsValueLayout.removeView(binding.contactEmailLayout);
-            } else {
-                binding.musicianEmailText.setText(contacts.get(1));
-            }
-            if (contacts.get(2).equals("")) {
-                binding.musicianContactsValueLayout.removeView(binding.contactSocialMediaLayout);
-            } else {
-                binding.musicianSocialMediaText.setText(contacts.get(2));
-            }
-
 
         }
 

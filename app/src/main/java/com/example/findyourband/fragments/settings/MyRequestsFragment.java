@@ -29,7 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MyRequestsFragment extends Fragment {
 
     FragmentMyRequestsBinding binding;
@@ -46,17 +45,14 @@ public class MyRequestsFragment extends Fragment {
         binding = FragmentMyRequestsBinding.inflate(inflater, container, false);
 
         setUserNicknameInUpperBar();
-
         loadRequestsDataFromDatabase();
-
 
         // Для входящих заявок
         binding.incomeRequestsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         incomeRequestsAdapter = new IncomeRequestsAdapter(getContext(), incomeRequestsList);
         binding.incomeRequestsRecycleView.setAdapter(incomeRequestsAdapter);
 
-
-        // Для исходящий заявок
+        // Для исходящих заявок
         binding.outcomeRequestsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         outcomeRequestsAdapter = new OutcomeRequestsAdapter(getContext(), outcomeRequestsList);
         binding.outcomeRequestsRecycleView.setAdapter(outcomeRequestsAdapter);
@@ -81,13 +77,13 @@ public class MyRequestsFragment extends Fragment {
             for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                 RequestDataClass request = requestSnapshot.getValue(RequestDataClass.class);
                 if (request != null) {
-                    if (request.getTo().equals(currentUserLogin) && !request.getStatus().equals("deny")) {
+                    if (currentUserLogin.equals(request.getTo()) && !"deny".equals(request.getStatus())) {
                         tasks.add(bandsRef.get().continueWithTask(task -> {
                             DataSnapshot dataSnapshot1 = task.getResult();
                             processIncomeRequest(dataSnapshot1, request);
                             return Tasks.forResult(null);
                         }));
-                    } else if (request.getFrom().equals(currentUserLogin)) {
+                    } else if (currentUserLogin.equals(request.getFrom())) {
                         tasks.add(bandsRef.get().continueWithTask(task -> {
                             DataSnapshot dataSnapshot1 = task.getResult();
                             processOutcomeRequest(dataSnapshot1, request);
@@ -145,7 +141,7 @@ public class MyRequestsFragment extends Fragment {
     private void filterOutcomeRequests() {
         List<RequestDataClass> filteredOutcomeRequests = new ArrayList<>();
         for (RequestDataClass request : outcomeRequestsList) {
-            if (incomeRequestsList.isEmpty() || !incomeRequestsList.get(0).getFrom().equals(request.getTo())) {
+            if (incomeRequestsList.isEmpty() || (request.getTo() != null && !incomeRequestsList.get(0).getFrom().equals(request.getTo()))) {
                 filteredOutcomeRequests.add(request);
             }
         }
@@ -153,7 +149,6 @@ public class MyRequestsFragment extends Fragment {
         outcomeRequestsList.addAll(filteredOutcomeRequests);
         outcomeRequestsAdapter.notifyDataSetChanged();
     }
-
 
     private void setUserNicknameInUpperBar() {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
