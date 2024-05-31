@@ -100,6 +100,7 @@
             android:layout_marginTop="17dp"
             android:layout_marginBottom="20dp"
             android:text="Новости"
+            android:textColor="#000000"
             android:textSize="32sp" />
 
         <androidx.recyclerview.widget.RecyclerView

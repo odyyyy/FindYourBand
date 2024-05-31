@@ -42,6 +42,26 @@ public class AppActivity extends AppCompatActivity {
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (savedInstanceState != null) {
+            String currentFragmentTag = savedInstanceState.getString("currentFragmentTag");
+            if (currentFragmentTag != null) {
+                Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(currentFragmentTag);
+                if (currentFragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.app_fragment_container, currentFragment, currentFragmentTag)
+                            .commit();
+                }
+            }
+        }
+        else{
+            newsRecyclerView = findViewById(R.id.newsRecyclerView);
+            if (newsRecyclerView != null) {
+                newsRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            }
+            new ParserInBackground(getApplicationContext()).execute();
+
+        }
+
         // Получение данных из бд и кеширование их в SharedPreferences
         writeLoginFromFirebaseToSharedPreferences();
         loadDataIsUserBandLeader();
@@ -53,11 +73,7 @@ public class AppActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(navView, navController);
 
-        newsRecyclerView = findViewById(R.id.newsRecyclerView);
-        if (newsRecyclerView != null) {
-            newsRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        }
-        new ParserInBackground(getApplicationContext()).execute();
+
 
         navView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -85,8 +101,10 @@ public class AppActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String login = dataSnapshot.child("login").getValue(String.class);
-                ((TextView) findViewById(R.id.welcomeTextView)).setText("Добро пожаловать,\n" + login + "!");
-                // Добавление логина в sharedPreferences
+                TextView welcomeTextView = findViewById(R.id.welcomeTextView);
+                if (welcomeTextView != null) {
+                    welcomeTextView.setText("Добро пожаловать,\n" + login + "!");
+                }
                 SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("login", login);
@@ -100,36 +118,32 @@ public class AppActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        Log.d("Logging", "Saving fragment: " + "start");
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.app_fragment_container);
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.app_fragment_container);
         if (currentFragment != null) {
-            Log.d("Logging", "Saving fragment: " + currentFragment.getTag());
-            outState.putString("fragment", currentFragment.getTag());
+            outState.putString("currentFragmentTag", currentFragment.getTag());
         }
     }
 
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d("Logging", "Restoring fragment: " + "start");
-        Log.d("Logging", String.valueOf(savedInstanceState));
-        if (savedInstanceState.containsKey("fragment")) {
-            String fragmentTag = savedInstanceState.getString("fragment");
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
-            if (fragment != null) {
-                Log.d("Logging", "Restoring fragment3 : " + fragmentTag);
-                Log.d("Logging", "Restoring fragment 4: " + fragment);
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.app_fragment_container, fragment, fragmentTag).commit();
+
+        String currentFragmentTag = savedInstanceState.getString("currentFragmentTag");
+        if (currentFragmentTag != null) {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(currentFragmentTag);
+            if (currentFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.app_fragment_container, currentFragment, currentFragmentTag)
+                        .commit();
             }
         }
     }
+
 
     private void loadDataIsUserBandLeader() {
         DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference().child("bands");
