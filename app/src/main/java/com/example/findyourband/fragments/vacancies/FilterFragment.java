@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,18 @@ import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentFilterBinding;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FilterFragment extends Fragment {
     FragmentFilterBinding binding;
+
+    HashMap<String, String> filters;
+
+    ArrayList<Map<String, ArrayList<String>>> vacanciesList = new ArrayList<Map<String, ArrayList<String>>>();
 
     @Nullable
     @Override
@@ -28,9 +37,7 @@ public class FilterFragment extends Fragment {
         binding = FragmentFilterBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-
         HashMap<String, ArrayAdapter<String>> adaptersMap = getAdaptersForFilterInputs();
-
 
         // Установка адапторов для выпадающих списков и автокомплита
         binding.cityAutoComplete.setAdapter(adaptersMap.get("city"));
@@ -69,12 +76,28 @@ public class FilterFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                filters = new HashMap<>();
 
-                // TODO: применение фильтра
+                if (binding.chipMusicBands.isChecked()) {
+                    filters.put("type", "from_bands");
+                }
+                else if (binding.chipMusicians.isChecked()) {
+                    filters.put("type", "from_musicians");
+                }
+                else{
+                    filters.put("type", "");
+                }
+
+                filters.put("city", binding.cityAutoComplete.getText().toString());
+                filters.put("instrument", binding.instrumentDropDown.getText().toString());
+                filters.put("genre", binding.genreDropDown.getText().toString());
+                filters.put("experience", binding.experienceDropDown.getText().toString());
+
+                Bundle filterBundle = new Bundle();
+                filterBundle.putSerializable("filters", filters);
+                AppActivity.navController.navigate(R.id.action_filterFragment_to_navigation_vacancy, filterBundle);
             }
         });
-
-
 
         return view;
 
@@ -93,10 +116,8 @@ public class FilterFragment extends Fragment {
         adaptersMap.put("genres", adapter_genres);
         adaptersMap.put("experience", adapter_experience);
 
-
         return adaptersMap;
 
     }
-
 
 }

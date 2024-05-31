@@ -44,7 +44,7 @@ public class MyVacanciesFragment extends Fragment {
 
 
         binding.myVacanciesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new VacanciesAdapter(getContext(), vacanciesList);
+        adapter = new VacanciesAdapter(getContext(), vacanciesList, true);
 
         binding.myVacanciesRecyclerView.setAdapter(adapter);
 

@@ -99,11 +99,10 @@
         <item>Великий Новгород</item>
         <item>Жуковский</item>
     </string-array>
-
     <string-array name="instruments">
-        <item>Электро-гитара</item>
+        <item>Электрогитара</item>
         <item>Бас</item>
-        <item>Клавишные</item>
+        <!-- <item>Клавишные</item>-->
         <item>Вокал</item>
         <item>Ударные</item>
         <item>Саксофон</item>
@@ -117,16 +116,15 @@
 
 
     <string-array name="genres">
-        <item>Рок</item>
-        <item>Хип-хоп</item>
-        <item>Электронная музыка</item>
-        <item>Джаз</item>
-        <item>Классическая музыка</item>
-        <item>Блюз</item>
-        <item>Метал</item>
-        <item>Панк</item>
-        <item>Кантри</item>
-        <item>Инди</item>
+        <item>Rock</item>
+        <item>Electronic</item>
+        <item>Jazz</item>
+        <item>Classical</item>
+        <item>Blues</item>
+        <item>Metal</item>
+        <item>Punk</item>
+        <item>Country</item>
+        <item>Indie</item>
         <item>Другое</item>
     </string-array>
 

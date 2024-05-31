@@ -57,7 +57,7 @@ public class AppActivity extends AppCompatActivity {
         if (newsRecyclerView != null) {
             newsRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         }
-        //new ParserInBackground(getApplicationContext()).execute();
+        new ParserInBackground(getApplicationContext()).execute();
 
         navView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();

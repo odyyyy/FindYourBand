@@ -52,13 +52,13 @@ public class VacancyPageFragment extends Fragment {
         View view = binding.getRoot();
 
         setUserLoginInUpperBar();
-
+        Bundle filters = getArguments();
+        loadVacanciesDataFromDatabase(filters);
 
         vacanciesRecyclerView = binding.vacancyRecyclerView;
         vacanciesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new VacanciesAdapter(getContext(), vacanciesList);
         vacanciesRecyclerView.setAdapter(adapter);
-        loadVacanciesDataFromDatabase();
         NavController navController = AppActivity.navController;
 
         binding.filterChip.setOnClickListener(new View.OnClickListener() {
@@ -86,13 +86,18 @@ public class VacancyPageFragment extends Fragment {
     }
 
 
-    private void loadVacanciesDataFromDatabase() {
+    private void loadVacanciesDataFromDatabase(Bundle filters) {
         DatabaseReference vacanciesRef = FirebaseDatabase.getInstance().getReference("vacancies");
-
+        boolean hasFilters = filters != null;
+        HashMap<String, String> filtersMap = null;
+        if (hasFilters)
+            filtersMap = (HashMap<String, String>) filters.getSerializable("filters");
         // Запрос на получение объявлений от музыкантов
+        HashMap<String, String> finalFiltersMap = filtersMap;
         vacanciesRef.child("from_musicians").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
+                if (hasFilters && !finalFiltersMap.get("type").equals("")  && !finalFiltersMap.get("type").equals("from_musicians")) {return;}
                 if (dataSnapshot.exists()) {
                     vacanciesList.clear();
                     for (DataSnapshot vacancySnapshot : dataSnapshot.getChildren()) {
@@ -101,16 +106,25 @@ public class VacancyPageFragment extends Fragment {
                             @Override
                             public void onLoginAndImgLoaded(String login, String img) {
                                 String city = vacancySnapshot.child("city").getValue(String.class);
+                                if (hasFilters && !finalFiltersMap.get("city").equals("") &&  !finalFiltersMap.get("city").equals(city)) {return;}
+
                                 List<String> instruments = new ArrayList<>();
+
+
                                 List<String> genres = new ArrayList<>();
                                 for (DataSnapshot instrumentSnapshot : vacancySnapshot.child("instruments").getChildren()) {
                                     instruments.add(instrumentSnapshot.getValue(String.class));
                                 }
+                                if (hasFilters &&  !finalFiltersMap.get("instrument").equals("") && !instruments.contains(finalFiltersMap.get("instrument"))) {return;}
+
                                 for (DataSnapshot genreSnapshot : vacancySnapshot.child("genres").getChildren()) {
                                     genres.add(genreSnapshot.getValue(String.class));
                                 }
+                                if (hasFilters &&  !finalFiltersMap.get("genre").equals("") && !genres.contains(finalFiltersMap.get("genre"))) {return;}
+
                                 String description = vacancySnapshot.child("description").getValue(String.class);
                                 String experience = vacancySnapshot.child("experience").getValue(String.class);
+                                if (hasFilters && !finalFiltersMap.get("experience").equals("") && !experience.equals(finalFiltersMap.get("experience"))) {return;}
 
                                 List<String> tracks = new ArrayList<>();
                                 if (vacancySnapshot.child("tracks").exists()) {
@@ -152,12 +166,17 @@ public class VacancyPageFragment extends Fragment {
         vacanciesRef.child("from_bands").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
+                if (hasFilters && !finalFiltersMap.get("type").equals("")  && !finalFiltersMap.get("type").equals("from_bands")) { return;}
+
                 if (dataSnapshot.exists()) {
                     vacanciesList.clear();
                     for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
                         String bandId = bandSnapshot.getKey();
                         DatabaseReference bandRef = FirebaseDatabase.getInstance().getReference("bands").child(bandId);
                         ArrayList<String> instruments = new ArrayList<>(Collections.singletonList(bandSnapshot.child("instrument").getValue(String.class)));
+                        if (hasFilters &&  !finalFiltersMap.get("instrument").equals("") && !instruments.get(0).equals(finalFiltersMap.get("instrument"))) {continue;}
+
+
 
                         String vacancyID = bandSnapshot.child("id").getValue(String.class);
                         String description = bandSnapshot.child("description").getValue(String.class);
@@ -185,11 +204,15 @@ public class VacancyPageFragment extends Fragment {
                                     String img = bandDataSnapshot.child("bandImage").getValue(String.class);
 
                                     String city = bandDataSnapshot.child("city").getValue(String.class);
+                                    if (hasFilters && !finalFiltersMap.get("city").equals("") && !finalFiltersMap.get("city").equals(city)) {return;}
 
                                     ArrayList<String> genres = new ArrayList<>();
                                     for (DataSnapshot genreSnapshot : bandDataSnapshot.child("genres").getChildren()) {
                                         genres.add(genreSnapshot.getValue(String.class));
                                     }
+
+                                    if (hasFilters &&  !finalFiltersMap.get("genre").equals("") && !genres.contains(finalFiltersMap.get("genre"))) {return;}
+
                                     List<String> members = new ArrayList<>();
                                     for (DataSnapshot memberSnapshot : bandDataSnapshot.child("memberUserLogins").getChildren()) {
                                         members.add(memberSnapshot.getValue(String.class));

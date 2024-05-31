@@ -109,6 +109,9 @@
         <action
             android:id="@+id/action_musicianPageFragment_to_navigation_vacancy"
             app:destination="@id/navigation_vacancy" />
+        <action
+            android:id="@+id/action_musicianPageFragment_to_myVacanciesFragment"
+            app:destination="@id/myVacanciesFragment" />
     </fragment>
     <fragment
         android:id="@+id/bandPageFragment"
@@ -117,6 +120,9 @@
         <action
             android:id="@+id/action_bandPageFragment_to_navigation_vacancy"
             app:destination="@id/navigation_vacancy" />
+        <action
+            android:id="@+id/action_bandPageFragment_to_myVacanciesFragment"
+            app:destination="@id/myVacanciesFragment" />
     </fragment>
     <fragment
         android:id="@+id/createBandFragment"
@@ -146,6 +152,12 @@
         <action
             android:id="@+id/action_myVacanciesFragment_to_navigation_my_account_settings"
             app:destination="@id/navigation_my_account_settings" />
+        <action
+            android:id="@+id/action_myVacanciesFragment_to_bandPageFragment"
+            app:destination="@id/bandPageFragment" />
+        <action
+            android:id="@+id/action_myVacanciesFragment_to_musicianPageFragment"
+            app:destination="@id/musicianPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/myRequestsFragment"

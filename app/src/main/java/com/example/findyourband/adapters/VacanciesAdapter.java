@@ -33,10 +33,19 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
     private LayoutInflater layoutInflater;
     private List<Map<String, ArrayList<String>>> vacanciesList;
 
+    private boolean isFromMyVacancies = false;
+
 
     public VacanciesAdapter(Context context, List<Map<String, ArrayList<String>>> vacanciesList) {
         this.layoutInflater = LayoutInflater.from(context);
         this.vacanciesList = vacanciesList;
+    }
+
+
+    public VacanciesAdapter(Context context, List<Map<String, ArrayList<String>>> vacanciesList, boolean isFromMyVacancies) {
+        this.layoutInflater = LayoutInflater.from(context);
+        this.vacanciesList = vacanciesList;
+        this.isFromMyVacancies = isFromMyVacancies;
     }
 
 
@@ -120,11 +129,18 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
 
                 if (vacancy_title.contains("Группа")) {
                     vacancyData.putStringArrayList("members", vacanciesList.get(position).get("members"));
+                    if (isFromMyVacancies) {
+                        AppActivity.navController.navigate(R.id.action_myVacanciesFragment_to_bandPageFragment, vacancyData);
+                    }
                     AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_bandPageFragment, vacancyData);
 
                 } else {
                     vacancyData.putString("experience", vacanciesList.get(position).get("experience").get(0));
-                    AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_musicianPageFragment, vacancyData);
+                    if (isFromMyVacancies) {
+                        AppActivity.navController.navigate(R.id.action_myVacanciesFragment_to_musicianPageFragment, vacancyData);
+                    }
+                    else
+                        AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_musicianPageFragment, vacancyData);
                 }
             }
         });
