@@ -3,7 +3,10 @@ package com.example.findyourband.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,8 +86,7 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
                     notifyItemRangeChanged(position, getItemCount());
                 }
             });
-        }
-        else if (request.getStatus().equals("accept")) {
+        } else if (request.getStatus().equals("accept")) {
             holder.frameLayout.setBackgroundResource(R.drawable.request_accept_shape);
             holder.frameLayout.setOnClickListener(new View.OnClickListener() {
 
@@ -105,8 +108,7 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
                                 break;
                             }
                         });
-                    }
-                    else{
+                    } else {
                         vacanciesRef.child("from_musicians").get().addOnSuccessListener(dataSnapshot -> {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.child("id").getValue(String.class).equals(request.getId())) {
@@ -143,17 +145,40 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
         if (contacts.get(0).equals("")) {
             contactLayout.removeView(dialogView.findViewById(R.id.contactPhoneLayout));
         } else {
-            ((TextView) dialogView.findViewById(R.id.phoneNumberText)).setText(contacts.get(0));
+            TextView phoneNumberText = dialogView.findViewById(R.id.phoneNumberText);
+            phoneNumberText.setText(contacts.get(0));
+            phoneNumberText.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + contacts.get(0)));
+                context.startActivity(intent);
+            });
         }
         if (contacts.get(1).equals("")) {
             contactLayout.removeView(dialogView.findViewById(R.id.contactEmailLayout));
         } else {
-            ((TextView) dialogView.findViewById(R.id.emailText)).setText(contacts.get(1));
+            TextView emailText = dialogView.findViewById(R.id.emailText);
+            emailText.setText(contacts.get(1));
+            emailText.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:" + contacts.get(1)));
+                context.startActivity(intent);
+            });
         }
         if (contacts.get(2).equals("")) {
             contactLayout.removeView(dialogView.findViewById(R.id.contactSocialMediaLayout));
         } else {
-            ((TextView) dialogView.findViewById(R.id.socialMediaText)).setText(contacts.get(2));
+            TextView socialMediaText = dialogView.findViewById(R.id.socialMediaText);
+            socialMediaText.setText(contacts.get(2));
+            socialMediaText.setOnClickListener(v -> {
+                String socialMediaUrl = contacts.get(2);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://" + socialMediaUrl));
+                    context.startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(context, "No application found to handle this request.", Toast.LENGTH_SHORT).show();
+                }
+
+            });
         }
 
         dialogBuilder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
@@ -188,9 +213,6 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
 
         }
     }
-
-
-
 
 
 }

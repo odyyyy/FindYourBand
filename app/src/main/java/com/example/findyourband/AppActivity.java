@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,16 +74,22 @@ public class AppActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(navView, navController);
 
-
+        NavOptions navOptions = new NavOptions.Builder()
+                .setEnterAnim(R.anim.from_left)
+                .setExitAnim(R.anim.to_right)
+                .setPopEnterAnim(R.anim.from_right)
+                .setPopExitAnim(R.anim.to_left)
+                .build();
 
         navView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.navigation_home) {
-                navController.navigate(R.id.navigation_home);
+                navController.popBackStack();
+                navController.navigate(R.id.navigation_home, null, navOptions);
             } else if (id == R.id.navigation_vacancy) {
-                navController.navigate(R.id.navigation_vacancy);
+                navController.navigate(R.id.navigation_vacancy, null, navOptions);
             } else if (id == R.id.navigation_my_account_settings) {
-                navController.navigate(R.id.navigation_my_account_settings);
+                navController.navigate(R.id.navigation_my_account_settings, null, navOptions);
             }
             return true;
         });

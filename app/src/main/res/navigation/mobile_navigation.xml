@@ -7,33 +7,66 @@
     <fragment
         android:id="@+id/mainPageFragment"
         android:name="com.example.findyourband.fragments.MainPageFragment"
-        android:label="MainPageFragment" >
+        android:label="MainPageFragment">
         <action
             android:id="@+id/action_mainPageFragment_to_registerPageFragment"
             app:destination="@id/registerPageFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
         <action
             android:id="@+id/action_mainPageFragment_to_loginPageFragment"
             app:destination="@id/loginPageFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
 
     <fragment
         android:id="@+id/loginPageFragment"
         android:name="com.example.findyourband.fragments.auth.LoginFragment"
-        android:label="LoginPageFragment" />
+        android:label="LoginPageFragment">
+        <action
+            android:id="@+id/action_loginPageFragment_to_mainPageFragment"
+            app:destination="@id/mainPageFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
 
     <fragment
         android:id="@+id/registerPageFragment"
         android:name="com.example.findyourband.fragments.auth.RegisterFragment"
-        android:label="RegisterPageFragment" >
+        android:label="RegisterPageFragment">
+        <action
+            android:id="@+id/action_registerPageFragment_to_mainPageFragment"
+            app:destination="@id/mainPageFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_registerPageFragment_to_registerChooseInstrumentsFragment"
+            app:destination="@id/registerChooseInstrumentsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerChooseInstrumentsFragment"
+        android:name="com.example.findyourband.fragments.auth.RegisterChooseInstrumentsFragment"
+        android:label="RegisterChooseInstrumentsFragment">
+        <action
+            android:id="@+id/action_registerChooseInstrumentsFragment_to_registerPageFragment"
+            app:destination="@id/registerPageFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
 
 </navigation>

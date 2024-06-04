@@ -59,18 +59,23 @@ public class SearchBandMembersFragment extends Fragment {
 
         // получение данных при изменении бд
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (userSearchList.size() > 0) {
                     userSearchList.clear();
                 }
-                String currentUserLogin = snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("login").getValue().toString();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String login = ds.child("login").getValue().toString();
-                    MemberDataClass user = new MemberDataClass(login, ds.child("image").getValue().toString(), (ArrayList<String>) ds.child("instruments").getValue());
 
-                    if (!user.getNickname().equals(currentUserLogin)) {
+                DataSnapshot currentUserSnapshot = snapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                String currentUserLogin = currentUserSnapshot.child("login").getValue(String.class);
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String login = ds.child("login").getValue(String.class);
+                    String image = ds.child("image").getValue(String.class);
+                    ArrayList<String> instruments = (ArrayList<String>) ds.child("instruments").getValue();
+
+                    if (login != null && image != null && instruments != null && !login.equals(currentUserLogin)) {
+                        MemberDataClass user = new MemberDataClass(login, image, instruments);
+
                         AlreadyBandMemberChecker.isUserAlreadyInBand(login, new AlreadyBandMemberChecker.BandCheckCallback() {
                             @Override
                             public void onCheckCompleted(boolean isInBand) {
@@ -92,7 +97,6 @@ public class SearchBandMembersFragment extends Fragment {
 
         // реализация автокомплита
         binding.bandMembersSearchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -106,7 +110,6 @@ public class SearchBandMembersFragment extends Fragment {
         });
 
         binding.applyBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Bundle selectedMembers = new Bundle();
@@ -136,7 +139,6 @@ public class SearchBandMembersFragment extends Fragment {
         }
         searchMembersAdapter.searchDataList(searchList);
     }
-
 
     public void updateSelectedCountText() {
         int selectedCount = searchMembersAdapter.getSelectedCount();

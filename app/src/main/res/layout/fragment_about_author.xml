@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.settings.AboutAuthorFragment">
+    android:background="@color/background"
+    android:padding="20dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
 
-</FrameLayout>
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/logo"
+            android:contentDescription="@string/app_name"
+            android:layout_marginBottom="16dp"/>
+
+
+        <TextView
+            android:id="@+id/appNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="Игнаткин Илья"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ИКБО-13-22"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/githubLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:src="@drawable/github_mark" />
+
+            <TextView
+                android:id="@+id/githubText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="github.com/odyyyy"
+                android:textSize="20sp" />
+        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:id="@+id/contactEmailLayout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="25dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:src="@drawable/ic_email" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/musicianPhoneNumberText"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:text="iliyaign123@yandex.ru"-->
+<!--                android:textSize="20sp" />-->
+<!--        </LinearLayout>-->
+
+
+
+    </LinearLayout>
+
+</ScrollView>

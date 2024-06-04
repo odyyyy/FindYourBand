@@ -29,7 +29,7 @@
             android:id="@+id/contactPhoneLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -44,6 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="+71234567890"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -51,7 +53,7 @@
             android:id="@+id/contactEmailLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:gravity="center_vertical"
 
             android:orientation="horizontal">
@@ -68,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="musician@email.ru"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -75,7 +79,7 @@
             android:id="@+id/contactSocialMediaLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:gravity="center_vertical"
 
             android:orientation="horizontal">
@@ -92,6 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="musicianSocialMedia"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="20sp" />
         </LinearLayout>
 
