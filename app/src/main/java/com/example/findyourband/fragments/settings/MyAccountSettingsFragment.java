@@ -1,10 +1,15 @@
 package com.example.findyourband.fragments.settings;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,9 +23,15 @@ import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentMyAccountSettingsBinding;
 import com.example.findyourband.services.AlreadyBandMemberChecker;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MyAccountSettingsFragment extends Fragment {
     FragmentMyAccountSettingsBinding binding;
+    String login;
 
     @Override
 
@@ -36,7 +47,7 @@ public class MyAccountSettingsFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                AppActivity.navController.navigate(R.id.action_navigation_my_account_settings_to_manageBandFragment);
+                showConfirmationDialog();
             }
         });
 
@@ -110,6 +121,13 @@ public class MyAccountSettingsFragment extends Fragment {
             }
         });
 
+        binding.instructionButtonAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppActivity.navController.navigate(R.id.action_navigation_my_account_settings_to_instructionFragment);
+            }
+        });
+
         binding.aboutAuthorButtonAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,10 +139,26 @@ public class MyAccountSettingsFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setMessage("Вы уверены что хотите выйти из аккаунта?")
+                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+                        }).setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+
+                alertDialog.show();
+
             }
         });
 
@@ -150,8 +184,52 @@ public class MyAccountSettingsFragment extends Fragment {
 
     private void setUserLoginInUpperBar() {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", 0);
-        String login = preferences.getString("login", "Пользователь");
+        login = preferences.getString("login", "Пользователь");
         binding.userImgAndName.nicknameTextView.setText(login);
+    }
+
+    private void showConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Вы уверены что хотите расформировать группу?")
+                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        disbandGroup();
+                    }
+                })
+                .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void disbandGroup() {
+        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
+        bandsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot bandSnapshot : dataSnapshot.getChildren()) {
+                    Iterable<DataSnapshot> members = bandSnapshot.child("memberUserLogins").getChildren();
+                    for (DataSnapshot member : members) {
+                        if (member.getValue(String.class).equals(login)) {
+                            bandSnapshot.getRef().removeValue();
+                            Toast.makeText(getContext(), "Группа успешно расформирована!", Toast.LENGTH_LONG).show();
+                            binding.manageBandButton.setVisibility(View.GONE);
+                            binding.createBandButton.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                    }
+                }
+                Toast.makeText(getContext(), "Ошибка при расформировании группы!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Ошибка: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        });
     }
 
 }

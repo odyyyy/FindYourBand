@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.FindYourBand" parent="Theme.Material3.DayNight.NoActionBar">
-         <item name="colorPrimary">@color/background</item>
+         <item name="colorPrimary">@color/orange</item>
     </style>
 
     <style name="Theme.FindYourBand" parent="Base.Theme.FindYourBand" />

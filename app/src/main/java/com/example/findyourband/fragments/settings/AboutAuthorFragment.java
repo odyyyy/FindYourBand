@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentAboutAuthorBinding;
 
@@ -25,6 +26,13 @@ public class AboutAuthorFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         binding = FragmentAboutAuthorBinding.inflate(inflater, container, false);
+
+        binding.arrowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppActivity.navController.navigate(R.id.action_aboutAuthorFragment_to_navigation_my_account_settings);
+            }
+        });
 
         binding.githubLayout.setOnClickListener(v -> {
             String githubUrl = "https://github.com/odyyyy";

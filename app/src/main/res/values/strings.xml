@@ -17,8 +17,7 @@
     <string name="title_settings">Аккаунт</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
-
-    <string name="app_description">FindYourBand - это инновационная платформа, предназначенная для соединения музыкантов и групп. Если вы музыкант, который ищет группу, или группа, которая ищет новых участников, FindYourBand поможет вам найти идеальное совпадение. Наше приложение предоставляет удобный интерфейс для поиска талантов, деления своей музыкой и сотрудничества с другими артистами. Присоединяйтесь к нашему сообществу и поднимите ваше музыкальное путешествие на новый уровень.</string>
+    <string name="app_description">FindYourBand — это платформа для объединения музыкантов и музыкальных групп. Наше приложение предоставляет удобный интерфейс для поиска талантов, совместного создания музыки и сотрудничества с другими артистами. Присоединяйтесь к нашему сообществу.</string>
     <string name="app_features">- Создание и управление профилем музыканта или группы\n\n- Поиск и фильтрация музыкантов и групп по жанру, местоположению и инструментам\n\n- Отправка и получение запросов на присоединение к группам или набор музыкантов\n\n- Оповещения о последних музыкальных событиях и новостях</string>
     <string name="app_contact">При возникновении вопросов, пожалуйста, свяжитесь с нами по контактам указанным ниже</string>
 

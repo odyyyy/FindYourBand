@@ -157,6 +157,9 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_instructionFragment"
+            app:destination="@id/instructionFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
@@ -337,6 +340,19 @@
         <action
             android:id="@+id/action_searchBandMembersFragment_to_createBandFragment"
             app:destination="@id/createBandFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/instructionFragment"
+        android:name="com.example.findyourband.fragments.InstructionFragment"
+        android:label="fragment_instruction"
+        tools:layout="@layout/fragment_instruction">
+        <action
+            android:id="@+id/action_instructionFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"

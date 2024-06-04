@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.findyourband.R;
+import com.example.findyourband.services.ContactsDialogController;
 import com.example.findyourband.services.RequestDataClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -90,7 +91,7 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
                                             contacts.add(contactSnapshot.getValue(String.class));
                                         }
                                         Log.d("TAGLogging", "1 " + contacts.toString());
-                                        showContactsDialog(v.getContext(), contacts);
+                                        ContactsDialogController.showContactsDialog(v.getContext(), contacts);
                                     }
 
                                 }
@@ -106,7 +107,7 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
                                         contacts.add(contactSnapshot.getValue(String.class));
                                     }
                                     Log.d("TAGLogging", "2 " + contacts.toString());
-                                    showContactsDialog(v.getContext(), contacts);
+                                    ContactsDialogController.showContactsDialog(v.getContext(), contacts);
                                 }
 
                             }
@@ -175,66 +176,7 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
 
     }
 
-    private void showContactsDialog(Context context, List<String> contacts) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, R.style.CustomDialog);
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View dialogView = inflater.inflate(R.layout.dialog_contacts, null);
-        dialogBuilder.setView(dialogView);
 
-        LinearLayout contactLayout = dialogView.findViewById(R.id.contactsLayout);
-
-        StringBuilder contactsDisplay = new StringBuilder();
-        for (String contact : contacts) {
-            contactsDisplay.append(contact).append("\n\n");
-        }
-
-        if (contacts.get(0).equals("")) {
-            contactLayout.removeView(dialogView.findViewById(R.id.contactPhoneLayout));
-        } else {
-            TextView phoneNumberText = dialogView.findViewById(R.id.phoneNumberText);
-            phoneNumberText.setText(contacts.get(0));
-            phoneNumberText.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + contacts.get(0)));
-                context.startActivity(intent);
-            });
-        }
-        if (contacts.get(1).equals("")) {
-            contactLayout.removeView(dialogView.findViewById(R.id.contactEmailLayout));
-        } else {
-            TextView emailText = dialogView.findViewById(R.id.emailText);
-            emailText.setText(contacts.get(1));
-            emailText.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:" + contacts.get(1)));
-                context.startActivity(intent);
-            });
-        }
-        if (contacts.get(2).equals("")) {
-            contactLayout.removeView(dialogView.findViewById(R.id.contactSocialMediaLayout));
-        } else {
-            TextView socialMediaText = dialogView.findViewById(R.id.socialMediaText);
-            socialMediaText.setText(contacts.get(2));
-            socialMediaText.setOnClickListener(v -> {
-                String socialMediaUrl = contacts.get(2);
-                if (socialMediaUrl.startsWith("tg://") || socialMediaUrl.startsWith("https://t.me/")) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(socialMediaUrl));
-                        context.startActivity(intent);
-                    } catch (ActivityNotFoundException e) {
-                        Toast.makeText(context, "No application found to handle this request.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "Invalid Telegram link.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        dialogBuilder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
-
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show();
-    }
 
 
     @Override

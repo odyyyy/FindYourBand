@@ -39,7 +39,7 @@
             android:backgroundTint="#FF5722"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
-            android:text="Управление группой" />
+            android:text="Расформировать группу" />
 
         <Button
             android:id="@+id/createBandButton"
@@ -104,7 +104,12 @@
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="16dp"
             android:text="О приложении"/>
-
+        <Button
+            android:id="@+id/instructionButtonAccount"
+            style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="Инструкция"/>
 
         <Button
             android:id="@+id/aboutAuthorButtonAccount"
