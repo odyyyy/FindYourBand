@@ -159,7 +159,11 @@
             app:popExitAnim="@anim/to_left" />
         <action
             android:id="@+id/action_navigation_my_account_settings_to_instructionFragment"
-            app:destination="@id/instructionFragment" />
+            app:destination="@id/instructionFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"

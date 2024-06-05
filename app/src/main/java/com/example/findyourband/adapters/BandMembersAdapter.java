@@ -2,6 +2,8 @@ package com.example.findyourband.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,7 +78,12 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
         for (String instrument : member.getInstruments()) {
             ImageView instrumentView = new ImageView(context);
             instrumentView.setLayoutParams(layoutParams);
-            instrumentView.setImageResource(INSTRUMENT.valueOf(instrument).getImageId());
+            Drawable drawable = context.getResources().getDrawable(INSTRUMENT.valueOf(instrument).getImageId()).mutate();
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, Color.parseColor("#DFDFDF"));
+
+            instrumentView.setImageDrawable(drawable);
+
 
             holder.instrumentsLayout.addView(instrumentView);
         }

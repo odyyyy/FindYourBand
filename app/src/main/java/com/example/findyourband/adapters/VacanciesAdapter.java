@@ -2,6 +2,8 @@ package com.example.findyourband.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -13,8 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.AppActivity;
@@ -73,13 +77,16 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         instrumentsLayout.removeAllViews();
         genresLayout.removeAllViews();
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(80, 80);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(85, 85);
         layoutParams.setMarginStart(10);
 
         for (String instrument : instruments) {
             ImageView instrumentImageView = new ImageView(holder.itemView.getContext());
             instrumentImageView.setLayoutParams(layoutParams);
-            instrumentImageView.setImageResource(INSTRUMENT.valueOf(instrument).getImageId());
+            Drawable drawable = AppCompatResources.getDrawable(holder.itemView.getContext(), INSTRUMENT.valueOf(instrument).getImageId()).mutate();
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, Color.parseColor("#DFDFDF"));
+            instrumentImageView.setImageDrawable(drawable);
             instrumentsLayout.addView(instrumentImageView);
         }
 

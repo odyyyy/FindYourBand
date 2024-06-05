@@ -51,7 +51,7 @@
                 android:gravity="center_horizontal"
                 android:lines="1"
                 android:text="Имя пользователя"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="26sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/vacancyCardImage">
@@ -65,7 +65,7 @@
                 android:layout_below="@id/nameVacancyTextView"
                 android:layout_centerHorizontal="true"
                 android:text="Город"
-                android:textColor="#454545"
+                android:textColor="#DFDFDF"
                 android:textSize="18sp">
 
             </TextView>
@@ -89,6 +89,7 @@
                     android:layout_height="40dp"/>
                 <ImageView
                     android:src="@drawable/ic_guitar"
+
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
 

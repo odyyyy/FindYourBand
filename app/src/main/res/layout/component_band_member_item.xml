@@ -20,7 +20,7 @@
         app:cardBackgroundColor="@color/card_color">
 
         <LinearLayout
-            android:background="#E2E2E2"
+            android:background="@color/mainColor"
             android:padding="10dp"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="16sp"
+                android:textColor="@color/darker_white"
                 android:text="Никнейм"/>
 
             <ImageView
@@ -53,6 +54,7 @@
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="1dp"
+                android:tint="@color/darker_white"
                 android:src="@drawable/ic_star_groupleader" />
 
             <LinearLayout

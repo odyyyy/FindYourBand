@@ -44,7 +44,7 @@
                 android:gravity="center_horizontal"
                 android:lines="3"
                 android:text="Заголовок"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newsCardImage">
@@ -58,7 +58,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="15 марта 2024"
-                android:textColor="#585858"
+                android:textColor="#DFDFDF"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
