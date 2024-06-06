@@ -4,5 +4,7 @@
          <item name="colorPrimary">@color/orange</item>
     </style>
 
-    <style name="Theme.FindYourBand" parent="Base.Theme.FindYourBand" />
+    <style name="Theme.FindYourBand" parent="Base.Theme.FindYourBand">
+        <item name="android:windowBackground">@color/background</item>
+    </style>
 </resources>

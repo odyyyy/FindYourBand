@@ -101,6 +101,8 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
             TextView genreTextView = new TextView(newContext);
             genreTextView.setText(genre);
             genreTextView.setLayoutParams(params);
+//            genreTextView.getBackground().setTint(Color.parseColor("#DFDFDF"));
+//            genreTextView.setTextColor(Color.parseColor("#000000"));
             genresLayout.addView(genreTextView);
         }
 

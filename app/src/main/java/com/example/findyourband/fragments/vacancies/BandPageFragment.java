@@ -107,7 +107,12 @@ public class BandPageFragment extends Fragment {
 
             String description = bandData.getString("description");
             TextView descriptionTextView = binding.musicianDescriptionValueLayout.findViewById(R.id.aboutMeContentTextView);
-            descriptionTextView.setText(description);
+
+            if (description.equals("")) {
+                descriptionTextView.setText("Описание отсутствует");
+            }
+            else
+                descriptionTextView.setText(description);
 
             List<String> tracks = bandData.getStringArrayList("tracks");
             // TODO: загрузка треков
