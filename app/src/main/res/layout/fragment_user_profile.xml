@@ -1,0 +1,118 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/user_img_and_name"
+            layout="@layout/component_user_img_and_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <ProgressBar
+            android:id="@+id/profile_loading_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/groupTextView"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <!--        <Button-->
+        <!--            android:id="@+id/writeMessageButton"-->
+        <!--            style="@style/ButtonSettingsStyle"-->
+
+        <!--            android:layout_below="@id/groupTextView"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:text="Написать" />-->
+
+        <TextView
+            android:id="@+id/instrumentsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Инструменты:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <LinearLayout
+            android:id="@+id/instrumentsVacancyPageLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_marginRight="20dp"-->
+            <!--                android:src="@drawable/ic_instrument" />-->
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_marginRight="20dp"-->
+            <!--                android:src="@drawable/ic_instrument" />-->
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:src="@drawable/ic_instrument" />-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/experienceMusicianVacancyLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/ExperienceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Опыт:"
+                android:textSize="20dp"
+
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/experienceValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:text="Более 2-х лет"
+
+                android:textSize="18dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

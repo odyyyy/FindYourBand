@@ -164,6 +164,13 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
@@ -351,11 +358,23 @@
     </fragment>
     <fragment
         android:id="@+id/instructionFragment"
-        android:name="com.example.findyourband.fragments.InstructionFragment"
+        android:name="com.example.findyourband.fragments.settings.InstructionFragment"
         android:label="fragment_instruction"
         tools:layout="@layout/fragment_instruction">
         <action
             android:id="@+id/action_instructionFragment_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.findyourband.fragments.settings.UserProfileFragment"
+        android:label="UserProfileFragment">
+        <action
+            android:id="@+id/action_userProfileFragment_to_navigation_my_account_settings"
             app:destination="@id/navigation_my_account_settings"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right"

@@ -74,6 +74,10 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
         holder.statusImageView.setImageResource(STATUS.valueOf(request.getStatus()).getStatusId());
         holder.requestToImageText.setImageResource(R.drawable.user_default_avatar);
 
+        if (request.getStatus().equals("send")) {
+
+        }
+
         if (request.getStatus().equals("deny")) {
             holder.frameLayout.setBackgroundResource(R.drawable.request_deny_shape);
             DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");

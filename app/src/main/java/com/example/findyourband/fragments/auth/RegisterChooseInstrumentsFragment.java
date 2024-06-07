@@ -6,11 +6,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.findyourband.AppActivity;
@@ -35,6 +37,7 @@ public class RegisterChooseInstrumentsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentRegisterChooseInstrumentsBinding.inflate(inflater, container, false);
 
+        binding.experienceDropDown.setAdapter(new ArrayAdapter<>(getContext(), R.layout.component_dropdown_item, getResources().getStringArray(R.array.experience)));
 
         binding.registerBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -45,21 +48,37 @@ public class RegisterChooseInstrumentsFragment extends Fragment {
                 if (instrumentCheckedChipIds.isEmpty() || instrumentCheckedChipIds.size() > 3) {
 
                     Toast.makeText(getContext(), "Выберите от 1 до 3 инструментов", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else if (binding.experienceDropDown.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Укажите опыт", Toast.LENGTH_SHORT).show();
+                } else {
 
                     Bundle registrationData = getArguments();
 
-                    if (registrationData != null){
+                    if (registrationData != null) {
                         String email = registrationData.getString("email");
                         String login = registrationData.getString("login");
-                        String password =registrationData.getString("password");
+                        String password = registrationData.getString("password");
                         ArrayList<String> instruments = getInstrumentNamesArray(instrumentCheckedChipIds);
+                        String experience = binding.experienceDropDown.getText().toString();
 
-                        createUser(email, login, password, instruments);
+                        Bundle registerData = new Bundle();
+                        registerData.putString("email", email);
+                        registerData.putString("login", login);
+                        registerData.putString("password", password);
+                        registerData.putStringArrayList("instruments", instruments);
+                        registerData.putString("experience", experience);
 
-                    }
-                    else{
+                        RegisterInputContactsFragment fragment = new RegisterInputContactsFragment();
+                        fragment.setArguments(registerData);
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.auth_fragment_container, fragment);
+                        fragmentTransaction.addToBackStack(null).commit();
+
+
+
+
+
+                    } else {
                         Toast.makeText(getContext(), "Произошла ошибка", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getContext(), MainActivity.class));
                     }
@@ -71,25 +90,7 @@ public class RegisterChooseInstrumentsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void createUser(String email, String login, String password, ArrayList<String> instruments) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-                        userRef.child("email").setValue(email);
-                        userRef.child("login").setValue(login);
-                        userRef.child("image").setValue("");
-                        userRef.child("instruments").setValue(instruments);
 
-                        Intent intent = new Intent(getActivity(), AppActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getContext(), MainActivity.class));
-                    }
-                });
-    }
 
     private ArrayList<String> getInstrumentNamesArray(List<Integer> instrumentIds) {
 

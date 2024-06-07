@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background"
     tools:context=".fragments.auth.RegisterFragment">
 
@@ -11,53 +12,37 @@
         android:id="@+id/imageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="170dp"
+        android:layout_gravity="center"
         android:fontFamily="@font/philosopher"
         android:text="Регистрация"
         android:textColor="@color/black"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:textSize="48sp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="8dp"
         android:text="Шаг 2"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:textSize="28sp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:text="Выберите инструмент(ы) (макс. 3)"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:textSize="22sp" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/instrumentRegisterChipGroup"
@@ -65,11 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:selectionRequired="true"
         app:singleLine="false">
 
@@ -77,83 +57,93 @@
             android:id="@+id/guitarChip"
             style="@style/chipStyle"
             android:text="Электрогитара" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/bassChip"
             style="@style/chipStyle"
             android:text="Бас" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/vocalChip"
             style="@style/chipStyle"
             android:text="Вокал" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/drumChip"
             style="@style/chipStyle"
             android:text="Ударные" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/saxChip"
             style="@style/chipStyle"
             android:text="Саксофон" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/tubeChip"
             style="@style/chipStyle"
             android:text="Труба" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/vioChip"
             style="@style/chipStyle"
             android:text="Виолончель" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/violinChip"
             style="@style/chipStyle"
             android:text="Скрипка" />
-        />
-
 
         <com.google.android.material.chip.Chip
             android:id="@+id/contrabassChip"
             style="@style/chipStyle"
             android:text="Контрабас" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/multiInstrumentChip"
             style="@style/chipStyle"
             android:text="Мультиинструменталист" />
-        />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/otherInstrumentChip"
             style="@style/chipStyle"
             android:text="Другое" />
-        />
-
-
     </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="17dp"
+        android:text="Укажите ваш опыт"
+        android:textSize="22sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Опыт"
+        app:startIconDrawable="@drawable/ic_experience">
+
+        <AutoCompleteTextView
+            android:id="@+id/experienceDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:text="" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/registerBtn"
         style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="34dp"
+        android:text="Продолжить регистрацию" />
 
-        android:layout_marginTop="24dp"
-        android:text="Завершить регистрацию"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instrumentRegisterChipGroup" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -67,6 +67,25 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_registerChooseInstrumentsFragment_to_registerInputContactsFragment"
+            app:destination="@id/registerInputContactsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerInputContactsFragment"
+        android:name="com.example.findyourband.fragments.auth.RegisterInputContactsFragment"
+        android:label="RegisterInputContactsFragment">
+        <action
+            android:id="@+id/action_registerInputContactsFragment_to_registerChooseInstrumentsFragment"
+            app:destination="@id/registerChooseInstrumentsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
 
 </navigation>

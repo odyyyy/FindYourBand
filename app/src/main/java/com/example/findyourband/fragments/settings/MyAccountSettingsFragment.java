@@ -73,13 +73,12 @@ public class MyAccountSettingsFragment extends Fragment {
         });
 
 
-//        binding.myPageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
+        binding.myPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppActivity.navController.navigate(R.id.action_navigation_my_account_settings_to_userProfileFragment);
+            }
+        });
 
         binding.myVacanciesButton.setOnClickListener(new View.OnClickListener() {
 

@@ -49,14 +49,14 @@
             android:drawablePadding="16dp"
             android:text="Создать группу" />
 
-<!--        <Button-->
-<!--            android:id="@+id/myPageButton"-->
-<!--            style="@style/ButtonSettingsStyle"-->
-<!--            android:drawableEnd="@drawable/ic_arrow_right"-->
-<!--            android:drawablePadding="16dp"-->
-<!--            android:text="Моя страница"-->
+        <Button
+            android:id="@+id/myPageButton"
+            style="@style/ButtonSettingsStyle"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="16dp"
+            android:text="Моя страница"
 
-<!--            />-->
+            />
 
         <Button
             android:id="@+id/myVacanciesButton"
