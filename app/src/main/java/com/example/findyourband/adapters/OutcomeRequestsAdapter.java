@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +22,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.services.ContactsDialogController;
+import com.example.findyourband.services.FirebaseQueriesServices;
 import com.example.findyourband.services.RequestDataClass;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -76,9 +80,33 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
 
         if (request.getStatus().equals("send")) {
 
+            holder.frameLayout.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (request.getTo().contains("Группа")) {
+                        //Bundle bandDataBundle = new Bundle();
+                        // TODO: получаем данные группы и открываем страницу их объявлений
+
+                        // AppActivity.navController.navigate(R.id.action_myRequestsFragment_to_bandPageFragment, bandDataBundle);
+                    }
+
+                    else{
+                        Bundle UserDataBundle = new Bundle();
+                        FirebaseQueriesServices.getUserIdByLogin(request.getTo(), new FirebaseQueriesServices.UserIdGetterCallback() {
+                            @Override
+                            public void onGetIdCompleted(String ID) {
+                                UserDataBundle.putString("UserID", ID);
+                                AppActivity.navController.navigate(R.id.action_myRequestsFragment_to_userProfileFragment,UserDataBundle);
+                            }
+                        });
+                    }
+                }
+            });
+
         }
 
-        if (request.getStatus().equals("deny")) {
+        else if (request.getStatus().equals("deny")) {
             holder.frameLayout.setBackgroundResource(R.drawable.request_deny_shape);
             DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
             holder.frameLayout.setOnClickListener(new View.OnClickListener() {
@@ -98,44 +126,37 @@ public class OutcomeRequestsAdapter extends RecyclerView.Adapter<OutcomeRequests
                 @Override
                 public void onClick(View v) {
                     DatabaseReference vacanciesRef = FirebaseDatabase.getInstance().getReference("vacancies");
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
 
                     if (request.getTo().contains("Группа")) {
                         vacanciesRef.child("from_bands").get().addOnSuccessListener(dataSnapshot -> {
 
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Log.d("TAGLogging", "onDataChange: " + snapshot.child("id").getValue(String.class) + " " + request.getId());
                                 if (snapshot.child("id").getValue(String.class).equals(request.getId())) {
                                     ArrayList<String> contacts = new ArrayList<>();
                                     for (DataSnapshot contactSnapshot : snapshot.child("contacts").getChildren()) {
                                         contacts.add(contactSnapshot.getValue(String.class));
                                     }
                                     ContactsDialogController.showContactsDialog(v.getContext(), contacts);
+                                    break;
+
                                 }
-                                break;
                             }
                         });
                     } else {
-                        vacanciesRef.child("from_musicians").get().addOnSuccessListener(dataSnapshot -> {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                if (snapshot.child("id").getValue(String.class).equals(request.getId())) {
-                                    ArrayList<String> contacts = new ArrayList<>();
-                                    for (DataSnapshot contactSnapshot : snapshot.child("contacts").getChildren()) {
-                                        contacts.add(contactSnapshot.getValue(String.class));
-                                    }
-                                    ContactsDialogController.showContactsDialog(v.getContext(), contacts);
-                                }
-                                break;
+
+                        FirebaseQueriesServices.getUserContactsByLogin(request.getTo(), new FirebaseQueriesServices.UserContactsGetterCallback() {
+                            @Override
+                            public void onGetContactsCompleted(ArrayList<String> contacts) {
+                                ContactsDialogController.showContactsDialog(v.getContext(), contacts);
                             }
                         });
-
                     }
-
                 }
             });
         }
     }
-
-
-
 
     @Override
     public int getItemCount() {

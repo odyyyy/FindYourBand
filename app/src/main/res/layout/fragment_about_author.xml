@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-
+        android:background="@color/background"
         android:orientation="vertical">
 
 
@@ -42,13 +42,14 @@
         </LinearLayout>
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/logoImageView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/user_default_avatar" />
+            android:src="@drawable/author" />
 
 
         <TextView

@@ -67,15 +67,19 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
     }
 
     private void prepareParser() throws XmlPullParserException, MalformedURLException {
-
         url = new URL("https://samesound.ru/feed");
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-
         factory.setNamespaceAware(false);
         xpp = factory.newPullParser();
-        xpp.setInput(getInputStream(url), "UTF_8");
 
+        InputStream inputStream = getInputStream(url);
+        if (inputStream == null) {
+            throw new XmlPullParserException("Failed to get input stream from URL");
+        }
+
+        xpp.setInput(inputStream, "UTF_8");
     }
+
 
     private void parseAllNews() throws XmlPullParserException {
 
@@ -271,8 +275,5 @@ public class ParserInBackground extends AsyncTask<Integer, Void, Exception> {
         } else {
             return null;
         }
-
     }
-
-
 }

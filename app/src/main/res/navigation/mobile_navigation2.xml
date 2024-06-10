@@ -24,6 +24,27 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_navigation_home_to_aboutAppFragment"
+            app:destination="@id/aboutAppFragment" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_navigation_home_to_addNewVacancyFragment"
+            app:destination="@id/addNewVacancyFragment" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_navigation_home_to_myRequestsFragment"
+            app:destination="@id/myRequestsFragment" />
     </fragment>
 
     <fragment
@@ -195,6 +216,13 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_addNewVacancyFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/musicianPageFragment"
@@ -233,6 +261,20 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_bandPageFragment_to_myRequestsFragment"
+            app:destination="@id/myRequestsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_bandPageFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/createBandFragment"
@@ -304,6 +346,27 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_myRequestsFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_myRequestsFragment_to_bandPageFragment"
+            app:destination="@id/bandPageFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_myRequestsFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -329,6 +392,13 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_aboutAppFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/aboutAuthorFragment"
@@ -380,5 +450,19 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_myRequestsFragment"
+            app:destination="@id/myRequestsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            android:id="@+id/action_userProfileFragment_to_bandPageFragment"
+            app:destination="@id/bandPageFragment" />
     </fragment>
 </navigation>

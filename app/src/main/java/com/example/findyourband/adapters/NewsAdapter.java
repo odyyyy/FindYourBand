@@ -2,6 +2,7 @@ package com.example.findyourband.adapters;
 
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 
 import com.example.findyourband.R;
@@ -93,7 +95,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             imgURL = imgURL.replace("150x150", "750x375");
         }
         Picasso.get().load(imgURL).error(R.drawable.test_news_image).into(holder.newsImage);
-
     }
 
 

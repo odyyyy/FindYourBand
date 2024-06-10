@@ -34,14 +34,14 @@ public class UserProfileFragment extends Fragment {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false);
         progressBar = binding.profileLoadingSpinner;
 
-        String UserID;
+        String userID;
         Bundle userData = getArguments();
-        if (userData == null)
-            UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (userData == null || userData.getString("UserID").equals(""))
+            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         else
-            UserID = userData.getString("id");
+            userID = userData.getString("UserID");
         progressBar.setVisibility(View.VISIBLE);
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(UserID);
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
 
         userRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override

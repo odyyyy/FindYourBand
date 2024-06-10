@@ -43,7 +43,7 @@
                 android:id="@+id/avatarImageView"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/user_default_avatar" />
 
             <ImageView
                 android:id="@+id/changeAvatarIcon"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,10 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.fragments.settings.SearchBandMembersFragment;
+import com.example.findyourband.services.FirebaseQueriesServices;
 import com.example.findyourband.services.INSTRUMENT;
 import com.example.findyourband.services.MemberDataClass;
 
@@ -120,6 +123,23 @@ public class BandMembersAdapter extends RecyclerView.Adapter<BandMembersAdapter.
                     ((SearchBandMembersFragment) fragment).updateSelectedCountText();
                 }
             });
+        }
+        else{
+            // Добавление открытия профиля музыканта на странице объявления группы при нажатии на участника
+            holder.memberCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle userDataBundle = new Bundle();
+                    FirebaseQueriesServices.getUserIdByLogin(member.getNickname(), new FirebaseQueriesServices.UserIdGetterCallback() {
+                        @Override
+                        public void onGetIdCompleted(String ID) {
+                            userDataBundle.putString("UserID", ID);
+                            AppActivity.navController.navigate(R.id.action_bandPageFragment_to_userProfileFragment, userDataBundle);
+                        }
+                    });
+                }
+            });
+
         }
     }
 

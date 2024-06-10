@@ -25,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="75dp"
         android:background="#A52A2A"
-        app:itemActiveIndicatorStyle="@drawable/genre_shape"
+        app:itemActiveIndicatorStyle="@style/Theme.BottomNavigationView.ActiveIndicator"
         app:itemIconTint="@color/nav_icon"
         app:itemRippleColor="@color/mainColor"
         app:itemTextColor="@color/nav_icon"

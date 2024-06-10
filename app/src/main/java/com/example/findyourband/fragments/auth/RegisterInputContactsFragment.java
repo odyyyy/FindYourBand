@@ -82,6 +82,7 @@ public class RegisterInputContactsFragment extends Fragment {
                         userRef.child("contacts").setValue(contacts);
 
                         Intent intent = new Intent(getActivity(), AppActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();

@@ -68,6 +68,8 @@ public class MyRequestsFragment extends Fragment {
     }
 
     private void loadRequestsDataFromDatabase() {
+        outcomeRequestsList.clear();
+        incomeRequestsList.clear();
         requestsRef = FirebaseDatabase.getInstance().getReference("requests");
         DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
         String currentUserLogin = binding.nicknameText.getText().toString();

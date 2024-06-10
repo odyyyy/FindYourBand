@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findyourband.R;
 import com.example.findyourband.services.ContactsDialogController;
+import com.example.findyourband.services.FirebaseQueriesServices;
 import com.example.findyourband.services.RequestDataClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -73,24 +74,19 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
 
             @Override
             public void onClick(View v) {
-                Log.d("TAGLogging", request.getStatus());
                 if (request.getStatus().equals("accept")) {
-
                     DatabaseReference vacanciesRef = FirebaseDatabase.getInstance().getReference("vacancies");
-
                     if (request.getFrom().contains("Группа")) {
                         vacanciesRef.child("from_bands").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                             @Override
                             public void onSuccess(DataSnapshot dataSnapshot) {
 
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    Log.d("TAGLogging", "req 1" + snapshot.child("id").getValue(String.class) + " " + request.getId());
                                     if (snapshot.child("id").getValue(String.class).equals(request.getId())) {
                                         ArrayList<String> contacts = new ArrayList<>();
                                         for (DataSnapshot contactSnapshot : snapshot.child("contacts").getChildren()) {
                                             contacts.add(contactSnapshot.getValue(String.class));
                                         }
-                                        Log.d("TAGLogging", "1 " + contacts.toString());
                                         ContactsDialogController.showContactsDialog(v.getContext(), contacts);
                                     }
 
@@ -98,21 +94,12 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
                             }
                         });
                     } else {
-                        vacanciesRef.child("from_musicians").get().addOnSuccessListener(dataSnapshot -> {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                Log.d("TAGLogging", "req 2" + snapshot.child("id").getValue(String.class) + " " + request.getId());
-                                if (snapshot.child("id").getValue(String.class).equals(request.getId())) {
-                                    ArrayList<String> contacts = new ArrayList<>();
-                                    for (DataSnapshot contactSnapshot : snapshot.child("contacts").getChildren()) {
-                                        contacts.add(contactSnapshot.getValue(String.class));
-                                    }
-                                    Log.d("TAGLogging", "2 " + contacts.toString());
-                                    ContactsDialogController.showContactsDialog(v.getContext(), contacts);
-                                }
-
+                        FirebaseQueriesServices.getUserContactsByLogin(request.getFrom(), new FirebaseQueriesServices.UserContactsGetterCallback() {
+                            @Override
+                            public void onGetContactsCompleted(ArrayList<String> contacts) {
+                                ContactsDialogController.showContactsDialog(v.getContext(), contacts);
                             }
                         });
-
                     }
                 }
             }
@@ -153,18 +140,15 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
                     @Override
                     public void onSuccess(DataSnapshot dataSnapshot) {
                         for (DataSnapshot req : dataSnapshot.getChildren()) {
-                            if (req.child("id").getValue(String.class).equals(request.getId())) {
+                            if (request.getId() != null && req.child("id").getValue(String.class).equals(request.getId())) {
                                 req.child("status").getRef().setValue("accept");
                                 holder.acceptImageView.setVisibility(View.GONE);
                                 holder.denyImageView.setVisibility(View.GONE);
                                 holder.frameLayout.setBackgroundResource(R.drawable.request_accept_shape);
-
-
                                 request.setStatus("accept");
-
                                 Toast.makeText(v.getContext(), "Заявка успешно принята! Нажмите чтобы посмотреть контакты.", Toast.LENGTH_SHORT).show();
-
                             }
+
                         }
 
                     }
@@ -175,8 +159,6 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
 
 
     }
-
-
 
 
     @Override

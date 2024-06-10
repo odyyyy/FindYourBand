@@ -44,9 +44,11 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getContext(), "Поля не могут быть пустыми", Toast.LENGTH_SHORT).show();
                 } else if (!binding.registerPassword1.getText().toString().equals(binding.registerPassword2.getText().toString())) {
                     Toast.makeText(getContext(), "Введенные пароли должны совпадать", Toast.LENGTH_SHORT).show();
-                } else if (binding.registerPassword1.getText().toString().length() < 8) {
-                    Toast.makeText(getContext(), "Пароль должен содержать не менее 8 символов", Toast.LENGTH_SHORT).show();
-                } else if (binding.registerLogin.getText().toString().length() < 3) {
+                }
+//                else if (binding.registerPassword1.getText().toString().length() < 8) {
+//                    Toast.makeText(getContext(), "Пароль должен содержать не менее 8 символов", Toast.LENGTH_SHORT).show();
+//                }
+                else if (binding.registerLogin.getText().toString().length() < 3) {
                     Toast.makeText(getContext(), "Логин должен содержать не менее 3 символов", Toast.LENGTH_SHORT).show();
                 } else if (isNotValidEmail(binding.registerEmail.getText().toString())) {
                     Toast.makeText(getContext(), "Неверный формат почты", Toast.LENGTH_SHORT).show();

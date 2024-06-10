@@ -63,7 +63,7 @@ public class AppActivity extends AppCompatActivity {
                 new ParserInBackground(getApplicationContext()).execute();
             }
             catch (Exception e){
-                Toast.makeText(AppActivity.this, "Не удалось загрузить новости. Проверьте подключение к интернету!", Toast.LENGTH_LONG).show();
+
             }
 
 

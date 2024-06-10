@@ -1,14 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.settings.InstructionFragment">
+    android:background="@color/background"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
-</FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/arrowBack"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="start|center_vertical"
+                android:rotation="180"
+                android:src="@drawable/ic_arrow_right" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="25dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Инструкция"
+                android:textSize="32sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Меню приложения "
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:id="@+id/section_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Меню приложения состоит из трех основных пунктов: главная страница, страница с объявлениями и страница с настройками аккаунта."
+                android:textSize="18sp"
+                android:paddingBottom="16dp" />
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:src="@drawable/instruction1"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:id="@+id/section_main_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Главное окно включает в себя элементы:"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/section_main_page_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1) Добавить объявление: Эта кнопка позволяет пользователю быстро перейти на страницу с размещением нового объявления.\n2) О нашем приложении: Эта кнопка предоставляет информацию о приложении и его возможностях.\n3) Статус заявок: здесь можно отслеживать статус отправленных и полученных заявок."
+                android:textSize="18sp"
+                android:paddingBottom="16dp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/instruction2"/>
+
+            <TextView
+                android:id="@+id/section_ads_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="На странице с объявлениями пользователь может просматривать существующие объявления, а также фильтровать их по различным критериям."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+
+            <TextView
+                android:id="@+id/section_ads_page_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Основные элементы страницы:\n1) Разместить объявление: кнопка для создания нового объявления.\n2) Фильтр: позволяет настроить параметры поиска объявлений по городу, жанрам и другим характеристикам.\nНа экране также отображаются все найденные объявления, которые можно просмотреть, нажав на каждое из них."
+                android:textSize="18sp"
+                android:paddingBottom="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/instruction3"/>
+
+            <TextView
+                android:id="@+id/section_account_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="На странице настроек аккаунта пользователь может управлять своим профилем и настройками приложения."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+
+
+            <TextView
+                android:id="@+id/section_account_settings_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Основные элементы страницы: \n1) Создать группу: кнопка для создания новой музыкальной группы.\n2) Моя страница: здесь можно свою персональную страницу.\n3) Мои объявления: отображает все объявления, созданные пользователем.\n4) Мои заявки: позволяет управлять всходящими и исходящими заявками.\n5) Настройки: позволяет изменить настройки приложения и профиля.\n6) О приложении: содержит информацию о приложении и контактах для обратной связи."
+                android:textSize="18sp"
+                android:paddingBottom="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/instruction4"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

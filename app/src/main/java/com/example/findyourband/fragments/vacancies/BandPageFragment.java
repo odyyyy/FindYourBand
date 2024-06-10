@@ -24,13 +24,12 @@ import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentBandPageBinding;
 
-import com.example.findyourband.services.AlreadyBandMemberChecker;
+import com.example.findyourband.services.FirebaseQueriesServices;
 import com.example.findyourband.services.INSTRUMENT;
 import com.example.findyourband.services.MemberDataClass;
 import com.example.findyourband.services.RequestDataClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -117,7 +116,6 @@ public class BandPageFragment extends Fragment {
             List<String> tracks = bandData.getStringArrayList("tracks");
             // TODO: загрузка треков
 
-            ArrayList<String> contacts = bandData.getStringArrayList("contacts");
 
 
         }
@@ -145,7 +143,7 @@ public class BandPageFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        AlreadyBandMemberChecker.isUserAlreadyInBand(currentUserLogin, new AlreadyBandMemberChecker.BandCheckCallback() {
+                        FirebaseQueriesServices.isUserAlreadyInBand(currentUserLogin, new FirebaseQueriesServices.BandCheckCallback() {
 
                             @Override
                             public void onCheckCompleted(boolean isInBand) {
@@ -275,18 +273,19 @@ public class BandPageFragment extends Fragment {
     private void  updateBtnStateIfRequestExists(String id) {
 
         DatabaseReference requestsRef = FirebaseDatabase.getInstance().getReference("requests");
-
         requestsRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
 
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot request : dataSnapshot.getChildren()) {
-                    if (request.getKey().equals(id) && request.child("from").getValue(String.class).equals(currentUserLogin)) {
+                    String requestId = request.child("id").getValue(String.class);
+                    if (requestId != null && requestId.equals(id) && currentUserLogin != null && currentUserLogin.equals(request.child("from").getValue(String.class))) {
                         changeBtnStateAfterSendRequest();
                         return;
                     }
                 }
+
 
             }
         });

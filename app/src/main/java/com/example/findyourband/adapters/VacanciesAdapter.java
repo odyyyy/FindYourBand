@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,24 +26,37 @@ import com.example.findyourband.R;
 import com.example.findyourband.services.INSTRUMENT;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
     private List<Map<String, ArrayList<String>>> vacanciesList;
-
+    private ArrayList<Integer> musiciansImages = new ArrayList<>(
+            Arrays.asList(R.drawable.paul,
+                    R.drawable.yorke,
+                    R.drawable.serj,
+                    R.drawable.srv,
+                    R.drawable.ringo,
+                    R.drawable.roger,
+                    R.drawable.mercury,
+                    R.drawable.gilmour,
+                    R.drawable.lennon)
+    );
+    private ArrayList<Integer> bandImages = new ArrayList<>(
+            Arrays.asList(R.drawable.airbnad, R.drawable.animalcollective,
+                    R.drawable.kingcrimson, R.drawable.idles, R.drawable.tkband, R.drawable.airbnad, R.drawable.animalcollective,
+                    R.drawable.kingcrimson, R.drawable.idles, R.drawable.tkband
+            ));
     private boolean isFromMyVacancies = false;
-
 
     public VacanciesAdapter(Context context, List<Map<String, ArrayList<String>>> vacanciesList) {
         this.layoutInflater = LayoutInflater.from(context);
         this.vacanciesList = vacanciesList;
     }
-
 
     public VacanciesAdapter(Context context, List<Map<String, ArrayList<String>>> vacanciesList, boolean isFromMyVacancies) {
         this.layoutInflater = LayoutInflater.from(context);
@@ -52,15 +64,12 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         this.isFromMyVacancies = isFromMyVacancies;
     }
 
-
     @NonNull
     @Override
     public VacanciesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.componet_vacancy_item, parent, false);
-
         return new VacanciesAdapter.ViewHolder(view);
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull VacanciesAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -101,30 +110,25 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
             TextView genreTextView = new TextView(newContext);
             genreTextView.setText(genre);
             genreTextView.setLayoutParams(params);
-//            genreTextView.getBackground().setTint(Color.parseColor("#DFDFDF"));
-//            genreTextView.setTextColor(Color.parseColor("#000000"));
             genresLayout.addView(genreTextView);
         }
 
         holder.name.setText(name);
         holder.city.setText(city);
 
-        // TODO: загрузка картинки image
-        holder.image.setImageResource(R.drawable.paul);
+        int selectedImage = getImageForName(name, position);
 
+        holder.image.setImageResource(selectedImage);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 TextView vacancyTextView = ((TextView) v.findViewById(R.id.nameVacancyTextView));
                 String vacancy_title = vacancyTextView.getText().toString();
 
                 String id = vacanciesList.get(position).get("id").get(0);
-
                 String description = vacanciesList.get(position).get("description").get(0);
                 ArrayList<String> tracks = vacanciesList.get(position).get("tracks");
-                ArrayList<String> contacts = vacanciesList.get(position).get("contacts");
                 Bundle vacancyData = new Bundle();
                 vacancyData.putString("id", id);
                 vacancyData.putString("name", name);
@@ -134,22 +138,21 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
                 vacancyData.putStringArrayList("genres", genres);
                 vacancyData.putString("description", description);
                 vacancyData.putStringArrayList("tracks", tracks);
-                vacancyData.putStringArrayList("contacts", contacts);
 
                 if (vacancy_title.contains("Группа")) {
                     vacancyData.putStringArrayList("members", vacanciesList.get(position).get("members"));
                     if (isFromMyVacancies) {
                         AppActivity.navController.navigate(R.id.action_myVacanciesFragment_to_bandPageFragment, vacancyData);
+                    } else {
+                        AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_bandPageFragment, vacancyData);
                     }
-                    AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_bandPageFragment, vacancyData);
-
                 } else {
                     vacancyData.putString("experience", vacanciesList.get(position).get("experience").get(0));
                     if (isFromMyVacancies) {
                         AppActivity.navController.navigate(R.id.action_myVacanciesFragment_to_musicianPageFragment, vacancyData);
-                    }
-                    else
+                    } else {
                         AppActivity.navController.navigate(R.id.action_navigation_vacancy_to_musicianPageFragment, vacancyData);
+                    }
                 }
             }
         });
@@ -160,14 +163,32 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
         return vacanciesList.size();
     }
 
+    private int getImageForName(String name, int i) {
+        int index;
+        if (name.contains("Группа")) {
+            if (i < bandImages.size()){
+                index = i;
+            }
+            else {
+                index = Math.abs(name.hashCode()) % bandImages.size();
+            }
+            return bandImages.get(index);
+        } else {
+            if (i < musiciansImages.size()){
+                index = i;
+            }
+            else {
+                index = Math.abs(name.hashCode()) % musiciansImages.size();
+            }
+            return musiciansImages.get(index);
+        }
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
         TextView city;
-
         ImageView image;
-
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -175,9 +196,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.View
             name = itemView.findViewById(R.id.nameVacancyTextView);
             image = itemView.findViewById(R.id.vacancyCardImage);
             city = itemView.findViewById(R.id.cityVacancyTextView);
-
             cardView = itemView.findViewById(R.id.vacancyCardView);
         }
     }
-
 }

@@ -30,61 +30,67 @@
             android:padding="16dp">
 
             <LinearLayout
+                android:id="@+id/addNewAdBadge"
                 style="@style/BadgeStyle"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/ic_new_adv" />
 
                 <TextView
+                    android:textColor="@color/darker_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Статус заявок"
+                    android:text="Добавьте объявление"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
-
+                android:id="@+id/aboutAppBadge"
                 style="@style/BadgeStyle"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/ic_app" />
 
                 <TextView
+                    android:textColor="@color/darker_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Новые сообщения"
+                    android:text="О нашем приложении"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/newRequestsBadge"
                 style="@style/BadgeStyle"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/ic_requests" />
 
                 <TextView
+                    android:textColor="@color/darker_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Новые события"
+                    android:text="Статус заявок"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>

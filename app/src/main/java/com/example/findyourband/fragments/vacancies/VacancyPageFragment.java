@@ -136,14 +136,10 @@ public class VacancyPageFragment extends Fragment {
                                 String id = vacancySnapshot.child("id").getValue(String.class);
 
 
-                                List<String> contacts = new ArrayList<>();
-                                for (DataSnapshot contactSnapshot : vacancySnapshot.child("contacts").getChildren()) {
-                                    contacts.add(contactSnapshot.getValue(String.class));
-                                }
 
 
                                 Map<String, ArrayList<String>> vacancy = createVacancy(id, login, img, city, instruments, genres, description,
-                                        tracks, contacts, experience, null);
+                                        tracks,  experience, null);
                                 if (!vacanciesList.contains(vacancy)) {
                                     vacanciesList.add(vacancy);
                                 }
@@ -176,8 +172,6 @@ public class VacancyPageFragment extends Fragment {
                         ArrayList<String> instruments = new ArrayList<>(Collections.singletonList(bandSnapshot.child("instrument").getValue(String.class)));
                         if (hasFilters &&  !finalFiltersMap.get("instrument").equals("") && !instruments.get(0).equals(finalFiltersMap.get("instrument"))) {continue;}
 
-
-
                         String vacancyID = bandSnapshot.child("id").getValue(String.class);
                         String description = bandSnapshot.child("description").getValue(String.class);
 
@@ -187,14 +181,6 @@ public class VacancyPageFragment extends Fragment {
                                 tracks.add(trackSnapshot.getValue(String.class));
                             }
                         }
-                        List<String> contacts = new ArrayList<>();
-
-                        for (DataSnapshot contactSnapshot : bandSnapshot.child("contacts").getChildren()) {
-                            contacts.add(contactSnapshot.getValue(String.class));
-                        }
-
-
-
 
                         bandRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                             @Override
@@ -219,7 +205,7 @@ public class VacancyPageFragment extends Fragment {
                                     }
 
 
-                                    Map<String, ArrayList<String>> band = createVacancy(vacancyID,name, img, city, instruments, genres, description, tracks, contacts, null, members);
+                                    Map<String, ArrayList<String>> band = createVacancy(vacancyID,name, img, city, instruments, genres, description, tracks, null, members);
                                     if (!vacanciesList.contains(band)) {
                                         vacanciesList.add(band);
                                     }
@@ -248,7 +234,7 @@ public class VacancyPageFragment extends Fragment {
 
     private Map<String, ArrayList<String>> createVacancy(String id, String nickname, String img, String city, List<String> instruments,
                                                          List<String> genres, String description, List<String> tracks,
-                                                         List<String> contacts, String experience, List<String> members) {
+                                                          String experience, List<String> members) {
         Map<String, ArrayList<String>> vacancy = new HashMap<>();
         vacancy.put("id", new ArrayList<>(Collections.singletonList(id)));
         vacancy.put("name", new ArrayList<>(Collections.singletonList(nickname)));
@@ -258,7 +244,6 @@ public class VacancyPageFragment extends Fragment {
         vacancy.put("genres", new ArrayList<>(genres));
         vacancy.put("description", new ArrayList<>(Collections.singletonList(description)));
         vacancy.put("tracks", new ArrayList<>(tracks));
-        vacancy.put("contacts", new ArrayList<>(contacts));
 
 
         if (experience != null) {

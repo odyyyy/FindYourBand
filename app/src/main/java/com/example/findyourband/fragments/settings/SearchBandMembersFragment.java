@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import com.example.findyourband.AppActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.adapters.BandMembersAdapter;
 import com.example.findyourband.databinding.FragmentSearchBandMembersBinding;
-import com.example.findyourband.services.AlreadyBandMemberChecker;
+import com.example.findyourband.services.FirebaseQueriesServices;
 import com.example.findyourband.services.MemberDataClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -76,7 +75,7 @@ public class SearchBandMembersFragment extends Fragment {
                     if (login != null && image != null && instruments != null && !login.equals(currentUserLogin)) {
                         MemberDataClass user = new MemberDataClass(login, image, instruments);
 
-                        AlreadyBandMemberChecker.isUserAlreadyInBand(login, new AlreadyBandMemberChecker.BandCheckCallback() {
+                        FirebaseQueriesServices.isUserAlreadyInBand(login, new FirebaseQueriesServices.BandCheckCallback() {
                             @Override
                             public void onCheckCompleted(boolean isInBand) {
                                 if (!isInBand) {

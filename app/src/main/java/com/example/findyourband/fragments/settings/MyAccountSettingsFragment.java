@@ -1,7 +1,6 @@
 package com.example.findyourband.fragments.settings;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,7 +19,7 @@ import com.example.findyourband.AppActivity;
 import com.example.findyourband.MainActivity;
 import com.example.findyourband.R;
 import com.example.findyourband.databinding.FragmentMyAccountSettingsBinding;
-import com.example.findyourband.services.AlreadyBandMemberChecker;
+import com.example.findyourband.services.FirebaseQueriesServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,7 +56,7 @@ public class MyAccountSettingsFragment extends Fragment {
                 SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
                 String login = preferences.getString("login", "Пользователь");
 
-                AlreadyBandMemberChecker.isUserAlreadyInBand(login, new AlreadyBandMemberChecker.BandCheckCallback() {
+                FirebaseQueriesServices.isUserAlreadyInBand(login, new FirebaseQueriesServices.BandCheckCallback() {
 
                     @Override
                     public void onCheckCompleted(boolean isInBand) {
@@ -192,6 +190,7 @@ public class MyAccountSettingsFragment extends Fragment {
         builder.setMessage("Вы уверены что хотите расформировать группу?")
                 .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
                         disbandGroup();
                     }
                 })
@@ -204,7 +203,8 @@ public class MyAccountSettingsFragment extends Fragment {
     }
 
     private void disbandGroup() {
-        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference("bands");
+        DatabaseReference bandsRef = FirebaseDatabase.getInstance().getReference().child("bands");
+        DatabaseReference bandsVacanciesRef = FirebaseDatabase.getInstance().getReference().child("vacancies").child("from_bands");
         bandsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -212,6 +212,8 @@ public class MyAccountSettingsFragment extends Fragment {
                     Iterable<DataSnapshot> members = bandSnapshot.child("memberUserLogins").getChildren();
                     for (DataSnapshot member : members) {
                         if (member.getValue(String.class).equals(login)) {
+                            bandsVacanciesRef.child(bandSnapshot.getKey()).removeValue();
+
                             bandSnapshot.getRef().removeValue();
                             Toast.makeText(getContext(), "Группа успешно расформирована!", Toast.LENGTH_LONG).show();
                             binding.manageBandButton.setVisibility(View.GONE);

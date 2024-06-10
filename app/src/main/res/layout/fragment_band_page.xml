@@ -278,6 +278,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:layout_marginBottom="40dp"
             android:id="@+id/musicianDescriptionValueLayout"
             android:layout_width="330dp"
             android:layout_height="wrap_content"

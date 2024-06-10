@@ -64,7 +64,6 @@ public class MyVacanciesFragment extends Fragment {
     private void loadVacanciesDataFromDatabase() {
         DatabaseReference vacanciesRef = FirebaseDatabase.getInstance().getReference("vacancies");
 
-        // Запрос на получение объявлений от музыкантов
         vacanciesRef.child("from_musicians").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
@@ -126,7 +125,6 @@ public class MyVacanciesFragment extends Fragment {
             }
         });
 
-        // Запрос на получение объявлений от групп
         vacanciesRef.child("from_bands").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {

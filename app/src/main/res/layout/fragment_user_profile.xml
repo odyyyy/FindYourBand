@@ -85,15 +85,17 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/experienceMusicianVacancyLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:padding="10dp"
-            android:visibility="gone">
+           >
 
             <TextView
+                android:layout_gravity="center"
                 android:id="@+id/ExperienceTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
