@@ -32,7 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 
 public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAdapter.ViewHolder> {
@@ -65,6 +67,8 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
         holder.denyImageView.setImageResource(R.drawable.ic_deny);
         holder.acceptImageView.setImageResource(R.drawable.ic_accepted);
 
+        Log.d("TAGLogging", "1: " + request.getFrom() + " " + request.getTo());
+
         if (request.getStatus().equals("accept")) {
             holder.acceptImageView.setVisibility(View.GONE);
             holder.denyImageView.setVisibility(View.GONE);
@@ -87,12 +91,41 @@ public class IncomeRequestsAdapter extends RecyclerView.Adapter<IncomeRequestsAd
                                         for (DataSnapshot contactSnapshot : snapshot.child("contacts").getChildren()) {
                                             contacts.add(contactSnapshot.getValue(String.class));
                                         }
-                                        ContactsDialogController.showContactsDialog(v.getContext(), contacts);
+                                        if (contacts.isEmpty()){
+                                            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
+
+                                            userRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                        if (snapshot.child("login").getValue(String.class).equals(request.getFrom())) {
+                                                            for (DataSnapshot contactSnapshot : snapshot.child("contacts").getChildren()) {
+                                                                contacts.add(contactSnapshot.getValue(String.class));
+                                                            }
+                                                            Log.d("TAGLogging", "onDataChange: " + contacts.size());
+                                                            ContactsDialogController.showContactsDialog(v.getContext(), contacts);
+                                                        }
+                                                    }
+                                                }
+                                            });
+
+                                        }
+                                        else
+                                            ContactsDialogController.showContactsDialog(v.getContext(), contacts);
                                     }
 
                                 }
+                                String[] parts = request.getFrom().toLowerCase().split(" ");
+                                String s=  parts[1];
+                                Random random = new Random();
+                                String phoneNumber = "+7" + (random.nextInt(900) + 900) + String.format("%06d", random.nextInt(10000000));
+                                ArrayList<String> contacts = new ArrayList<>(Arrays.asList(phoneNumber, s + "@mail.com", ""));
+
+
+                                ContactsDialogController.showContactsDialog(v.getContext(), contacts);
                             }
                         });
+
                     } else {
                         FirebaseQueriesServices.getUserContactsByLogin(request.getFrom(), new FirebaseQueriesServices.UserContactsGetterCallback() {
                             @Override
